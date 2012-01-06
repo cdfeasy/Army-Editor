@@ -1,8 +1,13 @@
 package army.client.main;
 
+
+import com.extjs.gxt.ui.client.widget.Component;
 import com.extjs.gxt.ui.client.widget.Composite;
 import com.extjs.gxt.ui.client.widget.form.LabelField;
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.ui.Label;
 
 /**
  * Created by IntelliJ IDEA.
@@ -15,5 +20,17 @@ public class MainForm extends Composite {
 
     @UiField
     LabelField field;
+
+    interface MainFormUiBinder extends
+            UiBinder<Component, MainForm> {
+    };
+
+    private static MainFormUiBinder uiBinder = GWT
+            .create(MainFormUiBinder.class);
+
+    public MainForm() {
+        super();
+        initComponent(uiBinder.createAndBindUi(this));
+    }
 
 }
