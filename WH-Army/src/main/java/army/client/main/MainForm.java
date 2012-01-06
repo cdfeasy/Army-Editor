@@ -2,7 +2,6 @@ package army.client.main;
 
 import com.extjs.gxt.ui.client.widget.Composite;
 import com.extjs.gxt.ui.client.widget.form.LabelField;
-import com.extjs.gxt.ui.client.widget.form.TextField;
 import com.google.gwt.uibinder.client.UiField;
 
 /**
