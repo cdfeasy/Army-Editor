@@ -2,16 +2,16 @@ package army.client.main;
 
 
 import com.extjs.gxt.ui.client.widget.Component;
-import com.extjs.gxt.ui.client.widget.Composite;
 import com.extjs.gxt.ui.client.widget.Label;
 import com.extjs.gxt.ui.client.widget.form.LabelField;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.Widget;
 
 
 /**
- * Created by IntelliJ IDEA.
  * User: tau
  * Date: 03.01.12
  * Time: 15:25
@@ -19,11 +19,11 @@ import com.google.gwt.uibinder.client.UiField;
  */
 public class MainForm extends Composite {
 
-    @UiField
-    Label field;
+//    @UiField
+//    Label field;
 
     interface MainFormUiBinder extends
-            UiBinder<Component, MainForm> {
+            UiBinder<Widget, MainForm> {
     };
 
     private static MainFormUiBinder uiBinder = GWT
@@ -31,7 +31,8 @@ public class MainForm extends Composite {
 
     public MainForm() {
         super();
-        initComponent(uiBinder.createAndBindUi(this));
+        initWidget(uiBinder.createAndBindUi(this));
+//        initComponent(uiBinder.createAndBindUi(this));
     }
 
 }

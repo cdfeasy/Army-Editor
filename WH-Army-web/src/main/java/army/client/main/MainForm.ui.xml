@@ -4,8 +4,9 @@
              xmlns:gxt="urn:import:com.extjs.gxt.ui.client.widget"
              xmlns:form="urn:import:com.extjs.gxt.ui.client.widget.form">
 
-    <gxt:VerticalPanel>
-        <gxt:Label ui:field="field" text="Пыщ пыщ!"  borders="true" />
-    </gxt:VerticalPanel>
+    <g:VerticalPanel>
+
+        <g:Label text="Пыщ пыщ!" title="Пыщ" visible="true"  />
+    </g:VerticalPanel>
 
 </ui:UiBinder>
