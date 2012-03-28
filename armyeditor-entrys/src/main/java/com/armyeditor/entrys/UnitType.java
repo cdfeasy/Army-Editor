@@ -15,6 +15,10 @@ public class UnitType implements java.io.Serializable  {
     private Long id;
     private String name;
     private String nameRus;
+
+    public UnitType() {
+    }
+
     @Id @javax.persistence.GeneratedValue
     public Long getId() {
         return id;

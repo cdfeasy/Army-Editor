@@ -19,6 +19,10 @@ import javax.persistence.OneToMany;
 public class Squad implements java.io.Serializable {
     private Long id;
     private Squad squadBase;
+
+    public Squad() {
+    }
+
     @Id @javax.persistence.GeneratedValue
     public Long getId() {
         return id;

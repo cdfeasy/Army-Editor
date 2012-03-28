@@ -27,6 +27,10 @@ public class SquadPartBase implements java.io.Serializable  {
     private List<Option> options=new ArrayList<Option>();
     private List<SquadPartBase> modifications=new ArrayList<SquadPartBase>();
     private SquadPartBase parent;
+
+    public SquadPartBase() {
+    }
+
     @ManyToMany(cascade = CascadeType.REFRESH)
     public List<Item> getAvailibleItem() {
         return availibleItem;

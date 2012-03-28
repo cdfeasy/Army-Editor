@@ -16,6 +16,9 @@ public class SpecialRule  implements java.io.Serializable {
     private String name;
     private String description;
 
+    public SpecialRule() {
+    }
+
     public String getDescription() {
         return description;
     }

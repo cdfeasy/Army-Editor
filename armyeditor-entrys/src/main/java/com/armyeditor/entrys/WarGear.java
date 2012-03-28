@@ -18,6 +18,10 @@ import javax.persistence.ManyToMany;
 public class WarGear implements java.io.Serializable  {
     private Long id;
     private List<ItemBase> items=new ArrayList<ItemBase>();
+
+    public WarGear() {
+    }
+
     @Id @javax.persistence.GeneratedValue
     public Long getId() {
         return id;

@@ -16,6 +16,9 @@ public class Option implements java.io.Serializable  {
     private String name;
     private String description;
 
+    public Option() {
+    }
+
     public String getDescription() {
         return description;
     }

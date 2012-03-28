@@ -34,12 +34,14 @@ public class UnitBase implements java.io.Serializable  {
     private int Side;
     private int Rear;
     private int cost;
-
     private List<Option> options=new ArrayList<Option>();
     private UnitType unitType;
     private List<Weapon>  weapons=new ArrayList<Weapon>();
     private List<Item>  items=new ArrayList<Item>();
     private Fraction fraction;
+
+    public UnitBase() {
+    }
 
     public int getA() {
         return A;

@@ -18,6 +18,10 @@ public class Unit  implements java.io.Serializable {
     private Long id;
     private UnitBase unit;
     private WarGear warGear;
+
+    public Unit() {
+    }
+
     @Id @javax.persistence.GeneratedValue
     public Long getId() {
         return id;

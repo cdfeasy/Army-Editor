@@ -27,6 +27,9 @@ public class WeaponBase implements java.io.Serializable  {
     private String STR;
     private List<Option> options=new ArrayList<Option>();
 
+    public WeaponBase() {
+    }
+
     public String getAP() {
         return AP;
     }
@@ -91,6 +94,5 @@ public class WeaponBase implements java.io.Serializable  {
     public void setType(WeaponType type) {
         this.type = type;
     }
-
 
 }

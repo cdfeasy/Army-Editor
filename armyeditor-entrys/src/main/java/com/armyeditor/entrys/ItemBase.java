@@ -16,6 +16,9 @@ public class ItemBase implements java.io.Serializable  {
     private String name;
     private String description;
 
+    public ItemBase() {
+    }
+
     public String getDescription() {
         return description;
     }

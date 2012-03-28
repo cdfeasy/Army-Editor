@@ -15,6 +15,10 @@ import javax.persistence.Id;
 public class Item implements java.io.Serializable {
     private Long id;
     private int maxCount;
+    private int cost;
+
+    public Item() {
+    }
 
     public int getCost() {
         return cost;
@@ -39,6 +43,5 @@ public class Item implements java.io.Serializable {
     public void setMaxCount(int maxCount) {
         this.maxCount = maxCount;
     }
-    private int cost;
 
 }

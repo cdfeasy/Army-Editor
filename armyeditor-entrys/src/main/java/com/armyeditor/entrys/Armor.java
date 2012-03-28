@@ -17,6 +17,10 @@ import javax.persistence.Id;
 public class Armor implements Serializable {
     private Long id;
     private String name;
+    private String description;
+
+    public Armor() {
+    }
 
     public String getDescription() {
         return description;
@@ -41,6 +45,5 @@ public class Armor implements Serializable {
     public void setName(String name) {
         this.name = name;
     }
-    private String description;
 
 }

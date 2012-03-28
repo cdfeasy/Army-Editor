@@ -21,6 +21,9 @@ public class Weapon  implements java.io.Serializable {
     private int cost;
     private boolean replace=true;
 
+    public Weapon() {
+    }
+
     public int getCost() {
         return cost;
     }

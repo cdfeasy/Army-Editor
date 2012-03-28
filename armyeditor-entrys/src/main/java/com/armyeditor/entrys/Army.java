@@ -17,9 +17,14 @@ import javax.persistence.ManyToMany;
  * @author Dmitry
  */@javax.persistence.Entity
 public class Army  implements Serializable {
-     private Long id;
+    private Long id;
     private String name;
     private String description;
+    private List<Squad> squads=new ArrayList<Squad>();
+
+    public Army() {
+    }
+
     @Id @javax.persistence.GeneratedValue
     public Long getId() {
         return id;
@@ -52,5 +57,5 @@ public class Army  implements Serializable {
     public void setSquads(List<Squad> squads) {
         this.squads = squads;
     }
-    private List<Squad> squads=new ArrayList<Squad>();
+
 }

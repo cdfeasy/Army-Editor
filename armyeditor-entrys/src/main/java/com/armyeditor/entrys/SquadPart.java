@@ -17,13 +17,17 @@ import javax.persistence.ManyToOne;
  *
  * @author Dmitry
  */@javax.persistence.Entity
-public class SquadPart  implements java.io.Serializable {
+public class SquadPart implements java.io.Serializable {
     private Long id;
     private SquadPartBase base;
     private int squadsize;
     private List<Item> Items=new ArrayList<Item>();
     private List<Weapon> Weapons=new ArrayList<Weapon>();
     private List<Armor> Armors=new ArrayList<Armor>();
+
+    public SquadPart() {
+    }
+
     @ManyToMany(cascade = CascadeType.REFRESH)
     public List<Armor> getArmors() {
         return Armors;

@@ -19,6 +19,14 @@ import javax.persistence.OneToMany;
  * @author Dmitry
  */@javax.persistence.Entity
 public class Codex implements java.io.Serializable  {
+    private Long id;
+    private String name;
+    private String description;
+    private List<SquadBase> squads=new ArrayList<SquadBase>();
+
+    public Codex(){
+
+    }
 
     public String getDescription() {
         return description;
@@ -52,8 +60,5 @@ public class Codex implements java.io.Serializable  {
     public void setSquads(List<SquadBase> squads) {
         this.squads = squads;
     }
-    private Long id;
-    private String name;
-    private String description;
-    private List<SquadBase> squads=new ArrayList<SquadBase>();
+
 }

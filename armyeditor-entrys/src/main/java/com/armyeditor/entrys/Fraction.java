@@ -19,6 +19,13 @@ import javax.persistence.OneToMany;
  */@javax.persistence.Entity
 public class Fraction implements java.io.Serializable  {
     private Long id;
+    private String name;
+    private String description;
+    private List<Codex> codexes =new ArrayList<Codex>();
+
+    public Fraction() {
+    }
+
     @OneToMany(cascade=CascadeType.REFRESH)
     @JoinColumn(name="Faction_ID")
     public List<Codex> getCodexes() {
@@ -52,8 +59,5 @@ public class Fraction implements java.io.Serializable  {
     public void setName(String name) {
         this.name = name;
     }
-    private String name;
-    private String description;
-   
-    private List<Codex> codexes =new ArrayList<Codex>();
+
 }

@@ -15,6 +15,10 @@ public class WeaponType implements java.io.Serializable  {
     private Long id;
     private String nameRus;
     private String nameEng;
+
+    public WeaponType() {
+    }
+
     @Id @javax.persistence.GeneratedValue
     public Long getId() {
         return id;
