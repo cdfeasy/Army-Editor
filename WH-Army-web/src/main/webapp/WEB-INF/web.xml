@@ -6,15 +6,15 @@
 <web-app>
 
   <!-- Servlets -->
-  <!--<servlet>-->
-    <!--<servlet-name>greetServlet</servlet-name>-->
-    <!--<servlet-class>army.server.GreetingServiceImpl</servlet-class>-->
-  <!--</servlet>-->
+  <servlet>
+    <servlet-name>baseService</servlet-name>
+    <servlet-class>army.server.BaseService</servlet-class>
+  </servlet>
 
-  <!--<servlet-mapping>-->
-    <!--<servlet-name>greetServlet</servlet-name>-->
-    <!--<url-pattern>/army/greet</url-pattern>-->
-  <!--</servlet-mapping>-->
+  <servlet-mapping>
+    <servlet-name>baseService</servlet-name>
+    <url-pattern>/army/server/BaseService</url-pattern>
+  </servlet-mapping>
 
   <!-- Default page to serve -->
   <welcome-file-list>
