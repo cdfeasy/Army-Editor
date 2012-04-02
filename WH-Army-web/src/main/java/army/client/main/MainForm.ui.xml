@@ -4,11 +4,12 @@
              xmlns:gxt="urn:import:com.extjs.gxt.ui.client.widget"
              xmlns:form="urn:import:com.extjs.gxt.ui.client.widget.form">
 
-    <ui:with field="stores" type='army.client.main.MainForm.FormDataProvider'/>
+    <!--<ui:with field="stores" type='army.client.main.MainForm.FormDataProvider'/>-->
     <g:VerticalPanel>
 
         <g:Label text="Пыщ пыщ!" title="Пыщ" visible="true"  />
-        <form:ComboBox ui:field="unitList" store="{stores.unitStore}" visible="true"/>
+        <!--<form:ComboBox ui:field="unitList" store="{stores.unitStore}" visible="true"/>-->
+        <g:ListBox ui:field="unitList" visible="true"/>
     </g:VerticalPanel>
 
 </ui:UiBinder>

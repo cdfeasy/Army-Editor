@@ -14,9 +14,11 @@ import com.google.gwt.uibinder.client.UiFactory;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.Widget;
 import org.apache.log4j.Logger;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -30,9 +32,9 @@ import java.util.List;
 public class MainForm extends Composite {
 
     @UiField
-    ComboBox unitList;
+    ListBox unitList;
 
-    @UiFactory
+    /*@UiFactory
     public FormDataProvider getStore() {
         return new FormDataProvider() {
             @Override
@@ -58,7 +60,7 @@ public class MainForm extends Composite {
             }
         };
 
-    }
+    }*/
 
     private final UnitServiceAsync unitService = GWT.create(UnitService.class);
 
@@ -73,10 +75,23 @@ public class MainForm extends Composite {
         super();
         initWidget(uiBinder.createAndBindUi(this));
 //        initComponent(uiBinder.createAndBindUi(this));
+        unitService.getUnits(new AsyncCallback<List<Unit>>() {
+            @Override
+            public void onFailure(Throwable caught) {
+                System.out.println("Запрос упал "+caught.getMessage());
+            }
+
+            @Override
+            public void onSuccess(List<Unit> result) {
+                for(Unit u:result){
+                    unitList.addItem(u.getId().toString());
+                }
+            }
+        });
     }
 
-    public static interface FormDataProvider {
+    /*public static interface FormDataProvider {
         ListStore unitStore();
-    }
+    }*/
 
 }
