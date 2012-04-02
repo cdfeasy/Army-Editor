@@ -10,7 +10,6 @@
 
 import com.armyeditor.HibernateUtil;
 import com.armyeditor.entrys.WeaponType;
-//import com.armyeditor.fractioneditor.server.HibernateUtil;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.junit.Test;

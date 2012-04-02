@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+        <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
+        <property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
+        <property name="hibernate.connection.url">jdbc:postgresql://localhost:5433/postgres</property>
+        <property name="hibernate.connection.username">postgres</property>
+        <property name="hibernate.connection.password">nevertimes</property>
+        <property name="hibernate.hbm2ddl.auto">update</property>
+        <property name="hibernate.show_sql">true</property>
+        <mapping class="com.armyeditor.entrys.Armor"/>
+        <mapping class="com.armyeditor.entrys.Army"/>
+        <mapping class="com.armyeditor.entrys.AttackType"/>
+        <mapping class="com.armyeditor.entrys.Codex"/>
+        <mapping class="com.armyeditor.entrys.Fraction"/> 
+        <mapping class="com.armyeditor.entrys.Item"/>
+        <mapping class="com.armyeditor.entrys.ItemBase"/>
+        <mapping class="com.armyeditor.entrys.Option"/>
+        <mapping class="com.armyeditor.entrys.SpecialRule"/>
+        <mapping class="com.armyeditor.entrys.Squad"/>
+        <mapping class="com.armyeditor.entrys.SquadBase"/>
+        <mapping class="com.armyeditor.entrys.SquadPartBase"/>
+        <mapping class="com.armyeditor.entrys.Unit"/>
+        <mapping class="com.armyeditor.entrys.UnitBase"/>
+        <mapping class="com.armyeditor.entrys.UnitType"/>
+        <mapping class="com.armyeditor.entrys.WarGear"/>
+        <mapping class="com.armyeditor.entrys.Weapon"/>
+        <mapping class="com.armyeditor.entrys.WeaponBase"/>
+        <mapping class="com.armyeditor.entrys.WeaponType"/>
+        
+    </session-factory>
+</hibernate-configuration>

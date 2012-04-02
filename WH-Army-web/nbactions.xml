@@ -9,4 +9,18 @@
                 <goal>install</goal>
             </goals>
         </action>
+        <action>
+            <actionName>CUSTOM-gwt run</actionName>
+            <displayName>gwt run</displayName>
+            <goals>
+                <goal>gwt:run</goal>
+            </goals>
+        </action>
+        <action>
+            <actionName>CUSTOM-debug</actionName>
+            <displayName>debug</displayName>
+            <goals>
+                <goal>gwt:debug</goal>
+            </goals>
+        </action>
     </actions>

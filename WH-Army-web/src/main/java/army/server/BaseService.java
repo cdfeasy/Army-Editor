@@ -20,7 +20,9 @@ public class BaseService extends RemoteServiceServlet implements UnitService {
     @Override
     public List<Unit> getUnits() {
         Session ses= HibernateUtil.getSessionFactory().openSession();
-        Query query = ses.createQuery("select unit.id from Unit unit").setMaxResults(10);
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        Query query = ses.createQuery("select unit from Unit unit").setMaxResults(10);
+        List<Unit> itemlist=query.list();
+        ses.close();
+        return itemlist;
     }
 }

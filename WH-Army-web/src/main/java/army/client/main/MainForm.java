@@ -1,14 +1,24 @@
 package army.client.main;
 
 
-import com.extjs.gxt.ui.client.widget.Component;
-import com.extjs.gxt.ui.client.widget.Label;
-import com.extjs.gxt.ui.client.widget.form.LabelField;
+import army.client.services.UnitService;
+import army.client.services.UnitServiceAsync;
+import com.armyeditor.entrys.Unit;
+import com.extjs.gxt.ui.client.data.BaseModel;
+import com.extjs.gxt.ui.client.data.ModelData;
+import com.extjs.gxt.ui.client.store.ListStore;
+import com.extjs.gxt.ui.client.widget.form.ComboBox;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
+import com.google.gwt.uibinder.client.UiFactory;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Widget;
+import org.apache.log4j.Logger;
+
+import java.util.List;
+
 
 
 /**
@@ -19,8 +29,38 @@ import com.google.gwt.user.client.ui.Widget;
  */
 public class MainForm extends Composite {
 
-//    @UiField
-//    Label field;
+    @UiField
+    ComboBox unitList;
+
+    @UiFactory
+    public FormDataProvider getStore() {
+        return new FormDataProvider() {
+            @Override
+            public ListStore unitStore() {
+                final ListStore<ModelData> store = new ListStore<ModelData>(); //пустое хранилище
+                unitService.getUnits(new AsyncCallback<List<Unit>>() {
+                    @Override
+                    public void onFailure(Throwable caught) {
+                        System.out.println("Запрос упал");
+                    }
+
+                    @Override
+                    public void onSuccess(List<Unit> result) {
+
+                        for(Unit u:result){
+                            ModelData modelData = new BaseModel();
+                            modelData.set("id", u);
+                            store.add(modelData);
+                        }
+                    }
+                });
+                return store;
+            }
+        };
+
+    }
+
+    private final UnitServiceAsync unitService = GWT.create(UnitService.class);
 
     interface MainFormUiBinder extends
             UiBinder<Widget, MainForm> {
@@ -33,6 +73,10 @@ public class MainForm extends Composite {
         super();
         initWidget(uiBinder.createAndBindUi(this));
 //        initComponent(uiBinder.createAndBindUi(this));
+    }
+
+    public static interface FormDataProvider {
+        ListStore unitStore();
     }
 
 }
