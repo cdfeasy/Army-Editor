@@ -13,7 +13,7 @@ import java.util.List;
  * Time: 13:33
  * To change this template use File | Settings | File Templates.
  */
-@RemoteServiceRelativePath("/server/BaseService")
+@RemoteServiceRelativePath("server/BaseService")
 public interface UnitService extends RemoteService {
     List<Unit> getUnits();
 }
