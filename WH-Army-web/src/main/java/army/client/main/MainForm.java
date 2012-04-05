@@ -1,23 +1,17 @@
 package army.client.main;
 
 
+import army.client.secondForm.SecondForm;
 import army.client.services.UnitService;
 import army.client.services.UnitServiceAsync;
 import com.armyeditor.entrys.Unit;
-import com.extjs.gxt.ui.client.data.BaseModel;
-import com.extjs.gxt.ui.client.data.ModelData;
-import com.extjs.gxt.ui.client.store.ListStore;
-import com.extjs.gxt.ui.client.widget.form.ComboBox;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
-import com.google.gwt.uibinder.client.UiFactory;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.ListBox;
-import com.google.gwt.user.client.ui.Widget;
+import com.google.gwt.user.client.ui.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -32,34 +26,8 @@ public class MainForm extends Composite {
 
     @UiField
     ListBox unitList;
-
-    /*@UiFactory
-    public FormDataProvider getStore() {
-        return new FormDataProvider() {
-            @Override
-            public ListStore unitStore() {
-                final ListStore<ModelData> store = new ListStore<ModelData>(); //пустое хранилище
-                unitService.getUnits(new AsyncCallback<List<Unit>>() {
-                    @Override
-                    public void onFailure(Throwable caught) {
-                        System.out.println("Запрос упал");
-                    }
-
-                    @Override
-                    public void onSuccess(List<Unit> result) {
-
-                        for(Unit u:result){
-                            ModelData modelData = new BaseModel();
-                            modelData.set("id", u);
-                            store.add(modelData);
-                        }
-                    }
-                });
-                return store;
-            }
-        };
-
-    }*/
+    @UiField
+    MenuBar mainMenu;
 
     private final UnitServiceAsync unitService = GWT.create(UnitService.class);
 
@@ -87,10 +55,20 @@ public class MainForm extends Composite {
                 }
             }
         });
+        initMenu();
     }
 
-    /*public static interface FormDataProvider {
-        ListStore unitStore();
-    }*/
+    private void initMenu(){
+        MenuBar gwtMenu = new MenuBar(true);
+        mainMenu.addItem(new MenuItem("GWT", true, gwtMenu));
+        gwtMenu.addItem("Edit Base", new Command() {
+            @Override
+            public void execute() {
+                RootPanel.get().add(new SecondForm());
+//                new SecondForm();
+//                Window.Location.replace("http://google.com");
+            }
+        });
+    }
 
 }

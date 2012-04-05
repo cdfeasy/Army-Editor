@@ -1,12 +1,12 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
              xmlns:g="urn:import:com.google.gwt.user.client.ui"
-             xmlns:gxt="urn:import:com.extjs.gxt.ui.client.widget"
-             xmlns:form="urn:import:com.extjs.gxt.ui.client.widget.form">
+        >
 
     <!--<ui:with field="stores" type='army.client.main.MainForm.FormDataProvider'/>-->
     <g:VerticalPanel>
 
+        <g:MenuBar ui:field="mainMenu" animationEnabled="true" autoOpen="true" width="500"/>
         <g:Label text="Пыщ пыщ!" title="Пыщ" visible="true"  />
         <!--<form:ComboBox ui:field="unitList" store="{stores.unitStore}" visible="true"/>-->
         <g:ListBox ui:field="unitList" visible="true"/>
