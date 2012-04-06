@@ -2,8 +2,11 @@
              xmlns:g='urn:import:com.google.gwt.user.client.ui'
              xmlns:gxt="urn:import:com.extjs.gxt.ui.client.widget"
              xmlns:form="urn:import:com.extjs.gxt.ui.client.widget.form">
-    <g:VerticalPanel>
+    <g:DecoratorPanel>
         <g:Label text="ЫЫЫЫЫЫЫЫЫЫ" title="Пыщ" visible="true" />
-        <g:ListBox visibleItemCount="10" visible="true" ui:field="listBox"  />
-    </g:VerticalPanel>
+        <g:Panel>
+            <g:ListBox visibleItemCount="10" visible="true" ui:field="listBox"  />
+        </g:Panel>
+
+    </g:DecoratorPanel>
 </ui:UiBinder>
