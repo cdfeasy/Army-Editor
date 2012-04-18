@@ -3,10 +3,10 @@
              xmlns:gxt="urn:import:com.extjs.gxt.ui.client.widget"
              xmlns:form="urn:import:com.extjs.gxt.ui.client.widget.form">
     <g:DecoratorPanel>
-        <g:Label text="ЫЫЫЫЫЫЫЫЫЫ" title="Пыщ" visible="true" />
-        <g:Panel>
-            <g:ListBox visibleItemCount="10" visible="true" ui:field="listBox"  />
-        </g:Panel>
+        <!--<g:Label text="ЫЫЫЫЫЫЫЫЫЫ" title="Пыщ" visible="true" />-->
+
+        <g:ListBox visibleItemCount="10" visible="true" ui:field="listBox"  />
+
 
     </g:DecoratorPanel>
 </ui:UiBinder>

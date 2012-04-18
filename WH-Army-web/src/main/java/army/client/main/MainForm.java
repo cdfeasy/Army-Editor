@@ -14,8 +14,6 @@ import com.google.gwt.user.client.ui.*;
 
 import java.util.List;
 
-
-
 /**
  * User: tau
  * Date: 03.01.12
@@ -64,7 +62,7 @@ public class MainForm extends Composite {
         gwtMenu.addItem("Edit Base", new Command() {
             @Override
             public void execute() {
-                RootPanel.get().add(new SecondForm());
+                RootPanel.get().add((IsWidget) new SecondForm());
 //                new SecondForm();
 //                Window.Location.replace("http://google.com");
             }

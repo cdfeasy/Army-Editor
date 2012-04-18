@@ -1,28 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module rename-to='army'>
-  <!-- Inherit the core Web Toolkit stuff.                        -->
-  <inherits name='com.google.gwt.user.User' />
+    <!-- Inherit the core Web Toolkit stuff.                        -->
+    <inherits name='com.google.gwt.user.User'/>
 
-  <!-- We need the JUnit module in the main module,               -->
-  <!-- otherwise eclipse complains (Google plugin bug?)           -->
-  <inherits name='com.google.gwt.junit.JUnit' />
+    <!-- We need the JUnit module in the main module,               -->
+    <!-- otherwise eclipse complains (Google plugin bug?)           -->
+    <inherits name='com.google.gwt.junit.JUnit'/>
 
-  <!-- Inherit the default GWT style sheet.  You can change       -->
-  <!-- the theme of your GWT application by uncommenting          -->
-  <!-- any one of the following lines.                            -->
-  <inherits name='com.google.gwt.user.theme.standard.Standard' />
-  <inherits name="com.extjs.gxt.ui.GXT"/>
+    <!-- Inherit the default GWT style sheet.  You can change       -->
+    <!-- the theme of your GWT application by uncommenting          -->
+    <!-- any one of the following lines.                            -->
+    <inherits name='com.google.gwt.user.theme.standard.Standard'/>
+    <inherits name="com.extjs.gxt.ui.GXT"/>
     <inherits name="com.armyeditor.entrys"/>
     <!-- <inherits name='com.google.gwt.user.theme.chrome.Chrome'/> -->
-  <!-- <inherits name='com.google.gwt.user.theme.dark.Dark'/>     -->
+    <!-- <inherits name='com.google.gwt.user.theme.dark.Dark'/>     -->
 
-  <!-- Other module inherits                                      -->
+    <!-- Other module inherits                                      -->
 
-  <!-- Specify the app entry point class.                         -->
-  <entry-point class='army.client.Army' />
+    <!-- Specify the app entry point class.                         -->
+    <entry-point class='army.client.Army'/>
 
-  <!-- Specify the paths for translatable code                    -->
-  <source path='client' />
-  <source path='shared' />
+    <!-- Specify the paths for translatable code                    -->
+    <source path='client'/>
+    <source path='shared'/>
+
+    <!-- For development, a default of `DEBUG` is recommended -->
+    <inherits name="com.allen_sauer.gwt.log.gwt-log-INFO"/>
+    <!-- Logging -->
+    <set-configuration-property name="log_pattern" value="(%F:%L) %d [%-5p] %m%n"/>
+    <!-- When developing, you may wish to turn on enhanced Production Mode stack
+         traces. Note this adds overhead to the resulting JavaScript so you generally
+         don't want to leave this on for production. Then again, if you're debugging
+         a production issue, you might need to anyway :) -->
+    <set-property name="compiler.emulatedStack" value="true"/>
+    <set-configuration-property name="compiler.emulatedStack.recordLineNumbers" value="true"/>
+    <set-configuration-property name="compiler.emulatedStack.recordFileNames" value="true"/>
+    <set-configuration-property name="UiBinder.useSafeHtmlTemplates" value="true"/>
+
+    <set-property name="log_ConsoleLogger" value="ENABLED"/>
+    <set-property name="log_SystemLogger" value="ENABLED"/>
+    <set-property name="log_GWTLogger" value="ENABLED"/>
+    <set-property name="log_WindowLogger" value="DISABLED"/>
+    <set-property name="log_DivLogger" value="DISABLED"/>
 
 </module>
