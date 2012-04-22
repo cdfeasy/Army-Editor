@@ -1,5 +1,4 @@
 import com.armyeditor.HibernateUtil;
-import com.armyeditor.entrys.WeaponType;
 import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.Session;

@@ -1,8 +1,8 @@
 package army.client;
 
 import army.client.main.MainForm;
+import com.extjs.gxt.ui.client.widget.Viewport;
 import com.google.gwt.core.client.EntryPoint;
-import com.google.gwt.user.client.ui.IsWidget;
 import com.google.gwt.user.client.ui.RootPanel;
 
 /**
@@ -16,7 +16,9 @@ public class Army implements EntryPoint {
 
     @Override
     public void onModuleLoad() {
+        Viewport vp=new Viewport();
         MainForm form = new MainForm();
-        RootPanel.get().add((IsWidget) form);
+        vp.add(form);
+        RootPanel.get().add(vp);
     }
 }

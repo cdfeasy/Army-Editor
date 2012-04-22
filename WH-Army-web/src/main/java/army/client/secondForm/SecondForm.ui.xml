@@ -6,7 +6,5 @@
         <!--<g:Label text="ЫЫЫЫЫЫЫЫЫЫ" title="Пыщ" visible="true" />-->
 
         <g:ListBox visibleItemCount="10" visible="true" ui:field="listBox"  />
-
-
     </g:DecoratorPanel>
 </ui:UiBinder>
