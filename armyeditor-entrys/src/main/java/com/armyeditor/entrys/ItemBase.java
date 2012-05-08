@@ -5,7 +5,9 @@
 
 package com.armyeditor.entrys;
 
-import javax.persistence.Id;
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.*;
 
 /**
  *
@@ -15,6 +17,27 @@ public class ItemBase implements java.io.Serializable  {
     private Long id;
     private String name;
     private String description;
+    private Fraction fraction;
+     private List<Option> options=new ArrayList<Option>();
+
+    @ManyToOne( cascade = {CascadeType.REFRESH} )
+    @JoinColumn(name="Fraction_fk")
+    public Fraction getFraction() {
+        return fraction;
+    }
+
+    public void setFraction(Fraction fraction) {
+        this.fraction = fraction;
+    }
+    
+    @ManyToMany(cascade = CascadeType.REFRESH)
+    public List<Option> getOptions() {
+        return options;
+    }
+
+    public void setOptions(List<Option> options) {
+        this.options = options;
+    }
 
     public ItemBase() {
     }

@@ -19,34 +19,43 @@ import javax.persistence.ManyToOne;
  */@javax.persistence.Entity
 public class SquadPartBase implements java.io.Serializable  {
     private Long id;
-    private Unit unit;
+    private UnitBase unit;
     private int minSize;
     private int maxSize;
-    private List<Item> availibleItem=new ArrayList<Item>();
-    private List<Weapon> availibleWeapon=new ArrayList<Weapon>();
-    private List<Option> options=new ArrayList<Option>();
+    private List<ItemSelection> itemSelection;
+    private List<WeaponSelection> weaponSelection;
     private List<SquadPartBase> modifications=new ArrayList<SquadPartBase>();
     private SquadPartBase parent;
+    private String conditions;
 
     public SquadPartBase() {
     }
 
-    @ManyToMany(cascade = CascadeType.REFRESH)
-    public List<Item> getAvailibleItem() {
-        return availibleItem;
+    public String getConditions() {
+        return conditions;
     }
 
-    public void setAvailibleItem(List<Item> availibleItem) {
-        this.availibleItem = availibleItem;
-    }
-    @ManyToMany(cascade = CascadeType.REFRESH)
-    public List<Weapon> getAvailibleWeapon() {
-        return availibleWeapon;
+    public void setConditions(String conditions) {
+        this.conditions = conditions;
     }
 
-    public void setAvailibleWeapon(List<Weapon> availibleWeapon) {
-        this.availibleWeapon = availibleWeapon;
+    public List<ItemSelection> getItemSelection() {
+        return itemSelection;
     }
+
+    public void setItemSelection(List<ItemSelection> itemSelection) {
+        this.itemSelection = itemSelection;
+    }
+
+    public List<WeaponSelection> getWeaponSelection() {
+        return weaponSelection;
+    }
+
+    public void setWeaponSelection(List<WeaponSelection> weaponSelection) {
+        this.weaponSelection = weaponSelection;
+    }
+  
+    
     @Id @javax.persistence.GeneratedValue
     public Long getId() {
         return id;
@@ -79,14 +88,7 @@ public class SquadPartBase implements java.io.Serializable  {
     public void setModifications(List<SquadPartBase> modifications) {
         this.modifications = modifications;
     }
-    @ManyToMany(cascade = CascadeType.REFRESH)
-    public List<Option> getOptions() {
-        return options;
-    }
 
-    public void setOptions(List<Option> options) {
-        this.options = options;
-    }
     @ManyToOne( cascade = {CascadeType.REFRESH} )
     @JoinColumn(name="SquadPartBase_fk")
     public SquadPartBase getParent() {
@@ -98,11 +100,11 @@ public class SquadPartBase implements java.io.Serializable  {
     }
     @ManyToOne( cascade = {CascadeType.REFRESH} )
     @JoinColumn(name="Unit_fk")
-    public Unit getUnit() {
+    public UnitBase getUnit() {
         return unit;
     }
 
-    public void setUnit(Unit unit) {
+    public void setUnit(UnitBase unit) {
         this.unit = unit;
     }
 }

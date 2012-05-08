@@ -25,11 +25,33 @@ public class WeaponBase implements java.io.Serializable  {
     private String range;
     private String AP;
     private String STR;
+    private String fireCount;
     private List<Option> options=new ArrayList<Option>();
+    
+    private Fraction fraction;
+
+    @ManyToOne( cascade = {CascadeType.REFRESH} )
+    @JoinColumn(name="Fraction_fk")
+    public Fraction getFraction() {
+        return fraction;
+    }
+
+    public void setFraction(Fraction fraction) {
+        this.fraction = fraction;
+    }
 
     public WeaponBase() {
     }
 
+    public String getFireCount() {
+        return fireCount;
+    }
+
+    public void setFireCount(String fireCount) {
+        this.fireCount = fireCount;
+    }
+
+    
     public String getAP() {
         return AP;
     }

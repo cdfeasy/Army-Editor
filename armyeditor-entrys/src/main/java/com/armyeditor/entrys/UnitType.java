@@ -5,7 +5,10 @@
 
 package com.armyeditor.entrys;
 
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 
 /**
  *
@@ -14,7 +17,7 @@ import javax.persistence.Id;
 public class UnitType implements java.io.Serializable  {
     private Long id;
     private String name;
-    private String nameRus;
+    private List<Option> options;
 
     public UnitType() {
     }
@@ -27,20 +30,21 @@ public class UnitType implements java.io.Serializable  {
     public void setId(Long id) {
         this.id = id;
     }
+     @ManyToMany(cascade = CascadeType.REFRESH)
+    public List<Option> getOptions() {
+        return options;
+    }
 
+    public void setOptions(List<Option> options) {
+        this.options = options;
+    }
+
+    
     public String getName() {
         return name;
     }
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getNameRus() {
-        return nameRus;
-    }
-
-    public void setNameRus(String nameRus) {
-        this.nameRus = nameRus;
     }
 }

@@ -2,43 +2,35 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.armyeditor.entrys;
 
 import com.armyeditor.entrys.classes.Description;
 import java.util.ArrayList;
 import java.util.List;
-import javax.persistence.CascadeType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
 /**
  *
- * @author Dmitry
- */@javax.persistence.Entity
-public class UnitBase implements java.io.Serializable  {
+ * @author dmitry
+ */
+public class VenicleBase {
     private Long id;
     @Description(textRus="WS")
     private int WS;
     private int BS;
     private int S;
-    private int T;
     private int W;
     private int I;
     private int A;
-    private int LD;
-    private int SV;
+    private int Front;
+    private int Side;
+    private int Rear;
     private int cost;
     private List<Option> options=new ArrayList<Option>();
     private UnitType unitType;
     private List<Weapon>  weapons=new ArrayList<Weapon>();
     private List<Item>  items=new ArrayList<Item>();
     private Fraction fraction;
-
-    public UnitBase() {
-    }
 
     public int getA() {
         return A;
@@ -56,6 +48,13 @@ public class UnitBase implements java.io.Serializable  {
         this.BS = BS;
     }
 
+    public int getFront() {
+        return Front;
+    }
+
+    public void setFront(int Front) {
+        this.Front = Front;
+    }
 
     public int getI() {
         return I;
@@ -65,15 +64,13 @@ public class UnitBase implements java.io.Serializable  {
         this.I = I;
     }
 
-    public int getLD() {
-        return LD;
+    public int getRear() {
+        return Rear;
     }
 
-    public void setLD(int LD) {
-        this.LD = LD;
+    public void setRear(int Rear) {
+        this.Rear = Rear;
     }
-
-  
 
     public int getS() {
         return S;
@@ -83,22 +80,12 @@ public class UnitBase implements java.io.Serializable  {
         this.S = S;
     }
 
-    public int getSV() {
-        return SV;
+    public int getSide() {
+        return Side;
     }
 
-    public void setSV(int SV) {
-        this.SV = SV;
-    }
-
-   
-
-    public int getT() {
-        return T;
-    }
-
-    public void setT(int T) {
-        this.T = T;
+    public void setSide(int Side) {
+        this.Side = Side;
     }
 
     public int getW() {
@@ -133,7 +120,7 @@ public class UnitBase implements java.io.Serializable  {
     public void setFraction(Fraction fraction) {
         this.fraction = fraction;
     }
-    @Id @javax.persistence.GeneratedValue
+     @Id @javax.persistence.GeneratedValue
     public Long getId() {
         return id;
     }
@@ -141,11 +128,13 @@ public class UnitBase implements java.io.Serializable  {
     public void setId(Long id) {
         this.id = id;
     }
-    @ManyToMany(cascade = CascadeType.REFRESH)
+
     public List<Item> getItems() {
         return items;
     }
 
+    @ManyToOne( cascade = {CascadeType.REFRESH} )
+    @JoinColumn(name="Unit_fk")
     public void setItems(List<Item> items) {
         this.items = items;
     }
@@ -157,8 +146,8 @@ public class UnitBase implements java.io.Serializable  {
     public void setOptions(List<Option> options) {
         this.options = options;
     }
-     @ManyToOne( cascade = {CascadeType.REFRESH} )
-     @JoinColumn(name="UnitType_fk")
+    @ManyToOne( cascade = {CascadeType.REFRESH} )
+    @JoinColumn(name="UnitType_fk")
     public UnitType getUnitType() {
         return unitType;
     }
@@ -174,4 +163,6 @@ public class UnitBase implements java.io.Serializable  {
     public void setWeapons(List<Weapon> weapons) {
         this.weapons = weapons;
     }
+    
+    
 }

@@ -13,8 +13,8 @@ import javax.persistence.Id;
  */@javax.persistence.Entity
 public class WeaponType implements java.io.Serializable  {
     private Long id;
-    private String nameRus;
-    private String nameEng;
+    private String name;
+    private String description;
 
     public WeaponType() {
     }
@@ -28,19 +28,21 @@ public class WeaponType implements java.io.Serializable  {
         this.id = id;
     }
 
-    public String getNameEng() {
-        return nameEng;
+    public String getDescription() {
+        return description;
     }
 
-    public void setNameEng(String nameEng) {
-        this.nameEng = nameEng;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public String getNameRus() {
-        return nameRus;
+    public String getName() {
+        return name;
     }
 
-    public void setNameRus(String nameRus) {
-        this.nameRus = nameRus;
+    public void setName(String name) {
+        this.name = name;
     }
+
+    
 }
