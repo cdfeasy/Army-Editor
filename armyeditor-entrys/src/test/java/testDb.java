@@ -25,13 +25,13 @@ public class testDb {
          Session ses= HibernateUtil.getSessionFactory().openSession();
          Fraction f=new Fraction();
          f.setName("orks");
-         ses.merge(f);
+         ses.save(f);
          
          final Codex c=new Codex();
          c.setDescription("ork 5 red");
          f.setCodexes(new ArrayList<Codex>(){{add(c);}});
          c.setName("ork 5 red");
-         ses.merge(c);
+         ses.save(c);
          
          final SquadBase squadboys =new SquadBase();
          c.setSquads(new ArrayList<SquadBase>(){{add(squadboys);}});
@@ -47,9 +47,9 @@ public class testDb {
          mob.setDescription("mob rules");
          assaultGrenades.setName("assaultGrenades");
          assaultGrenades.setDescription("assaultGrenades");
-         ses.merge(waagh);
-         ses.merge(mob);
-         ses.merge(assaultGrenades);
+         ses.save(waagh);
+         ses.save(mob);
+         ses.save(assaultGrenades);
          
          UnitType troops=new UnitType();
          troops.setName("troops");
@@ -63,9 +63,9 @@ public class testDb {
          WeaponType assault=new WeaponType();
          assault.setName("assault");
          assault.setDescription("assault");
-         ses.merge(melee);
-         ses.merge(powerclaws);
-         ses.merge(assault);
+         ses.save(melee);
+         ses.save(powerclaws);
+         ses.save(assault);
          
          final WeaponBase slagga=new WeaponBase();
          slagga.setAP("6");
@@ -114,11 +114,11 @@ public class testDb {
          claws.setRange("-");
          claws.setSTR("-");
          claws.setType(powerclaws);
-         ses.merge(slagga);
-         ses.merge(choppa);
-         ses.merge(claws);
-         ses.merge(shuta);
-         ses.merge(bigshuta);
+         ses.save(slagga);
+         ses.save(choppa);
+         ses.save(claws);
+         ses.save(shuta);
+         ses.save(bigshuta);
          final Weapon shutac=new  Weapon();
          shutac.setWeapon(shuta);
          shutac.setCost(0);
@@ -139,11 +139,11 @@ public class testDb {
          shutac.setWeapon(choppa);
          shutac.setCost(0);
          
-         ses.merge(slaggac);
-         ses.merge(choppac);
-         ses.merge(clawsc);
-         ses.merge(shutac);
-         ses.merge(bigshutac);
+         ses.save(slaggac);
+         ses.save(choppac);
+         ses.save(clawsc);
+         ses.save(shutac);
+         ses.save(bigshutac);
          
          
          final ItemBase grenade=new ItemBase();
@@ -186,8 +186,8 @@ public class testDb {
          nob.setW(2);
          nob.setWS(4);
          nob.setWeapons(new ArrayList<Weapon>(){{add(slaggac);add(choppac);}});
-         ses.merge(nob);
-         ses.merge(ork);
+         ses.save(nob);
+         ses.save(ork);
          
          final ItemSelection boysIS=new ItemSelection();
          boysIS.setItem(new ArrayList<Item>(){{add(grenadeCost);}});
@@ -212,7 +212,7 @@ public class testDb {
          boysPart.setItemSelection(new ArrayList<ItemSelection>(){{add(boysIS);}});
          boysPart.setWeaponSelection(new ArrayList<WeaponSelection>(){{add(shuttacond);add(bigshuttacond);}});
          boysPart.setUnit(ork);
-         ses.merge(boysPart);
+         ses.save(boysPart);
          
          final SquadPartBase nobPart=new SquadPartBase();
          nobPart.setMinSize(0);
@@ -222,8 +222,9 @@ public class testDb {
          nobPart.setUnit(nob);
          nobPart.setParent(boysPart);
          boysPart.setModifications(new ArrayList<SquadPartBase>(){{add(nobPart);}} );
-         ses.merge(nobPart);
-         ses.merge(boysPart);
+         ses.save(nobPart);
+         ses.save(boysPart);
+         ses.close();
          
 
          
@@ -236,9 +237,10 @@ public class testDb {
     }
     @Test
     public void testDb(){
+       // init();
         Session ses= HibernateUtil.getSessionFactory().openSession();
     //      ses.beginTransaction();
-        Query query = ses.createQuery("select wt from WeaponType wt").setMaxResults(10);
+        Query query = ses.createQuery("select wt from WeaponType wt");
         List<WeaponType> itemlist=query.list();
         Assert.assertEquals(itemlist.size(),3);
         ses.close();  
