@@ -13,6 +13,7 @@ import com.armyeditor.entrys.Fraction;
 import com.armyeditor.entrys.*;
 import java.util.ArrayList;
 import java.util.List;
+import junit.framework.Assert;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.junit.Before;
@@ -239,6 +240,7 @@ public class testDb {
     //      ses.beginTransaction();
         Query query = ses.createQuery("select wt from WeaponType wt").setMaxResults(10);
         List<WeaponType> itemlist=query.list();
+        Assert.assertEquals(itemlist.size(),3);
         ses.close();  
     }
     

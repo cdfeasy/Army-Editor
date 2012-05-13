@@ -13,6 +13,7 @@ import javax.persistence.ManyToMany;
  *
  * @author dmitry
  */
+@javax.persistence.Entity
 public class WeaponSelection implements java.io.Serializable{
 
     private Long id;

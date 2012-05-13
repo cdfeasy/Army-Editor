@@ -11,6 +11,7 @@ import javax.persistence.*;
  *
  * @author dmitry
  */
+@javax.persistence.Entity
 public class ItemSelection implements java.io.Serializable{
 
     private Long id;

@@ -38,7 +38,7 @@ public class SquadPartBase implements java.io.Serializable  {
     public void setConditions(String conditions) {
         this.conditions = conditions;
     }
-
+    @ManyToMany(cascade = CascadeType.REFRESH)
     public List<ItemSelection> getItemSelection() {
         return itemSelection;
     }
@@ -46,7 +46,7 @@ public class SquadPartBase implements java.io.Serializable  {
     public void setItemSelection(List<ItemSelection> itemSelection) {
         this.itemSelection = itemSelection;
     }
-
+   @ManyToMany(cascade = CascadeType.REFRESH)
     public List<WeaponSelection> getWeaponSelection() {
         return weaponSelection;
     }
