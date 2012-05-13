@@ -1,7 +1,7 @@
 package army.client.main;
 
 
-import army.client.secondForm.SecondForm;
+import army.client.editBase.EditBase;
 import army.client.services.UnitService;
 import army.client.services.UnitServiceAsync;
 import com.armyeditor.entrys.Unit;
@@ -62,8 +62,8 @@ public class MainForm extends Composite {
         gwtMenu.addItem("Edit Base", new Command() {
             @Override
             public void execute() {
-                RootPanel.get().add((IsWidget) new SecondForm());
-//                new SecondForm();
+                RootPanel.get().add((IsWidget) new EditBase());
+//                new EditBase();
 //                Window.Location.replace("http://google.com");
             }
         });
