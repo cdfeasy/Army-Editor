@@ -26,6 +26,8 @@ public class MainForm extends Composite {
     ListBox unitList;
     @UiField
     MenuBar mainMenu;
+    @UiField
+    VerticalPanel mainPanel;
 
     private final UnitServiceAsync unitService = GWT.create(UnitService.class);
 
@@ -62,8 +64,8 @@ public class MainForm extends Composite {
         gwtMenu.addItem("Edit Base", new Command() {
             @Override
             public void execute() {
-                RootPanel.get().add((IsWidget) new EditBase());
-//                new EditBase();
+//                RootPanel.get().add((IsWidget) new EditBase());
+                mainPanel.add(new EditBase());
 //                Window.Location.replace("http://google.com");
             }
         });

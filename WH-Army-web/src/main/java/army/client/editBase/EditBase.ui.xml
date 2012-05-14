@@ -1,10 +1,61 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
-             xmlns:g='urn:import:com.google.gwt.user.client.ui'
-             xmlns:gxt="urn:import:com.extjs.gxt.ui.client.widget"
-             xmlns:form="urn:import:com.extjs.gxt.ui.client.widget.form">
-    <g:DecoratorPanel>
-        <!--<g:Label text="ЫЫЫЫЫЫЫЫЫЫ" title="Пыщ" visible="true" />-->
+             xmlns:g="urn:import:com.google.gwt.user.client.ui"
+             xmlns:tabs="urn:import:com.sencha.gxt.widget.core.client"
+             xmlns:container="urn:import:com.sencha.gxt.widget.core.client.container">
 
-        <g:ListBox visibleItemCount="10" visible="true" ui:field="listBox"  />
-    </g:DecoratorPanel>
+    <ui:with type="java.lang.String" field="txt" />
+    <!--<ui:with type="com.sencha.gxt.examples.resources.client.images.ExampleImages" field="images" />-->
+
+    <ui:with type="com.sencha.gxt.widget.core.client.TabItemConfig" field="shortTextTabConfig">
+        <ui:attributes text="Short Text" />
+    </ui:with>
+    <ui:with type="com.sencha.gxt.widget.core.client.TabItemConfig" field="longTextTabConfig">
+        <ui:attributes text="Long Text" />
+    </ui:with>
+    <ui:with type="com.sencha.gxt.widget.core.client.TabItemConfig" field="normalTabConfig">
+        <ui:attributes text="Normal" />
+    </ui:with>
+    <ui:with type="com.sencha.gxt.widget.core.client.TabItemConfig" field="iconTabConfig">
+        <ui:attributes text="Icon Tab" icon="{images.table}" />
+    </ui:with>
+    <ui:with type="com.sencha.gxt.widget.core.client.TabItemConfig" field="disabledTabConfig">
+        <ui:attributes text="Disabled" enabled="false" />
+    </ui:with>
+
+    <ui:style>
+        .sep {
+            margin-top: 20px;
+        }
+    </ui:style>
+
+    <container:FlowLayoutContainer>
+        <tabs:TabPanel ui:field="folder" width="450" addStyleNames="margin-10">
+            <tabs:child config="{shortTextTabConfig}">
+                <g:Label addStyleNames="pad-text" text="{txt}" />
+            </tabs:child>
+
+            <tabs:child config="{longTextTabConfig}">
+                <container:FlowLayoutContainer>
+                    <g:Label text="{txt}" addStyleNames="pad-text"  />
+                    <g:Label text="{txt}" addStyleNames="pad-text {style.sep}" />
+                </container:FlowLayoutContainer>
+            </tabs:child>
+        </tabs:TabPanel>
+
+        <tabs:PlainTabPanel ui:field="panel" pixelSize="450, 250" addStyleNames="margin-10">
+            <tabs:child config="{normalTabConfig}">
+                <g:Label text="Just a plain old tab" addStyleNames="pad-text" />
+            </tabs:child>
+
+            <tabs:child config="{iconTabConfig}">
+                <g:Label text="Just a plain old tab with an icon" addStyleNames="pad-text" />
+            </tabs:child>
+
+            <tabs:child config="{disabledTabConfig}">
+                <g:Label text="This tab should be disabled" addStyleNames="pad-text" />
+            </tabs:child>
+        </tabs:PlainTabPanel>
+    </container:FlowLayoutContainer>
+
 </ui:UiBinder>

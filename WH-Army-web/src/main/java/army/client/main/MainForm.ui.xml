@@ -4,7 +4,7 @@
         >
 
     <!--<ui:with field="stores" type='army.client.main.MainForm.FormDataProvider'/>-->
-    <g:VerticalPanel>
+    <g:VerticalPanel ui:field="mainPanel">
 
         <g:MenuBar ui:field="mainMenu" animationEnabled="true" autoOpen="true" width="500"/>
         <g:Label text="Пыщ пыщ!" title="Пыщ" visible="true"  />
