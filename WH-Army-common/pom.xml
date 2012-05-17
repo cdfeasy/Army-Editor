@@ -12,6 +12,7 @@
     <modules>
         <module>../WH-Army-web</module>
         <module>../armyeditor-entrys</module>
+        <module>../web-admin</module>
     </modules>
     
 </project>
