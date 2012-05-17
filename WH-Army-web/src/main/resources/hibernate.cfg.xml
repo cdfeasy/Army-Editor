@@ -7,7 +7,7 @@
         <property name="hibernate.connection.url">jdbc:postgresql://localhost:5433/postgres</property>
         <property name="hibernate.connection.username">postgres</property>
         <property name="hibernate.connection.password">nevertimes</property>
-        <property name="hibernate.hbm2ddl.auto">update</property>
+        <property name="hibernate.hbm2ddl.auto">create</property>
         <property name="hibernate.show_sql">true</property>
         <mapping class="com.armyeditor.entrys.Armor"/>
         <mapping class="com.armyeditor.entrys.Army"/>
@@ -28,6 +28,7 @@
         <mapping class="com.armyeditor.entrys.Weapon"/>
         <mapping class="com.armyeditor.entrys.WeaponBase"/>
         <mapping class="com.armyeditor.entrys.WeaponType"/>
-        
+        <mapping class="com.armyeditor.entrys.WeaponSelection"/>
+        <mapping class="com.armyeditor.entrys.ItemSelection"/>
     </session-factory>
 </hibernate-configuration>

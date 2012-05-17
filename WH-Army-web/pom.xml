@@ -108,45 +108,10 @@
             <artifactId>javassist</artifactId>
             <version>3.8.1.GA</version>
         </dependency>
-       <!-- <dependency>
-            <groupId>org.hibernate.javax.persistence</groupId>
-            <artifactId>hibernate-jpa-2.0-api</artifactId>
-            <version>1.0.1.Final</version>
-        </dependency>-->
         <dependency>
             <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-annotations</artifactId>
+            <artifactId>hibernate-entitymanager</artifactId>
             <version>3.5.6-Final</version>
-        </dependency>
-        <!--<dependency>
-            <groupId>com.sencha.gxt</groupId>
-            <artifactId>gxt</artifactId>
-            <version>3.0.0-beta4</version>
-        </dependency>-->
-        <!--<dependency>
-            <groupId>com.sencha.gxt</groupId>
-            <artifactId>gxt-examples</artifactId>
-            <version>3.0.0-beta1</version>
-        </dependency>-->
-        <dependency>
-            <groupId>com.sencha.gxt</groupId>
-            <artifactId>gxt-legacy</artifactId>
-            <version>3.0.0-beta1</version>
-        </dependency>
-        <!--<dependency>
-            <groupId>com.sencha.gxt</groupId>
-            <artifactId>gxt-parent</artifactId>
-            <version>3.0.0-beta4</version>
-        </dependency>-->
-        <!--<dependency>
-            <groupId>com.sencha.gxt</groupId>
-            <artifactId>gxt-release</artifactId>
-            <version>3.0.0-beta1</version>
-        </dependency>-->
-        <dependency>
-            <groupId>com.sencha.gxt</groupId>
-            <artifactId>uibinder-bridge</artifactId>
-            <version>2.4.0</version>
         </dependency>
     </dependencies>
 
