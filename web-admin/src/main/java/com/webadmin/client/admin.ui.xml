@@ -2,7 +2,7 @@
 <ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
              xmlns:g="urn:import:com.google.gwt.user.client.ui"
              xmlns:tabs="urn:import:com.sencha.gxt.widget.core.client"
-             xmlns:container="urn:import:com.sencha.gxt.widget.core.client.container">
+			 xmlns:con="urn:import:com.sencha.gxt.widget.core.client.container">
 
     <!--<ui:with type="com.sencha.gxt.widget.core.client.TabItemConfig" field="shortTextTabConfig">
         <ui:attributes text="Short Text" />
@@ -19,20 +19,19 @@
     <ui:with type="com.sencha.gxt.widget.core.client.TabItemConfig" field="disabledTabConfig">
         <ui:attributes text="Disabled" enabled="false" />
     </ui:with>-->
-
-    <container:FlowLayoutContainer>
-        <tabs:TabPanel ui:field="folder" width="450" addStyleNames="margin-10">
+    <con:FlowLayoutContainer>
+<!--        <tabs:TabPanel ui:field="folder" width="450" addStyleNames="margin-10">
             <tabs:child >
                 <g:Label addStyleNames="pad-text" text="tab1" />
             </tabs:child>
 
             <tabs:child >
-                <container:FlowLayoutContainer>
+                <con:FlowLayoutContainer>
                     <g:Label text="tab2" addStyleNames="pad-text"  />
-                </container:FlowLayoutContainer>
+                </con:FlowLayoutContainer>
             </tabs:child>
-        </tabs:TabPanel>
+        </tabs:TabPanel>-->
 
-    </container:FlowLayoutContainer>
+    </con:FlowLayoutContainer>
 
 </ui:UiBinder>
