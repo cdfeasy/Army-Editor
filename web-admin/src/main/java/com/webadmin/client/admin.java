@@ -11,7 +11,7 @@ import com.google.gwt.user.client.ui.Widget;
 /**
  * Entry point classes define <code>onModuleLoad()</code>.
  */
-public class admin implements IsWidget,EntryPoint {
+public class admin implements EntryPoint {
 
     interface MyUiBinder extends UiBinder<Widget, admin> {
     }
