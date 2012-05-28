@@ -4,10 +4,9 @@ import army.client.services.UnitService;
 import com.armyeditor.HibernateUtil;
 import com.armyeditor.entrys.Unit;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
+import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.Session;
-
-import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
