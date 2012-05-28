@@ -15,6 +15,7 @@ import java.util.List;
 import junit.framework.Assert;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -22,6 +23,8 @@ public class testDbAdmin {
     @Before
     public void init(){
          Session ses= HibernateUtil.getSessionFactory().openSession();
+		 Transaction trans=ses.beginTransaction();
+		 trans.begin();
          Fraction f=new Fraction();
          f.setName("orks");
          ses.save(f);
@@ -36,6 +39,7 @@ public class testDbAdmin {
          c.setSquads(new ArrayList<SquadBase>(){{add(squadboys);}});
          squadboys.setDescription("ork boys");
          squadboys.setName("ork boys");
+		 ses.save(squadboys);
          
          final Option waagh=new Option();
          final Option assaultGrenades=new Option();
@@ -52,6 +56,7 @@ public class testDbAdmin {
          
          UnitType troops=new UnitType();
          troops.setName("troops");
+		 ses.save(troops);
          
          WeaponType melee=new WeaponType();
          melee.setName("melee");
@@ -153,6 +158,9 @@ public class testDbAdmin {
          final Item grenadeCost=new  Item();
          grenadeCost.setItemBase(grenade);
          grenadeCost.setCost(1);
+		 
+		 ses.save(grenade);
+		 ses.save(grenadeCost);
         
          UnitBase ork=new UnitBase();
          ork.setA(2);
@@ -191,18 +199,22 @@ public class testDbAdmin {
          final ItemSelection boysIS=new ItemSelection();
          boysIS.setItem(new ArrayList<Item>(){{add(grenadeCost);}});
          boysIS.setCondition("for all;");
-         
+         ses.save(boysIS);
+		 
          final WeaponSelection shuttacond=new WeaponSelection();
          shuttacond.setWeapon(new ArrayList<Weapon>(){{add(shutac);}});
          shuttacond.setCondition("for all;replace;");
+		 ses.save(shuttacond);
          
          final WeaponSelection bigshuttacond=new WeaponSelection();
          bigshuttacond.setWeapon(new ArrayList<Weapon>(){{add(bigshutac);}});
          bigshuttacond.setCondition("replace slagga;count:1 for 10");
+		 ses.save(bigshuttacond);
          
          final WeaponSelection clawscond=new WeaponSelection();
          clawscond.setWeapon(new ArrayList<Weapon>(){{add(clawsc);}});
          clawscond.setCondition("replace slagga;");
+		 ses.save(clawscond);
          
          
          SquadPartBase boysPart=new SquadPartBase();
@@ -223,6 +235,7 @@ public class testDbAdmin {
          boysPart.setModifications(new ArrayList<SquadPartBase>(){{add(nobPart);}} );
          ses.save(nobPart);
          ses.save(boysPart);
+		 trans.commit();
          ses.close();
          
 
