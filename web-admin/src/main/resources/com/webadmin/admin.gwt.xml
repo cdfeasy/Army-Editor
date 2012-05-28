@@ -8,6 +8,8 @@
     <inherits name='com.google.gwt.junit.JUnit' />
 
     <!--  <inherits name="com.sencha.gwt.uibinder.UiBinder" />-->
+    <inherits name='com.google.gwt.uibinder.UiBinder' />
+    <inherits name="com.sencha.gwt.uibinder.UiBinder"/>
     <inherits name='com.sencha.gxt.legacy.Legacy'/>
     <!--  <inherits name='com.sencha.gxt.core.Core'/>-->
     <inherits name='com.sencha.gxt.widget.core.Core'/>
