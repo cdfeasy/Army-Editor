@@ -20,21 +20,6 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
-    <repositories>
-        <repository>
-            <id>codehaus</id>
-            <url>http://repository.codehaus.org</url>
-        </repository>
-        <repository>
-            <id>maven.aksw.org</id>
-            <url>http://maven.aksw.org/archiva/repository/internal/</url>
-        </repository>
-        <repository>
-            <id>sonatype</id>
-            <url>http://repository.sonatype.org/content/groups/public/</url>
-        </repository>
-    </repositories>
-
     <dependencies>
         <dependency>
             <groupId>com.google.gwt</groupId>

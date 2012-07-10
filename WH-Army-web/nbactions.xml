@@ -23,4 +23,11 @@
                 <goal>gwt:debug</goal>
             </goals>
         </action>
+        <action>
+            <actionName>CUSTOM-install</actionName>
+            <displayName>install</displayName>
+            <goals>
+                <goal>install</goal>
+            </goals>
+        </action>
     </actions>
