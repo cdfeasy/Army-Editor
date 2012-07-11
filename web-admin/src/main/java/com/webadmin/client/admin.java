@@ -14,79 +14,96 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.IsWidget;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.Widget;
+import com.sencha.gxt.core.client.ValueProvider;
 import com.sencha.gxt.data.shared.ListStore;
+import com.sencha.gxt.data.shared.ModelKeyProvider;
+import com.sencha.gxt.data.shared.PropertyAccess;
 import com.sencha.gxt.widget.core.client.TabItemConfig;
 import com.sencha.gxt.widget.core.client.TabPanel;
+import com.sencha.gxt.widget.core.client.grid.ColumnConfig;
 import com.sencha.gxt.widget.core.client.grid.ColumnModel;
 import com.sencha.gxt.widget.core.client.grid.Grid;
 import com.sencha.gxt.widget.core.client.info.Info;
 import com.webadmin.client.services.CommonService;
 import com.webadmin.client.services.CommonServiceAsync;
+import java.util.ArrayList;
 
 import java.util.List;
 
 /**
- * Entry point classes define <code>onModuleLoad()</code>.
+ * Entry point classes define
+ * <code>onModuleLoad()</code>.
  */
 public class admin implements EntryPoint {
 
-    interface MyUiBinder extends UiBinder<Widget, admin> {
-    }
+	interface MyUiBinder extends UiBinder<Widget, admin> {
+	}
+	private static MyUiBinder uiBinder = GWT.create(MyUiBinder.class);
+	private final CommonServiceAsync commonService = GWT.create(CommonService.class);
+	@UiField(provided = true)
+	String txt = "ваааааа";
+	/**
+	 * This is the entry point method.
+	 */
+	@UiField
+	Grid<Armor> armorGrid;
+	@UiField
+	ColumnModel<Armor> cm;
+	@UiField
+	ListStore<Armor> store;
 
-    private static MyUiBinder uiBinder = GWT.create(MyUiBinder.class);
-    private final CommonServiceAsync commonService = GWT.create(CommonService.class);
+	@UiFactory
+	ColumnModel<Armor> createColumnModel() {
+		return cm;
+	}
 
-    @UiField(provided = true)
-    String txt = "ваааааа";
-    /**
-     * This is the entry point method.
-     */
-    @UiField
-    Grid<Armor> armorGrid;
+	@UiFactory
+	ListStore<Armor> createListStore() {
+		return store;
+	}
 
-    @UiField
-    ColumnModel<Armor> cm;
+	public Widget asWidget() {
+		PostProperties props = GWT.create(PostProperties.class);
+		commonService.getArmors(new AsyncCallback<List<Armor>>() {
 
-    @UiField
-    ListStore<Armor> store;
+			@Override
+			public void onFailure(Throwable caught) {
+				System.out.println("Запрос упал " + caught.getMessage());
+			}
 
-    @UiFactory
-    ColumnModel<Armor> createColumnModel() {
-        return cm;
-    }
+			@Override
+			public void onSuccess(List<Armor> result) {
+				for (Armor a : result) {
+					store.add(a.getId().intValue(), a);
+				}
+			}
+		});
+		
+		 store = new ListStore<Armor>(new ModelKeyProvider<Armor>() {
+			@Override
+			public String getKey(Armor item) {
+				return "" + item.getId();
+			}
+			});
+		
+		ColumnConfig<Armor, String> forumColumn = new ColumnConfig<Armor, String>(props.name(), 150, "name");
 
-    @UiFactory
-    ListStore<Armor> createListStore() {
-        return store;
-    }
 
-    public Widget asWidget() {
-        commonService.getArmors(new AsyncCallback<List<Armor>>() {
-            @Override
-            public void onFailure(Throwable caught) {
-                System.out.println("Запрос упал "+caught.getMessage());
-            }
+		List<ColumnConfig<Armor, ?>> l = new ArrayList<ColumnConfig<Armor, ?>>();
+		l.add(forumColumn);
+		cm = new ColumnModel<Armor>(l);
+		return uiBinder.createAndBindUi(this);
+	}
 
-            @Override
-            public void onSuccess(List<Armor> result) {
-                for(Armor a:result){
-                    store.add(a.getId().intValue(),a);
-                }
-            }
-        });
+	public void onModuleLoad() {
+		RootPanel.get().add(asWidget());
+	}
 
-        return uiBinder.createAndBindUi(this);
-    }
-
-    public void onModuleLoad() {
-        RootPanel.get().add(asWidget());
-    }
-
-    @UiHandler(value = {"folder", "panel"})
-    void onSelection(SelectionEvent<Widget> event) {
-        TabPanel panel = (TabPanel) event.getSource();
-        Widget w = event.getSelectedItem();
-        TabItemConfig config = panel.getConfig(w);
-        Info.display("Message", "'" + config.getText() + "' Selected");
-    }
+	@UiHandler(value = {"folder", "panel"})
+	void onSelection(SelectionEvent<Widget> event) {
+		TabPanel panel = (TabPanel) event.getSource();
+		Widget w = event.getSelectedItem();
+		TabItemConfig config = panel.getConfig(w);
+		Info.display("Message", "'" + config.getText() + "' Selected");
+	}
 }

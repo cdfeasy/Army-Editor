@@ -60,10 +60,6 @@
             <tabs:child config="{normalTabConfig}">
                 <g:Label text="Just a plain old tab with an icon" addStyleNames="pad-text" />
             </tabs:child>
-
-            <tabs:child config="{disabledTabConfig}">
-                <g:Label text="This tab should be disabled" addStyleNames="pad-text" />
-            </tabs:child>
         </tabs:PlainTabPanel>
     </container:FlowLayoutContainer>
 
