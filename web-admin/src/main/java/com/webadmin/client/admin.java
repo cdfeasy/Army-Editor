@@ -109,7 +109,7 @@ public class admin implements EntryPoint {
             @Override
             public void onSuccess(List<Armor> result) {
                 for (Armor a : result) {
-                    store.add(a.getId().intValue(), a);
+                    store.add(Integer.parseInt(a.getId()), a);
                     armorGrid.reconfigure(store,cm);
                 }
             }
