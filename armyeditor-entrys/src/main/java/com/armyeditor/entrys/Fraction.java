@@ -18,7 +18,7 @@ import javax.persistence.OneToMany;
  * @author Dmitry
  */@javax.persistence.Entity
 public class Fraction implements java.io.Serializable  {
-    private Long id;
+    private String  id;
     private String name;
     private String description;
     private List<Codex> codexes =new ArrayList<Codex>();
@@ -43,12 +43,12 @@ public class Fraction implements java.io.Serializable  {
     public void setDescription(String description) {
         this.description = description;
     }
-    @Id @javax.persistence.GeneratedValue
-    public Long getId() {
+    @Id 
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

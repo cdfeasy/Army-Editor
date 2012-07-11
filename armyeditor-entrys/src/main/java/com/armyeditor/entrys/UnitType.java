@@ -15,19 +15,19 @@ import javax.persistence.ManyToMany;
  * @author Dmitry
  */@javax.persistence.Entity
 public class UnitType implements java.io.Serializable  {
-    private Long id;
+    private String  id;
     private String name;
     private List<Option> options;
 
     public UnitType() {
     }
 
-    @Id @javax.persistence.GeneratedValue
-    public Long getId() {
+    @Id
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
      @ManyToMany(cascade = CascadeType.REFRESH)

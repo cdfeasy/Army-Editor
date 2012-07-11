@@ -15,7 +15,7 @@ import javax.persistence.Id;
  */
 @javax.persistence.Entity
 public class Armor implements Serializable {
-    private Long id;
+    private String  id;
     private String name;
     private String description;
 
@@ -29,12 +29,12 @@ public class Armor implements Serializable {
     public void setDescription(String description) {
         this.description = description;
     }
-    @Id @javax.persistence.GeneratedValue
-    public Long getId() {
+    @Id 
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

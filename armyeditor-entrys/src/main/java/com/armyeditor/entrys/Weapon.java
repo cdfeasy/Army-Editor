@@ -15,7 +15,7 @@ import javax.persistence.ManyToOne;
  */
 @javax.persistence.Entity
 public class Weapon implements java.io.Serializable {
-    private Long id;
+    private Long  id;
     private WeaponBase weapon;
     private int cost;
 
