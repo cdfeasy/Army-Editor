@@ -79,19 +79,21 @@ public class admin implements EntryPoint {
 			}
 		});
 		
-		 store = new ListStore<Armor>(new ModelKeyProvider<Armor>() {
+		store = new ListStore<Armor>(new ModelKeyProvider<Armor>() {
 			@Override
 			public String getKey(Armor item) {
 				return "" + item.getId();
 			}
-			});
+        });
 		
-		ColumnConfig<Armor, String> forumColumn = new ColumnConfig<Armor, String>(props.name(), 150, "name");
-
+		ColumnConfig<Armor, String> nameColumn = new ColumnConfig<Armor, String>(props.name(), 150, "name");
+        ColumnConfig<Armor, String> descripColumn = new ColumnConfig<Armor, String>(props.description(), 150, "description");
 
 		List<ColumnConfig<Armor, ?>> l = new ArrayList<ColumnConfig<Armor, ?>>();
-		l.add(forumColumn);
+		l.add(nameColumn);
+        l.add(descripColumn);
 		cm = new ColumnModel<Armor>(l);
+
 		return uiBinder.createAndBindUi(this);
 	}
 

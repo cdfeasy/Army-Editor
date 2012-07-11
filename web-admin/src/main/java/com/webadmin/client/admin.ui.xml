@@ -38,9 +38,9 @@
     <container:FlowLayoutContainer borders="true">
         <tabs:TabPanel ui:field="folder"  addStyleNames="margin-10">
             <tabs:child config="{armorConfig}">
-                <container:FlowLayoutContainer>
+                <container:FlowLayoutContainer >
                     <g:Label addStyleNames="pad-text" text="{txt}" />
-                    <grid:Grid ui:field="armorGrid" store="{store}" cm="{cm}" view="{view}" borders="true" width="500" loadMask="true" columnReordering="true"/>
+                    <grid:Grid ui:field="armorGrid" store="{store}" cm="{cm}" view="{view}" borders="true" loadMask="true" columnReordering="true"  />
                 </container:FlowLayoutContainer>
             </tabs:child>
 
