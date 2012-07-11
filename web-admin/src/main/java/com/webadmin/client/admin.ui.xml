@@ -21,7 +21,13 @@
         <ui:attributes text="Disabled" enabled="false" />
     </ui:with>
     <ui:with type="java.lang.String" field="txt" />
-    <ui:with type="com.extjs.gxt.ui.client.store.ListStore" field="store" />
+    <ui:with type="com.sencha.gxt.data.shared.ListStore" field="store" >
+
+    </ui:with>
+    <ui:with type="com.sencha.gxt.widget.core.client.grid.GridView" field="view" >
+
+    </ui:with>
+    <ui:with type="com.sencha.gxt.widget.core.client.grid.ColumnModel" field="cm" />
 
     <ui:style>
         .sep {
@@ -34,17 +40,7 @@
             <tabs:child config="{armorConfig}">
                 <container:FlowLayoutContainer>
                     <g:Label addStyleNames="pad-text" text="{txt}" />
-                    <grid:Grid store="{store}" cm="" view="">
-                        <grid:column id="id"
-                                     header="id"
-                                     width="35"  />
-                        <grid:column id="name"
-                                     header="Name"
-                                     width="100" />
-                        <grid:column id="description"
-                                     header="Description"
-                                     width="500"/>
-                    </grid:Grid>
+                    <grid:Grid ui:field="armorGrid" store="{store}" cm="{cm}" view="{view}" borders="true" width="500" loadMask="true" columnReordering="true"/>
                 </container:FlowLayoutContainer>
             </tabs:child>
 

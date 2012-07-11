@@ -1,17 +1,29 @@
 package com.webadmin.client;
 
+import com.armyeditor.entrys.Armor;
+import com.armyeditor.entrys.Unit;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.logical.shared.SelectionEvent;
 import com.google.gwt.uibinder.client.UiBinder;
+import com.google.gwt.uibinder.client.UiFactory;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
+
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.IsWidget;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.Widget;
+import com.sencha.gxt.data.shared.ListStore;
 import com.sencha.gxt.widget.core.client.TabItemConfig;
 import com.sencha.gxt.widget.core.client.TabPanel;
+import com.sencha.gxt.widget.core.client.grid.ColumnModel;
+import com.sencha.gxt.widget.core.client.grid.Grid;
 import com.sencha.gxt.widget.core.client.info.Info;
+import com.webadmin.client.services.CommonService;
+import com.webadmin.client.services.CommonServiceAsync;
+
+import java.util.List;
 
 /**
  * Entry point classes define <code>onModuleLoad()</code>.
@@ -22,13 +34,47 @@ public class admin implements EntryPoint {
     }
 
     private static MyUiBinder uiBinder = GWT.create(MyUiBinder.class);
+    private final CommonServiceAsync commonService = GWT.create(CommonService.class);
 
     @UiField(provided = true)
     String txt = "ваааааа";
     /**
      * This is the entry point method.
      */
+    @UiField
+    Grid<Armor> armorGrid;
+
+    @UiField
+    ColumnModel<Armor> cm;
+
+    @UiField
+    ListStore<Armor> store;
+
+    @UiFactory
+    ColumnModel<Armor> createColumnModel() {
+        return cm;
+    }
+
+    @UiFactory
+    ListStore<Armor> createListStore() {
+        return store;
+    }
+
     public Widget asWidget() {
+        commonService.getArmors(new AsyncCallback<List<Armor>>() {
+            @Override
+            public void onFailure(Throwable caught) {
+                System.out.println("Запрос упал "+caught.getMessage());
+            }
+
+            @Override
+            public void onSuccess(List<Armor> result) {
+                for(Armor a:result){
+                    store.add(a.getId().intValue(),a);
+                }
+            }
+        });
+
         return uiBinder.createAndBindUi(this);
     }
 
