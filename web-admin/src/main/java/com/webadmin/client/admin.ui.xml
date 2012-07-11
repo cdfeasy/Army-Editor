@@ -3,7 +3,8 @@
              xmlns:g="urn:import:com.google.gwt.user.client.ui"
              xmlns:grid="urn:import:com.sencha.gxt.widget.core.client.grid"
              xmlns:tabs="urn:import:com.sencha.gxt.widget.core.client"
-             xmlns:container="urn:import:com.sencha.gxt.widget.core.client.container">
+             xmlns:container="urn:import:com.sencha.gxt.widget.core.client.container"
+             xmlns:button="urn:import:com.sencha.gxt.widget.core.client.button">
 
     <ui:with type="com.sencha.gxt.widget.core.client.TabItemConfig" field="armorConfig">
         <ui:attributes text="Armors" />
@@ -40,6 +41,7 @@
             <tabs:child config="{armorConfig}">
                 <container:FlowLayoutContainer >
                     <g:Label addStyleNames="pad-text" text="{txt}" />
+                    <button:TextButton ui:field="updateBtn" text="Update"/>
                     <grid:Grid ui:field="armorGrid" store="{store}" cm="{cm}" view="{view}" borders="true" loadMask="true" columnReordering="true"  />
                 </container:FlowLayoutContainer>
             </tabs:child>

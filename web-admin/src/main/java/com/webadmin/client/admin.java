@@ -20,6 +20,8 @@ import com.sencha.gxt.data.shared.ModelKeyProvider;
 import com.sencha.gxt.data.shared.PropertyAccess;
 import com.sencha.gxt.widget.core.client.TabItemConfig;
 import com.sencha.gxt.widget.core.client.TabPanel;
+import com.sencha.gxt.widget.core.client.button.TextButton;
+import com.sencha.gxt.widget.core.client.event.SelectEvent;
 import com.sencha.gxt.widget.core.client.grid.ColumnConfig;
 import com.sencha.gxt.widget.core.client.grid.ColumnModel;
 import com.sencha.gxt.widget.core.client.grid.Grid;
@@ -51,7 +53,14 @@ public class admin implements EntryPoint {
 	ColumnModel<Armor> cm;
 	@UiField
 	ListStore<Armor> store;
+    @UiField
+    TextButton updateBtn;
+    @UiHandler({"updateBtn"})
+    public void onButtonClick(SelectEvent event) {
+        updateStore();
+        Info.display("Click", ((TextButton) event.getSource()).getText() + " clicked");
 
+    }
 	@UiFactory
 	ColumnModel<Armor> createColumnModel() {
 		return cm;
@@ -64,28 +73,7 @@ public class admin implements EntryPoint {
 
 	public Widget asWidget() {
 		PostProperties props = GWT.create(PostProperties.class);
-		commonService.getArmors(new AsyncCallback<List<Armor>>() {
 
-			@Override
-			public void onFailure(Throwable caught) {
-				System.out.println("Запрос упал " + caught.getMessage());
-			}
-
-			@Override
-			public void onSuccess(List<Armor> result) {
-				for (Armor a : result) {
-					store.add(a.getId().intValue(), a);
-				}
-			}
-		});
-		
-		store = new ListStore<Armor>(new ModelKeyProvider<Armor>() {
-			@Override
-			public String getKey(Armor item) {
-				return "" + item.getId();
-			}
-        });
-		
 		ColumnConfig<Armor, String> nameColumn = new ColumnConfig<Armor, String>(props.name(), 150, "name");
         ColumnConfig<Armor, String> descripColumn = new ColumnConfig<Armor, String>(props.description(), 150, "description");
 
@@ -94,12 +82,35 @@ public class admin implements EntryPoint {
         l.add(descripColumn);
 		cm = new ColumnModel<Armor>(l);
 
+        store = new ListStore<Armor>(props.id());
+
+
+
 		return uiBinder.createAndBindUi(this);
 	}
 
 	public void onModuleLoad() {
-		RootPanel.get().add(asWidget());
+        updateStore();
+        RootPanel.get().add(asWidget());
 	}
+
+    public void updateStore(){
+        commonService.getArmors(new AsyncCallback<List<Armor>>() {
+
+            @Override
+            public void onFailure(Throwable caught) {
+                System.out.println("Запрос упал " + caught.getMessage());
+            }
+
+            @Override
+            public void onSuccess(List<Armor> result) {
+                for (Armor a : result) {
+                    store.add(a.getId().intValue(), a);
+                    armorGrid.reconfigure(store,cm);
+                }
+            }
+        });
+    }
 
 	@UiHandler(value = {"folder", "panel"})
 	void onSelection(SelectionEvent<Widget> event) {
