@@ -18,7 +18,7 @@ import javax.persistence.OneToMany;
  */@javax.persistence.Entity
 public class Squad implements java.io.Serializable {
     private Long id;
-    private Squad squadBase;
+    private SquadBase squadBase;
 
     public Squad() {
     }
@@ -32,11 +32,11 @@ public class Squad implements java.io.Serializable {
         this.id = id;
     }
     @ManyToOne( cascade = {CascadeType.REFRESH} )
-    public Squad getSquadBase() {
+    public SquadBase getSquadBase() {
         return squadBase;
     }
 
-    public void setSquadBase(Squad squadBase) {
+    public void setSquadBase(SquadBase squadBase) {
         this.squadBase = squadBase;
     }
 }

@@ -14,7 +14,7 @@ import javax.persistence.*;
  * @author dmitry
  */
 public class VenicleBase {
-    private Long id;
+    private String  id;
     @Description(textRus="WS")
     private int WS;
     private int BS;
@@ -120,12 +120,12 @@ public class VenicleBase {
     public void setFraction(Fraction fraction) {
         this.fraction = fraction;
     }
-     @Id @javax.persistence.GeneratedValue
-    public Long getId() {
+     @Id 
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

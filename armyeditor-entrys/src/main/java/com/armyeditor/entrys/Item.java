@@ -16,7 +16,7 @@ import javax.persistence.ManyToOne;
  */
 @javax.persistence.Entity
 public class Item implements java.io.Serializable {
-    private Long id;
+    private Long  id;
     private ItemBase itemBase;
     private int cost;
 

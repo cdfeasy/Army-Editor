@@ -25,15 +25,18 @@ public class testDb {
          Session ses= HibernateUtil.getSessionFactory().openSession();
          Fraction f=new Fraction();
          f.setName("orks");
+         f.setId("orks");
          ses.save(f);
          
          final Codex c=new Codex();
          c.setDescription("ork 5 red");
+         c.setId("ork 5 red");
          f.setCodexes(new ArrayList<Codex>(){{add(c);}});
          c.setName("ork 5 red");
          ses.save(c);
          
          final SquadBase squadboys =new SquadBase();
+         squadboys.setId("squadboys");
          c.setSquads(new ArrayList<SquadBase>(){{add(squadboys);}});
          squadboys.setDescription("ork boys");
          squadboys.setName("ork boys");
@@ -41,6 +44,10 @@ public class testDb {
          final Option waagh=new Option();
          final Option assaultGrenades=new Option();
          final Option mob=new Option();
+         waagh.setId("waagh");
+         assaultGrenades.setId("assaultGrenades");
+         mob.setId("mob");
+         
          waagh.setName("waagh rules");
          waagh.setDescription("waagh rules");
          mob.setName("mob rules");
@@ -53,14 +60,18 @@ public class testDb {
          
          UnitType troops=new UnitType();
          troops.setName("troops");
+         troops.setId("troops");
          
          WeaponType melee=new WeaponType();
+         melee.setId("melee");
          melee.setName("melee");
          melee.setDescription("melee");
          WeaponType powerclaws=new WeaponType();
+         powerclaws.setId("klaw");
          powerclaws.setName("power claws");
          powerclaws.setDescription("powerclaws");
          WeaponType assault=new WeaponType();
+         assault.setId("assault");
          assault.setName("assault");
          assault.setDescription("assault");
          ses.save(melee);
@@ -68,6 +79,7 @@ public class testDb {
          ses.save(assault);
          
          final WeaponBase slagga=new WeaponBase();
+         slagga.setId("slagga");
          slagga.setAP("6");
          slagga.setDescription("slagga");
          slagga.setFraction(f);
@@ -77,6 +89,7 @@ public class testDb {
          slagga.setType(assault);
          
          final WeaponBase bigshuta=new WeaponBase();
+         bigshuta.setId("bigshoota");
          bigshuta.setAP("4");
          bigshuta.setDescription("bigshuta");
          bigshuta.setFraction(f);
@@ -87,6 +100,7 @@ public class testDb {
          bigshuta.setType(assault);
          
          final WeaponBase shuta=new WeaponBase();
+         shuta.setId("shoota");
          shuta.setAP("4");
          shuta.setDescription("shuta");
          shuta.setFraction(f);
@@ -98,6 +112,7 @@ public class testDb {
          
            
          final WeaponBase choppa=new WeaponBase();
+         choppa.setId("choppa");
          choppa.setAP("-");
          choppa.setDescription("choppa");
          choppa.setFraction(f);
@@ -107,6 +122,7 @@ public class testDb {
          choppa.setType(melee);
          
          final WeaponBase claws=new WeaponBase();
+         claws.setId("claws");
          claws.setAP("-");
          claws.setDescription("power claws");
          claws.setFraction(f);
@@ -147,6 +163,7 @@ public class testDb {
          
          
          final ItemBase grenade=new ItemBase();
+         grenade.setId("grenade");
          grenade.setFraction(f);
          grenade.setDescription("Grenade");
          grenade.setName("grenade");
@@ -156,6 +173,7 @@ public class testDb {
          grenadeCost.setCost(1);
         
          UnitBase ork=new UnitBase();
+         ork.setId("ork");
          ork.setA(2);
          ork.setBS(2);
          ork.setCost(6);
@@ -172,6 +190,7 @@ public class testDb {
          ork.setWeapons(new ArrayList<Weapon>(){{add(slaggac);add(choppac);}});
          
          UnitBase nob=new UnitBase();
+         nob.setId("nob");
          nob.setA(3);
          nob.setBS(2);
          nob.setCost(16);
@@ -207,6 +226,7 @@ public class testDb {
          
          
          SquadPartBase boysPart=new SquadPartBase();
+         boysPart.setId("boyspart");
          boysPart.setMinSize(10);
          boysPart.setMaxSize(30);
          boysPart.setItemSelection(new ArrayList<ItemSelection>(){{add(boysIS);}});
@@ -215,6 +235,7 @@ public class testDb {
          ses.save(boysPart);
          
          final SquadPartBase nobPart=new SquadPartBase();
+         nobPart.setId("nobPart");
          nobPart.setMinSize(0);
          nobPart.setMaxSize(1);
          nobPart.setConditions("replace");

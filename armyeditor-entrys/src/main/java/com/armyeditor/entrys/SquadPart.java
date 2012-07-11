@@ -18,7 +18,7 @@ import javax.persistence.ManyToOne;
  * @author Dmitry
  */@javax.persistence.Entity
 public class SquadPart implements java.io.Serializable {
-    private Long id;
+    private String  id;
     private SquadPartBase base;
     private int squadsize;
     private List<Item> Items=new ArrayList<Item>();
@@ -61,12 +61,12 @@ public class SquadPart implements java.io.Serializable {
     public void setBase(SquadPartBase base) {
         this.base = base;
     }
-    @Id @javax.persistence.GeneratedValue
-    public Long getId() {
+    @Id 
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
