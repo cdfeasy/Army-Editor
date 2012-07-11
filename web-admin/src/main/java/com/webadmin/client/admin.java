@@ -14,6 +14,8 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.IsWidget;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.Widget;
+import com.sencha.gxt.core.client.IdentityValueProvider;
+import com.sencha.gxt.core.client.Style;
 import com.sencha.gxt.core.client.ValueProvider;
 import com.sencha.gxt.data.shared.ListStore;
 import com.sencha.gxt.data.shared.ModelKeyProvider;
@@ -22,6 +24,7 @@ import com.sencha.gxt.widget.core.client.TabItemConfig;
 import com.sencha.gxt.widget.core.client.TabPanel;
 import com.sencha.gxt.widget.core.client.button.TextButton;
 import com.sencha.gxt.widget.core.client.event.SelectEvent;
+import com.sencha.gxt.widget.core.client.grid.CheckBoxSelectionModel;
 import com.sencha.gxt.widget.core.client.grid.ColumnConfig;
 import com.sencha.gxt.widget.core.client.grid.ColumnModel;
 import com.sencha.gxt.widget.core.client.grid.Grid;
@@ -74,18 +77,19 @@ public class admin implements EntryPoint {
 	public Widget asWidget() {
 		PostProperties props = GWT.create(PostProperties.class);
 
+        IdentityValueProvider<Armor> identity = new IdentityValueProvider<Armor>();
+        final CheckBoxSelectionModel<Armor> sm = new CheckBoxSelectionModel<Armor>(identity);
 		ColumnConfig<Armor, String> nameColumn = new ColumnConfig<Armor, String>(props.name(), 150, "name");
         ColumnConfig<Armor, String> descripColumn = new ColumnConfig<Armor, String>(props.description(), 150, "description");
 
 		List<ColumnConfig<Armor, ?>> l = new ArrayList<ColumnConfig<Armor, ?>>();
-		l.add(nameColumn);
+        l.add(sm.getColumn());
+        l.add(nameColumn);
         l.add(descripColumn);
 		cm = new ColumnModel<Armor>(l);
-
+        sm.setSelectionMode(Style.SelectionMode.MULTI);
         store = new ListStore<Armor>(props.id());
-
-
-
+        armorGrid.setSelectionModel(sm);
 		return uiBinder.createAndBindUi(this);
 	}
 
