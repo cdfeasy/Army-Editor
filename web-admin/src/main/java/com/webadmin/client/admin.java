@@ -83,7 +83,7 @@ public class admin implements EntryPoint {
         sm.setSelectionMode(Style.SelectionMode.MULTI);
         store = new ListStore<Armor>(props.id());
         updateStore();
-        final Grid<Armor> armorGrid= new Grid<Armor>(store, cm);
+        Grid<Armor> armorGrid= new Grid<Armor>(store, cm);
         armorGrid.setSelectionModel(sm);
         VerticalLayoutContainer con = new VerticalLayoutContainer();
         con.add(armorGrid);
@@ -93,7 +93,6 @@ public class admin implements EntryPoint {
 	public Widget asWidget() {
         Widget d=uiBinder.createAndBindUi(this);
         configGrid();
-
         return d;
 	}
 

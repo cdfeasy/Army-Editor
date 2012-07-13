@@ -39,7 +39,6 @@
     <container:FlowLayoutContainer borders="true">
         <tabs:TabPanel ui:field="folder"  addStyleNames="margin-10">
             <tabs:child config="{armorConfig}">
-
                 <container:FlowLayoutContainer ui:field="gridContainer">
                     <g:Label addStyleNames="pad-text" text="{txt}" />
                     <button:TextButton ui:field="updateBtn" text="Update"/>
