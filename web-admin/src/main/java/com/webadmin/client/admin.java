@@ -23,6 +23,8 @@ import com.sencha.gxt.data.shared.PropertyAccess;
 import com.sencha.gxt.widget.core.client.TabItemConfig;
 import com.sencha.gxt.widget.core.client.TabPanel;
 import com.sencha.gxt.widget.core.client.button.TextButton;
+import com.sencha.gxt.widget.core.client.container.FlowLayoutContainer;
+import com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer;
 import com.sencha.gxt.widget.core.client.event.SelectEvent;
 import com.sencha.gxt.widget.core.client.grid.CheckBoxSelectionModel;
 import com.sencha.gxt.widget.core.client.grid.ColumnConfig;
@@ -45,57 +47,56 @@ public class admin implements EntryPoint {
 	}
 	private static MyUiBinder uiBinder = GWT.create(MyUiBinder.class);
 	private final CommonServiceAsync commonService = GWT.create(CommonService.class);
+
 	@UiField(provided = true)
 	String txt = "ваааааа";
 	/**
 	 * This is the entry point method.
 	 */
 	@UiField
-	Grid<Armor> armorGrid;
-	@UiField
+    FlowLayoutContainer gridContainer;
+    Grid<Armor> armorGrid;
 	ColumnModel<Armor> cm;
-	@UiField
 	ListStore<Armor> store;
     @UiField
     TextButton updateBtn;
     @UiHandler({"updateBtn"})
     public void onButtonClick(SelectEvent event) {
         updateStore();
+        armorGrid.reconfigure(store,cm);
         Info.display("Click", ((TextButton) event.getSource()).getText() + " clicked");
 
     }
-	@UiFactory
-	ColumnModel<Armor> createColumnModel() {
-		return cm;
-	}
 
-	@UiFactory
-	ListStore<Armor> createListStore() {
-		return store;
-	}
-
-	public Widget asWidget() {
-		PostProperties props = GWT.create(PostProperties.class);
-
+    public void configGrid(){
+        PostProperties props = GWT.create(PostProperties.class);
         IdentityValueProvider<Armor> identity = new IdentityValueProvider<Armor>();
         final CheckBoxSelectionModel<Armor> sm = new CheckBoxSelectionModel<Armor>(identity);
-		ColumnConfig<Armor, String> nameColumn = new ColumnConfig<Armor, String>(props.name(), 150, "name");
+        ColumnConfig<Armor, String> nameColumn = new ColumnConfig<Armor, String>(props.name(), 150, "name");
         ColumnConfig<Armor, String> descripColumn = new ColumnConfig<Armor, String>(props.description(), 150, "description");
 
-		List<ColumnConfig<Armor, ?>> l = new ArrayList<ColumnConfig<Armor, ?>>();
+        List<ColumnConfig<Armor, ?>> l = new ArrayList<ColumnConfig<Armor, ?>>();
         l.add(sm.getColumn());
         l.add(nameColumn);
         l.add(descripColumn);
-		cm = new ColumnModel<Armor>(l);
+        cm = new ColumnModel<Armor>(l);
         sm.setSelectionMode(Style.SelectionMode.MULTI);
         store = new ListStore<Armor>(props.id());
+        updateStore();
+        final Grid<Armor> armorGrid= new Grid<Armor>(store, cm);
         armorGrid.setSelectionModel(sm);
+    }
+
+	public Widget asWidget() {
 		return uiBinder.createAndBindUi(this);
 	}
 
 	public void onModuleLoad() {
-        updateStore();
         RootPanel.get().add(asWidget());
+        configGrid();
+        VerticalLayoutContainer con = new VerticalLayoutContainer();
+        con.add(armorGrid);
+        gridContainer.add(con);
 	}
 
     public void updateStore(){
@@ -109,8 +110,8 @@ public class admin implements EntryPoint {
             @Override
             public void onSuccess(List<Armor> result) {
                 for (Armor a : result) {
+                    store.clear();
                     store.add(Integer.parseInt(a.getId()), a);
-                    armorGrid.reconfigure(store,cm);
                 }
             }
         });
