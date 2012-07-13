@@ -85,18 +85,20 @@ public class admin implements EntryPoint {
         updateStore();
         final Grid<Armor> armorGrid= new Grid<Armor>(store, cm);
         armorGrid.setSelectionModel(sm);
+        VerticalLayoutContainer con = new VerticalLayoutContainer();
+        con.add(armorGrid);
+        gridContainer.add(con);
     }
 
 	public Widget asWidget() {
-		return uiBinder.createAndBindUi(this);
+        Widget d=uiBinder.createAndBindUi(this);
+        configGrid();
+
+        return d;
 	}
 
 	public void onModuleLoad() {
         RootPanel.get().add(asWidget());
-        configGrid();
-        VerticalLayoutContainer con = new VerticalLayoutContainer();
-        con.add(armorGrid);
-        gridContainer.add(con);
 	}
 
     public void updateStore(){
@@ -111,7 +113,7 @@ public class admin implements EntryPoint {
             public void onSuccess(List<Armor> result) {
                 for (Armor a : result) {
                     store.clear();
-                    store.add(Integer.parseInt(a.getId()), a);
+                    store.add(a);
                 }
             }
         });
