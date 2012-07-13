@@ -6,6 +6,7 @@
 package com.armyeditor.entrys;
 
 import com.armyeditor.entrys.classes.Description;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
@@ -124,6 +125,7 @@ public class UnitBase implements java.io.Serializable  {
     public void setCost(int cost) {
         this.cost = cost;
     }
+    @JsonIgnore
     @ManyToOne( cascade = {CascadeType.REFRESH} )
     @JoinColumn(name="Fraction_fk")
     public Fraction getFraction() {
