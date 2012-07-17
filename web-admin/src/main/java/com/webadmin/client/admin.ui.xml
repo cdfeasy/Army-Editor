@@ -39,10 +39,18 @@
     <container:FlowLayoutContainer borders="true">
         <tabs:TabPanel ui:field="folder"  addStyleNames="margin-10">
             <tabs:child config="{armorConfig}">
-                <container:FlowLayoutContainer ui:field="gridContainer">
-                    <g:Label addStyleNames="pad-text" text="{txt}" />
-                    <button:TextButton ui:field="updateBtn" text="Update"/>
-                </container:FlowLayoutContainer>
+                <container:VerticalLayoutContainer ui:field="gridContainer" >
+                    <container:child>
+                        <container:VerticalLayoutContainer>
+                            <g:Label addStyleNames="pad-text" text="{txt}" />
+                            <button:TextButton ui:field="updateBtn" text="Update" />
+                        </container:VerticalLayoutContainer>
+                    </container:child>
+                    <container:child>
+                        <container:VerticalLayoutContainer ui:field="con"/>
+                    </container:child>
+                    <button:TextButton ui:field="delSelBtn" text="Delete Selected"  />
+                </container:VerticalLayoutContainer>
             </tabs:child>
 
             <tabs:child config="{longTextTabConfig}">

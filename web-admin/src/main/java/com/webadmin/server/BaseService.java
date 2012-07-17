@@ -7,6 +7,7 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.webadmin.client.services.CommonService;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 import java.util.List;
 
@@ -35,4 +36,18 @@ public class BaseService extends RemoteServiceServlet implements CommonService {
         ses.close();
         return itemlist;
     }
+
+    @Override
+    public void delArmors(List<Armor> list) {
+        Session ses= HibernateUtil.getSessionFactory().openSession();
+        Transaction trans=ses.beginTransaction();
+        trans.begin();
+        for(Armor a:list){
+            ses.delete(a);
+        }
+        trans.commit();
+        ses.close();
+    }
+
+
 }

@@ -54,10 +54,14 @@ public class admin implements EntryPoint {
 	 * This is the entry point method.
 	 */
 	@UiField
-    FlowLayoutContainer gridContainer;
+    VerticalLayoutContainer gridContainer;
+    @UiField
+    VerticalLayoutContainer con;
     Grid<Armor> armorGrid;
 	ColumnModel<Armor> cm;
 	ListStore<Armor> store;
+    @UiField
+    TextButton delSelBtn;
     @UiField
     TextButton updateBtn;
     @UiHandler({"updateBtn"})
@@ -85,14 +89,32 @@ public class admin implements EntryPoint {
         updateStore();
         Grid<Armor> armorGrid= new Grid<Armor>(store, cm);
         armorGrid.setSelectionModel(sm);
-        VerticalLayoutContainer con = new VerticalLayoutContainer();
         con.add(armorGrid);
-        gridContainer.add(con);
     }
 
 	public Widget asWidget() {
         Widget d=uiBinder.createAndBindUi(this);
         configGrid();
+        delSelBtn.addSelectHandler(new SelectEvent.SelectHandler() {
+            @Override
+            public void onSelect(SelectEvent event) {
+                Info.display("Click", ((TextButton) event.getSource()).getText() + " clicked");
+                List selectList = new ArrayList();
+                selectList = armorGrid.getSelectionModel().getSelectedItems();
+                commonService.delArmors(selectList,new AsyncCallback<Void>() {
+                    @Override
+                    public void onFailure(Throwable throwable) {
+                        System.out.println("Запрос упал " + throwable.getMessage());
+                    }
+
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        updateStore();
+                        armorGrid.reconfigure(store,cm);
+                    }
+                });
+            }
+        });
         return d;
 	}
 
