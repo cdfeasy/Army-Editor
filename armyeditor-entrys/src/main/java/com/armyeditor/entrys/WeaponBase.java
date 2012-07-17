@@ -5,7 +5,7 @@
 
 package com.armyeditor.entrys;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+//import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
@@ -30,7 +30,7 @@ public class WeaponBase implements java.io.Serializable  {
     private List<Option> options=new ArrayList<Option>();
     
     private Fraction fraction;
-    @JsonIgnore
+   // @JsonIgnore
     @ManyToOne( cascade = {CascadeType.REFRESH} )
     @JoinColumn(name="Fraction_fk")
     public Fraction getFraction() {

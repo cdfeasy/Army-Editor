@@ -251,9 +251,9 @@ public class testDb {
          ses.save(squadboys);
          ses.close();
          
-          ObjectMapper mapper = new ObjectMapper();
-         String json = mapper.writeValueAsString(f) ; 
-         System.out.println(json);
+         // ObjectMapper mapper = new ObjectMapper();
+         //String json = mapper.writeValueAsString(f) ; 
+         //System.out.println(json);
          
          
          

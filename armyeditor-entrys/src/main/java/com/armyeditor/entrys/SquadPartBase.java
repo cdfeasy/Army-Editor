@@ -5,7 +5,7 @@
 
 package com.armyeditor.entrys;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+//import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
@@ -89,7 +89,7 @@ public class SquadPartBase implements java.io.Serializable  {
     public void setModifications(List<SquadPartBase> modifications) {
         this.modifications = modifications;
     }
-    @JsonIgnore
+    //@JsonIgnore
     @ManyToOne( cascade = {CascadeType.REFRESH} )
     @JoinColumn(name="SquadPartBase_fk")
     public SquadPartBase getParent() {
