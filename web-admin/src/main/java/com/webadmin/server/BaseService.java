@@ -46,6 +46,7 @@ public class BaseService extends RemoteServiceServlet implements CommonService {
             a= (Armor) ses.merge(a);
             ses.delete(a);
         }
+        ses.flush();
         trans.commit();
         ses.close();
     }

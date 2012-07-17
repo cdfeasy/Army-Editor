@@ -86,8 +86,8 @@ public class admin implements EntryPoint {
         cm = new ColumnModel<Armor>(l);
         sm.setSelectionMode(Style.SelectionMode.MULTI);
         store = new ListStore<Armor>(props.id());
+        armorGrid= new Grid<Armor>(store, cm);
         updateStore();
-        Grid<Armor> armorGrid= new Grid<Armor>(store, cm);
         armorGrid.setSelectionModel(sm);
         con.add(armorGrid);
     }
@@ -110,7 +110,7 @@ public class admin implements EntryPoint {
                     @Override
                     public void onSuccess(Void aVoid) {
                         updateStore();
-                        armorGrid.reconfigure(store,cm);
+//                        armorGrid.reconfigure(store,cm);
                     }
                 });
             }
@@ -136,6 +136,7 @@ public class admin implements EntryPoint {
                     store.clear();
                     store.add(a);
                 }
+                armorGrid.reconfigure(store,cm);
             }
         });
     }
