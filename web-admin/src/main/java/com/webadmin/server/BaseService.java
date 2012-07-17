@@ -43,6 +43,7 @@ public class BaseService extends RemoteServiceServlet implements CommonService {
         Transaction trans=ses.beginTransaction();
         trans.begin();
         for(Armor a:list){
+            a= (Armor) ses.merge(a);
             ses.delete(a);
         }
         trans.commit();
