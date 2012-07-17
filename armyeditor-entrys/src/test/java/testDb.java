@@ -11,6 +11,8 @@
 import com.armyeditor.HibernateUtil;
 import com.armyeditor.entrys.Fraction;
 import com.armyeditor.entrys.*;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import junit.framework.Assert;
@@ -21,7 +23,7 @@ import org.junit.Test;
 
 public class testDb {
     @Before
-    public void init(){
+    public void init() throws IOException{
          Session ses= HibernateUtil.getSessionFactory().openSession();
          Fraction f=new Fraction();
          f.setName("orks");
@@ -140,20 +142,20 @@ public class testDb {
          shutac.setCost(0);
          
          final Weapon clawsc=new  Weapon();
-         shutac.setWeapon(claws);
-         shutac.setCost(25);
+         clawsc.setWeapon(claws);
+         clawsc.setCost(25);
          
          final Weapon bigshutac=new  Weapon();
-         shutac.setWeapon(bigshuta);
-         shutac.setCost(5);
+         bigshutac.setWeapon(bigshuta);
+         bigshutac.setCost(5);
          
          final Weapon slaggac=new  Weapon();
-         shutac.setWeapon(slagga);
-         shutac.setCost(0);
+         slaggac.setWeapon(slagga);
+         slaggac.setCost(0);
          
          final Weapon choppac=new  Weapon();
-         shutac.setWeapon(choppa);
-         shutac.setCost(0);
+         choppac.setWeapon(choppa);
+         choppac.setCost(0);
          
          ses.save(slaggac);
          ses.save(choppac);
@@ -243,11 +245,15 @@ public class testDb {
          nobPart.setUnit(nob);
          nobPart.setParent(boysPart);
          boysPart.setModifications(new ArrayList<SquadPartBase>(){{add(nobPart);}} );
+         squadboys.setSquadPartBase(boysPart);
          ses.save(nobPart);
          ses.save(boysPart);
+         ses.save(squadboys);
          ses.close();
          
-
+          ObjectMapper mapper = new ObjectMapper();
+         String json = mapper.writeValueAsString(f) ; 
+         System.out.println(json);
          
          
          
