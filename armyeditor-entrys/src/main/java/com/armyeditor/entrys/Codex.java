@@ -6,7 +6,9 @@
 package com.armyeditor.entrys;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
@@ -59,6 +61,49 @@ public class Codex implements java.io.Serializable  {
 
     public void setSquads(List<SquadBase> squads) {
         this.squads = squads;
+    }
+    
+    
+    public void parseParts(String offset, StringBuilder smain,SquadPartBase part){
+        smain.append(offset).append(part.getId()).append("\n");
+        smain.append(offset).append(part.getUnit().toString()).append("\n");
+        smain.append(offset).append("minsize=").append(part.getMinSize()).append(" maxsize=").append(part.getMaxSize()).append("\n");
+        for(SquadPartBase localpart:part.getModifications()){
+            smain.append("[").append("\n");
+            parseParts(offset+"\t",smain,localpart);
+            smain.append("]").append("\n");
+        }
+    }
+    public String marshall(){
+        StringBuilder smain=new StringBuilder();
+        Set<Option> lst=new HashSet<Option>();
+        StringBuilder sopt=new StringBuilder(); 
+        StringBuilder sweapons=new StringBuilder(); 
+        StringBuilder sunits=new StringBuilder(); 
+        
+        smain.append("[\nid=").append(id).append("\n");
+        smain.append("name=").append(name).append("\n");
+        smain.append("description=").append(description).append("\n");
+        smain.append("Squads:\n");
+        String offset="\t";
+        for(SquadBase s:squads){
+             smain.append(s.getId()).append("\n");
+             smain.append(offset).append(s.getId()).append("\n");
+             smain.append(offset).append(s.getName()).append("\n");
+             smain.append(offset).append(s.getDescription()).append("\n");
+             smain.append(offset).append("options:[").append("\n");
+             offset="\t\t";
+             for(Option opt:s.getOptions()){
+                 smain.append(offset).append(opt.getId()).append("\n");
+                 lst.add(opt);
+             }
+             offset="\t";
+             smain.append(offset).append("]").append("\n");
+             parseParts(offset,smain,s.getSquadPartBase());
+             
+        }
+        return smain.toString();
+        
     }
 
 }

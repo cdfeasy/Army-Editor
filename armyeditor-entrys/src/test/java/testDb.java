@@ -253,7 +253,7 @@ public class testDb {
          
          // ObjectMapper mapper = new ObjectMapper();
          //String json = mapper.writeValueAsString(f) ; 
-         //System.out.println(json);
+         System.out.println(c.marshall());
          
          
          
