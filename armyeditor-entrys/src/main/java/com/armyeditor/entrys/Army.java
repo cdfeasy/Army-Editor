@@ -80,7 +80,7 @@ public class Army  implements Serializable {
         smain.append("[\nid=").append(id).append("\n");
         smain.append("name=").append(name).append("\n");
         smain.append("description=").append(description).append("\n");
-        smain.append("Squads:\n");
+        smain.append("Squads:[\n");
         String offset="\t";
         for(Squad s:squads){
              smain.append(s.getId()).append("\n");
@@ -98,6 +98,7 @@ public class Army  implements Serializable {
              parseParts(offset,smain,s.getSquadBase().getSquadPartBase());
              
         }
+		smain.append("]\n");
         return smain.toString();
         
     }

@@ -118,4 +118,12 @@ public class WeaponBase implements java.io.Serializable  {
         this.type = type;
     }
 
+	@Override
+	public String toString() {
+		return "WeaponBase{" + "id=" + id + ", type=" + type + ", name=" + name + ", description=" + description + ", range=" + range + ", AP=" + AP + ", STR=" + STR + ", fireCount=" + fireCount + ", options=" + options + '}';
+	}
+	
+	
+	
+
 }

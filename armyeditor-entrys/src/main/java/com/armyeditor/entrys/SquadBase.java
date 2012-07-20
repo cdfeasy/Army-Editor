@@ -27,10 +27,24 @@ public class SquadBase  implements java.io.Serializable {
     private List<Option> options=new ArrayList<Option>();
     private String name;
     private String description;
+	/**
+	 * 0-hq,1-Elite,2-troops,3-fast,4-heavy,5-fortifications
+	 */
+	private int foqType;
 
     public SquadBase() {
     }
 
+	public int getFoqType() {
+		return foqType;
+	}
+
+	public void setFoqType(int foqType) {
+		this.foqType = foqType;
+	}
+
+	
+	
     public String getDescription() {
         return description;
     }
