@@ -178,8 +178,8 @@ public class admin implements EntryPoint {
 
             @Override
             public void onSuccess(List<Armor> result) {
+                store.clear();
                 for (Armor a : result) {
-                    store.clear();
                     store.add(a);
                 }
                 armorGrid.reconfigure(store,cm);
