@@ -42,4 +42,11 @@ public class Option implements java.io.Serializable  {
     public void setName(String name) {
         this.name = name;
     }
+
+	@Override
+	public String toString() {
+		return "Option{" + "id=" + id + ", name=" + name + ", description=" + description + '}';
+	}
+	
+	
 }

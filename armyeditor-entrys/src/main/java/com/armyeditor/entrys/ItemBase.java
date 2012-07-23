@@ -67,4 +67,11 @@ public class ItemBase implements java.io.Serializable  {
         this.name = name;
     }
 
+	@Override
+	public String toString() {
+		return "ItemBase{" + "id=" + id + ", name=" + name + ", description=" + description + ", options=" + options + '}';
+	}
+	
+	
+
 }

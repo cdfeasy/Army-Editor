@@ -176,4 +176,11 @@ public class UnitBase implements java.io.Serializable  {
     public void setWeapons(List<Weapon> weapons) {
         this.weapons = weapons;
     }
+
+    @Override
+    public String toString() {
+        return "UnitBase{" + "id=" + id + ", WS=" + WS + ", BS=" + BS + ", S=" + S + ", T=" + T + ", W=" + W + ", I=" + I + ", A=" + A + ", LD=" + LD + ", SV=" + SV + ", cost=" + cost + ", options=" + options + ", unitType=" + unitType + ", weapons=" + weapons + ", items=" + items + ", fraction=" + fraction + '}';
+    }
+    
+    
 }

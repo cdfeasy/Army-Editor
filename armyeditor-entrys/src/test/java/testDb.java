@@ -100,6 +100,17 @@ public class testDb {
          bigshuta.setSTR("5");
          bigshuta.setFireCount("3");
          bigshuta.setType(assault);
+		 
+		 final WeaponBase rokkit=new WeaponBase();
+         rokkit.setId("rokkit");
+         rokkit.setAP("3");
+         rokkit.setDescription("rokkit");
+         rokkit.setFraction(f);
+         rokkit.setName("rokkit");
+         rokkit.setRange("24");
+         rokkit.setSTR("8");
+         rokkit.setFireCount("1");
+         rokkit.setType(assault);
          
          final WeaponBase shuta=new WeaponBase();
          shuta.setId("shoota");
@@ -136,7 +147,8 @@ public class testDb {
          ses.save(choppa);
          ses.save(claws);
          ses.save(shuta);
-         ses.save(bigshuta);
+         ses.save(rokkit);
+		 ses.save(bigshuta);
          final Weapon shutac=new  Weapon();
          shutac.setWeapon(shuta);
          shutac.setCost(0);
@@ -148,6 +160,10 @@ public class testDb {
          final Weapon bigshutac=new  Weapon();
          bigshutac.setWeapon(bigshuta);
          bigshutac.setCost(5);
+		 
+		 final Weapon rokkitc=new  Weapon();
+         rokkitc.setWeapon(rokkit);
+         rokkitc.setCost(6);
          
          final Weapon slaggac=new  Weapon();
          slaggac.setWeapon(slagga);
@@ -158,6 +174,7 @@ public class testDb {
          choppac.setCost(0);
          
          ses.save(slaggac);
+		 ses.save(rokkitc);
          ses.save(choppac);
          ses.save(clawsc);
          ses.save(shutac);
@@ -219,7 +236,7 @@ public class testDb {
          shuttacond.setCondition("for all;replace;");
          
          final WeaponSelection bigshuttacond=new WeaponSelection();
-         bigshuttacond.setWeapon(new ArrayList<Weapon>(){{add(bigshutac);}});
+         bigshuttacond.setWeapon(new ArrayList<Weapon>(){{add(bigshutac);add(rokkitc);}});
          bigshuttacond.setCondition("replace slagga;count:1 for 10");
          
          final WeaponSelection clawscond=new WeaponSelection();
@@ -253,7 +270,7 @@ public class testDb {
          
          // ObjectMapper mapper = new ObjectMapper();
          //String json = mapper.writeValueAsString(f) ; 
-         //System.out.println(json);
+         System.out.println(c.marshall());
          
          
          

@@ -23,8 +23,8 @@ public class SquadPartBase implements java.io.Serializable  {
     private UnitBase unit;
     private int minSize;
     private int maxSize;
-    private List<ItemSelection> itemSelection;
-    private List<WeaponSelection> weaponSelection;
+    private List<ItemSelection> itemSelection=new ArrayList<ItemSelection>();
+    private List<WeaponSelection> weaponSelection=new ArrayList<WeaponSelection>();
     private List<SquadPartBase> modifications=new ArrayList<SquadPartBase>();
     private SquadPartBase parent;
     private String conditions;
