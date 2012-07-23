@@ -19,4 +19,5 @@ public interface CommonService extends RemoteService {
     List<Unit> getUnits();
     List<Armor> getArmors();
     void delArmors(List<Armor> list);
+    void addArmor(Armor a);
 }

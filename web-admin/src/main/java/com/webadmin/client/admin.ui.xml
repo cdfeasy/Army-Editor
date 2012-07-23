@@ -44,6 +44,7 @@
                         <container:VerticalLayoutContainer>
                             <g:Label addStyleNames="pad-text" text="{txt}" />
                             <button:TextButton ui:field="updateBtn" text="Update" />
+                            <button:TextButton ui:field="addBtn" text="Add new item"/>
                         </container:VerticalLayoutContainer>
                     </container:child>
                     <container:child>

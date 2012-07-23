@@ -51,5 +51,15 @@ public class BaseService extends RemoteServiceServlet implements CommonService {
         ses.close();
     }
 
+    @Override
+    public void addArmor(Armor a) {
+        Session ses = HibernateUtil.getSessionFactory().openSession();
+        Transaction trans = ses.beginTransaction();
+        trans.begin();
+        ses.save(a);
+        trans.commit();
+        ses.close();
+    }
+
 
 }

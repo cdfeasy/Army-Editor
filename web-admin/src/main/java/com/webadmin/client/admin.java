@@ -20,12 +20,15 @@ import com.sencha.gxt.core.client.ValueProvider;
 import com.sencha.gxt.data.shared.ListStore;
 import com.sencha.gxt.data.shared.ModelKeyProvider;
 import com.sencha.gxt.data.shared.PropertyAccess;
+import com.sencha.gxt.widget.core.client.Dialog;
 import com.sencha.gxt.widget.core.client.TabItemConfig;
 import com.sencha.gxt.widget.core.client.TabPanel;
 import com.sencha.gxt.widget.core.client.button.TextButton;
 import com.sencha.gxt.widget.core.client.container.FlowLayoutContainer;
 import com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer;
 import com.sencha.gxt.widget.core.client.event.SelectEvent;
+import com.sencha.gxt.widget.core.client.form.FieldLabel;
+import com.sencha.gxt.widget.core.client.form.TextField;
 import com.sencha.gxt.widget.core.client.grid.CheckBoxSelectionModel;
 import com.sencha.gxt.widget.core.client.grid.ColumnConfig;
 import com.sencha.gxt.widget.core.client.grid.ColumnModel;
@@ -63,6 +66,8 @@ public class admin implements EntryPoint {
     @UiField
     TextButton delSelBtn;
     @UiField
+    TextButton addBtn;
+    @UiField
     TextButton updateBtn;
     @UiHandler({"updateBtn"})
     public void onButtonClick(SelectEvent event) {
@@ -89,6 +94,7 @@ public class admin implements EntryPoint {
         armorGrid= new Grid<Armor>(store, cm);
         updateStore();
         armorGrid.setSelectionModel(sm);
+//        armorGrid.setHeight(500);
         con.add(armorGrid);
     }
 
@@ -113,6 +119,46 @@ public class admin implements EntryPoint {
 //                        armorGrid.reconfigure(store,cm);
                     }
                 });
+            }
+        });
+        addBtn.addSelectHandler(new SelectEvent.SelectHandler() {
+            @Override
+            public void onSelect(SelectEvent event) {
+                final Dialog addDialog = new Dialog();
+                addDialog.setHeadingText("Add new item");
+                VerticalLayoutContainer layoutContainer = new VerticalLayoutContainer();
+                addDialog.add(layoutContainer);
+                final TextField id = new TextField();
+                layoutContainer.add(new FieldLabel(id,"ID"));
+                final TextField name = new TextField();
+                layoutContainer.add(new FieldLabel(name,"Name"));
+                final TextField descrip = new TextField();
+                layoutContainer.add(new FieldLabel(descrip,"Description"));
+                addDialog.setPredefinedButtons(Dialog.PredefinedButton.CANCEL, Dialog.PredefinedButton.OK);
+                TextButton saveBtn = addDialog.getButtonById("OK");
+                addDialog.getButtonById("OK").setText("Save");
+                saveBtn.addSelectHandler(new SelectEvent.SelectHandler() {
+                    @Override
+                    public void onSelect(SelectEvent event) {
+                        Armor arm = new Armor();
+                        arm.setId(id.getText());
+                        arm.setName(name.getText());
+                        arm.setDescription(descrip.getText());
+                        commonService.addArmor(arm, new AsyncCallback<Void>() {
+                            @Override
+                            public void onFailure(Throwable throwable) {
+                                System.out.println("Запрос упал " + throwable.getMessage());
+                            }
+
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                updateStore();
+                                addDialog.hide();
+                            }
+                        });
+                    }
+                });
+                addDialog.show();
             }
         });
         return d;
