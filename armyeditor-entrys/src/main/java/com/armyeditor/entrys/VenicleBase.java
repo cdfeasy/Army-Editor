@@ -6,6 +6,7 @@ package com.armyeditor.entrys;
 
 import com.armyeditor.entrys.classes.Description;
 //import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.*;
@@ -14,7 +15,7 @@ import javax.persistence.*;
  *
  * @author dmitry
  */
-public class VenicleBase {
+public class VenicleBase implements Serializable {
     private String  id;
     @Description(textRus="WS")
     private int WS;

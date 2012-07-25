@@ -15,6 +15,7 @@ import com.sencha.gxt.data.shared.PropertyAccess;
  */
 public interface PostProperties extends PropertyAccess<Armor> {
     ModelKeyProvider<Armor> id();
+//    ValueProvider<Armor, String> id(String s);
     ValueProvider<Armor, String> name();
     ValueProvider<Armor, String> description();
 	}

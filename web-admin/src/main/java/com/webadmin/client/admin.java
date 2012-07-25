@@ -25,6 +25,7 @@ import com.sencha.gxt.widget.core.client.TabItemConfig;
 import com.sencha.gxt.widget.core.client.TabPanel;
 import com.sencha.gxt.widget.core.client.button.TextButton;
 import com.sencha.gxt.widget.core.client.container.FlowLayoutContainer;
+import com.sencha.gxt.widget.core.client.container.VBoxLayoutContainer;
 import com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer;
 import com.sencha.gxt.widget.core.client.event.SelectEvent;
 import com.sencha.gxt.widget.core.client.form.FieldLabel;
@@ -51,12 +52,16 @@ public class admin implements EntryPoint {
 	private static MyUiBinder uiBinder = GWT.create(MyUiBinder.class);
 	private final CommonServiceAsync commonService = GWT.create(CommonService.class);
 
-	@UiField(provided = true)
+	@UiField
 	String txt = "ваааааа";
 	/**
 	 * This is the entry point method.
 	 */
 	@UiField
+    VBoxLayoutContainer fldsCon;
+    @UiField
+    VerticalLayoutContainer attackTyteGridContainer;
+    @UiField
     VerticalLayoutContainer gridContainer;
     @UiField
     VerticalLayoutContainer con;
@@ -81,11 +86,13 @@ public class admin implements EntryPoint {
         PostProperties props = GWT.create(PostProperties.class);
         IdentityValueProvider<Armor> identity = new IdentityValueProvider<Armor>();
         final CheckBoxSelectionModel<Armor> sm = new CheckBoxSelectionModel<Armor>(identity);
+//        ColumnConfig<Armor, String> idColumn = new ColumnConfig<Armor, String>(props.idShow(), 100, "id");
         ColumnConfig<Armor, String> nameColumn = new ColumnConfig<Armor, String>(props.name(), 150, "name");
         ColumnConfig<Armor, String> descripColumn = new ColumnConfig<Armor, String>(props.description(), 150, "description");
 
         List<ColumnConfig<Armor, ?>> l = new ArrayList<ColumnConfig<Armor, ?>>();
         l.add(sm.getColumn());
+//        l.add(idColumn);
         l.add(nameColumn);
         l.add(descripColumn);
         cm = new ColumnModel<Armor>(l);
@@ -101,12 +108,12 @@ public class admin implements EntryPoint {
 	public Widget asWidget() {
         Widget d=uiBinder.createAndBindUi(this);
         configGrid();
+        fldsCon.add(new Fieds());
         delSelBtn.addSelectHandler(new SelectEvent.SelectHandler() {
             @Override
             public void onSelect(SelectEvent event) {
                 Info.display("Click", ((TextButton) event.getSource()).getText() + " clicked");
-                List selectList = new ArrayList();
-                selectList = armorGrid.getSelectionModel().getSelectedItems();
+                List selectList = armorGrid.getSelectionModel().getSelectedItems();
                 commonService.delArmors(selectList,new AsyncCallback<Void>() {
                     @Override
                     public void onFailure(Throwable throwable) {
@@ -187,7 +194,7 @@ public class admin implements EntryPoint {
         });
     }
 
-	@UiHandler(value = {"folder", "panel"})
+	@UiHandler(value = {"folder"})
 	void onSelection(SelectionEvent<Widget> event) {
 		TabPanel panel = (TabPanel) event.getSource();
 		Widget w = event.getSelectedItem();
