@@ -49,10 +49,7 @@
                     <container:BorderLayoutContainer borders="true" height="200" width="350" layoutData="{westData}" >
                         <container:center>
                             <container:VBoxLayoutContainer ui:field="fldsCon" padding="{padding5}" vBoxLayoutAlign="STRETCH">
-                                <!--<g:Label text="ыыыы"/>
-                                <form:FieldLabel ui:field="idFld" text="id" labelWidth="30" enabled="true"  />
-                                <form:FieldLabel ui:field="nameFld" text="name" />
-                                <form:FieldLabel ui:field="descrFld" text="description" />-->
+                            <!--fields panel-->
                             </container:VBoxLayoutContainer>
                         </container:center>
                     </container:BorderLayoutContainer>
@@ -60,10 +57,12 @@
             </tabs:child>
 
             <tabs:child config="{attackTypeTextTabConfig}">
-                <container:VerticalLayoutContainer ui:field="attackTyteGridContainer">
-                    <g:Label text="{txt}" addStyleNames="pad-text"  />
-                    <g:Label text="{txt}" addStyleNames="pad-text {style.sep}" />
-                </container:VerticalLayoutContainer>
+                <container:HorizontalLayoutContainer ui:field="attackTyteGridContainer">
+                    <!--<container:VerticalLayoutContainer >
+                        <g:Label text="{txt}" addStyleNames="pad-text"  />
+                        <g:Label text="{txt}" addStyleNames="pad-text {style.sep}" />
+                    </container:VerticalLayoutContainer>-->
+                </container:HorizontalLayoutContainer>
             </tabs:child>
         </tabs:TabPanel>
 

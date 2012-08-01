@@ -1,6 +1,7 @@
 package com.webadmin.client.services;
 
 import com.armyeditor.entrys.Armor;
+import com.armyeditor.entrys.AttackType;
 import com.armyeditor.entrys.Unit;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
@@ -20,4 +21,10 @@ public interface CommonService extends RemoteService {
     List<Armor> getArmors();
     void delArmors(List<Armor> list);
     void addArmor(Armor a);
+    void changeArmor(Armor a);
+
+    List<AttackType> getAttackTypes();
+    void delAttackTypes(List<AttackType> list);
+    void addAttackType(AttackType a);
+    void changeAttackType(AttackType a);
 }

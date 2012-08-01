@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.webadmin.client;
+package com.webadmin.client.mainForm;
 
 import com.armyeditor.entrys.Armor;
 import com.sencha.gxt.core.client.ValueProvider;
@@ -13,9 +13,8 @@ import com.sencha.gxt.data.shared.PropertyAccess;
  *
  * @author d.asadullin
  */
-public interface PostProperties extends PropertyAccess<Armor> {
+public interface ArmorProperties extends PropertyAccess<Armor> {
     ModelKeyProvider<Armor> id();
-//    ValueProvider<Armor, String> id(String s);
     ValueProvider<Armor, String> name();
     ValueProvider<Armor, String> description();
 	}

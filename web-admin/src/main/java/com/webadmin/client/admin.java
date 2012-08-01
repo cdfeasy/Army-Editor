@@ -1,32 +1,27 @@
 package com.webadmin.client;
 
 import com.armyeditor.entrys.Armor;
-import com.armyeditor.entrys.Unit;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.logical.shared.SelectionEvent;
 import com.google.gwt.uibinder.client.UiBinder;
-import com.google.gwt.uibinder.client.UiFactory;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.ui.IsWidget;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.sencha.gxt.core.client.IdentityValueProvider;
 import com.sencha.gxt.core.client.Style;
-import com.sencha.gxt.core.client.ValueProvider;
 import com.sencha.gxt.data.shared.ListStore;
-import com.sencha.gxt.data.shared.ModelKeyProvider;
-import com.sencha.gxt.data.shared.PropertyAccess;
 import com.sencha.gxt.widget.core.client.Dialog;
 import com.sencha.gxt.widget.core.client.TabItemConfig;
 import com.sencha.gxt.widget.core.client.TabPanel;
 import com.sencha.gxt.widget.core.client.button.TextButton;
-import com.sencha.gxt.widget.core.client.container.FlowLayoutContainer;
+import com.sencha.gxt.widget.core.client.container.HorizontalLayoutContainer;
 import com.sencha.gxt.widget.core.client.container.VBoxLayoutContainer;
 import com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer;
+import com.sencha.gxt.widget.core.client.event.RowClickEvent;
 import com.sencha.gxt.widget.core.client.event.SelectEvent;
 import com.sencha.gxt.widget.core.client.form.FieldLabel;
 import com.sencha.gxt.widget.core.client.form.TextField;
@@ -35,6 +30,10 @@ import com.sencha.gxt.widget.core.client.grid.ColumnConfig;
 import com.sencha.gxt.widget.core.client.grid.ColumnModel;
 import com.sencha.gxt.widget.core.client.grid.Grid;
 import com.sencha.gxt.widget.core.client.info.Info;
+import com.webadmin.client.mainForm.ArmorFieds;
+import com.webadmin.client.mainForm.ArmorProperties;
+import com.webadmin.client.mainForm.AttackTypeContainer;
+import com.webadmin.client.mainForm.AttackTypeFields;
 import com.webadmin.client.services.CommonService;
 import com.webadmin.client.services.CommonServiceAsync;
 import java.util.ArrayList;
@@ -57,10 +56,11 @@ public class admin implements EntryPoint {
 	/**
 	 * This is the entry point method.
 	 */
-	@UiField
+    final ArmorFieds fields = new ArmorFieds();
+    @UiField
     VBoxLayoutContainer fldsCon;
     @UiField
-    VerticalLayoutContainer attackTyteGridContainer;
+    HorizontalLayoutContainer attackTyteGridContainer;
     @UiField
     VerticalLayoutContainer gridContainer;
     @UiField
@@ -77,22 +77,19 @@ public class admin implements EntryPoint {
     @UiHandler({"updateBtn"})
     public void onButtonClick(SelectEvent event) {
         updateStore();
-        armorGrid.reconfigure(store,cm);
         Info.display("Click", ((TextButton) event.getSource()).getText() + " clicked");
 
     }
 
     public void configGrid(){
-        PostProperties props = GWT.create(PostProperties.class);
+        ArmorProperties props = GWT.create(ArmorProperties.class);
         IdentityValueProvider<Armor> identity = new IdentityValueProvider<Armor>();
         final CheckBoxSelectionModel<Armor> sm = new CheckBoxSelectionModel<Armor>(identity);
-//        ColumnConfig<Armor, String> idColumn = new ColumnConfig<Armor, String>(props.idShow(), 100, "id");
         ColumnConfig<Armor, String> nameColumn = new ColumnConfig<Armor, String>(props.name(), 150, "name");
         ColumnConfig<Armor, String> descripColumn = new ColumnConfig<Armor, String>(props.description(), 150, "description");
 
         List<ColumnConfig<Armor, ?>> l = new ArrayList<ColumnConfig<Armor, ?>>();
         l.add(sm.getColumn());
-//        l.add(idColumn);
         l.add(nameColumn);
         l.add(descripColumn);
         cm = new ColumnModel<Armor>(l);
@@ -101,14 +98,62 @@ public class admin implements EntryPoint {
         armorGrid= new Grid<Armor>(store, cm);
         updateStore();
         armorGrid.setSelectionModel(sm);
-//        armorGrid.setHeight(500);
         con.add(armorGrid);
+        attackTyteGridContainer.add(new AttackTypeContainer());
     }
 
-	public Widget asWidget() {
-        Widget d=uiBinder.createAndBindUi(this);
-        configGrid();
-        fldsCon.add(new Fieds());
+	void initHandlers() {
+        armorGrid.addRowClickHandler(new RowClickEvent.RowClickHandler() {
+            @Override
+            public void onRowClick(RowClickEvent event) {
+                int row = event.getRowIndex();
+                Armor a =(Armor) event.getSource().getStore().get(row);
+                fields.getIdFld().setText(a.getId());
+                fields.getNameFld().setText(a.getName());
+                fields.getDescripFld().setText(a.getDescription());
+            }
+        });
+        fields.getSaveBtn().addSelectHandler(new SelectEvent.SelectHandler() {
+            @Override
+            public void onSelect(SelectEvent event) {
+                Armor a = new Armor();
+                a.setId(fields.getIdFld().getText());
+                a.setName(fields.getNameFld().getText());
+                a.setDescription(fields.getDescripFld().getText());
+                commonService.changeArmor(a, new AsyncCallback<Void>() {
+                    @Override
+                    public void onFailure(Throwable throwable) {
+                        System.out.println("Запрос упал " + throwable.getMessage());
+                    }
+
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        updateStore();
+                    }
+                });
+            }
+        });
+        fields.getSaveNewBtn().addSelectHandler(new SelectEvent.SelectHandler() {
+            @Override
+            public void onSelect(SelectEvent event) {
+                Armor a = new Armor();
+                a.setId(fields.getIdFld().getText());
+                a.setName(fields.getNameFld().getText());
+                a.setDescription(fields.getDescripFld().getText());
+                commonService.addArmor(a, new AsyncCallback<Void>() {
+                    @Override
+                    public void onFailure(Throwable throwable) {
+                        System.out.println("Запрос упал " + throwable.getMessage());
+                    }
+
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        updateStore();
+                    }
+                });
+            }
+        });
+
         delSelBtn.addSelectHandler(new SelectEvent.SelectHandler() {
             @Override
             public void onSelect(SelectEvent event) {
@@ -123,7 +168,6 @@ public class admin implements EntryPoint {
                     @Override
                     public void onSuccess(Void aVoid) {
                         updateStore();
-//                        armorGrid.reconfigure(store,cm);
                     }
                 });
             }
@@ -168,6 +212,13 @@ public class admin implements EntryPoint {
                 addDialog.show();
             }
         });
+    }
+
+    public Widget asWidget() {
+        Widget d=uiBinder.createAndBindUi(this);
+        configGrid();
+        initHandlers();
+        fldsCon.add(fields);
         return d;
 	}
 

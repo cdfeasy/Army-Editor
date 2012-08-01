@@ -2,6 +2,7 @@ package com.webadmin.server;
 
 import com.armyeditor.HibernateUtil;
 import com.armyeditor.entrys.Armor;
+import com.armyeditor.entrys.AttackType;
 import com.armyeditor.entrys.Unit;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.webadmin.client.services.CommonService;
@@ -41,7 +42,6 @@ public class BaseService extends RemoteServiceServlet implements CommonService {
     public void delArmors(List<Armor> list) {
         Session ses= HibernateUtil.getSessionFactory().openSession();
         Transaction trans=ses.beginTransaction();
-        trans.begin();
         for(Armor a:list){
             a= (Armor) ses.merge(a);
             ses.delete(a);
@@ -55,8 +55,58 @@ public class BaseService extends RemoteServiceServlet implements CommonService {
     public void addArmor(Armor a) {
         Session ses = HibernateUtil.getSessionFactory().openSession();
         Transaction trans = ses.beginTransaction();
-        trans.begin();
         ses.save(a);
+        trans.commit();
+        ses.close();
+    }
+
+    @Override
+    public void changeArmor(Armor a) {
+        Session ses = HibernateUtil.getSessionFactory().openSession();
+        Transaction trans = ses.beginTransaction();
+        a = (Armor)ses.merge(a);
+        ses.flush();
+        trans.commit();
+        ses.close();
+    }
+
+    @Override
+    public List<AttackType> getAttackTypes() {
+        Session ses= HibernateUtil.getSessionFactory().openSession();
+        Query query = ses.createQuery("select attacktype from AttackType attacktype").setMaxResults(10);
+        List<AttackType> itemlist=query.list();
+        ses.close();
+        return itemlist;
+    }
+
+    @Override
+    public void delAttackTypes(List<AttackType> list) {
+        Session ses= HibernateUtil.getSessionFactory().openSession();
+        Transaction trans=ses.beginTransaction();
+        for(AttackType a:list){
+            a= (AttackType) ses.merge(a);
+            ses.delete(a);
+        }
+        ses.flush();
+        trans.commit();
+        ses.close();
+    }
+
+    @Override
+    public void addAttackType(AttackType a) {
+        Session ses = HibernateUtil.getSessionFactory().openSession();
+        Transaction trans = ses.beginTransaction();
+        ses.save(a);
+        trans.commit();
+        ses.close();
+    }
+
+    @Override
+    public void changeAttackType(AttackType a) {
+        Session ses = HibernateUtil.getSessionFactory().openSession();
+        Transaction trans = ses.beginTransaction();
+        a = (AttackType)ses.merge(a);
+        ses.flush();
         trans.commit();
         ses.close();
     }
