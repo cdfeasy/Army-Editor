@@ -18,13 +18,15 @@ import java.util.List;
 import junit.framework.Assert;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.junit.Before;
 import org.junit.Test;
 
 public class testDb {
-    @Before
+  //  @Before
     public void init() throws IOException{
          Session ses= HibernateUtil.getSessionFactory().openSession();
+         Transaction tr= ses.beginTransaction();
          Fraction f=new Fraction();
          f.setName("orks");
          f.setId("orks");
@@ -63,6 +65,7 @@ public class testDb {
          UnitType troops=new UnitType();
          troops.setName("troops");
          troops.setId("troops");
+         ses.save(troops);
          
          WeaponType melee=new WeaponType();
          melee.setId("melee");
@@ -190,6 +193,8 @@ public class testDb {
          final Item grenadeCost=new  Item();
          grenadeCost.setItemBase(grenade);
          grenadeCost.setCost(1);
+         ses.save(grenade);
+		 ses.save(grenadeCost);
         
          UnitBase ork=new UnitBase();
          ork.setId("ork");
@@ -230,6 +235,7 @@ public class testDb {
          final ItemSelection boysIS=new ItemSelection();
          boysIS.setItem(new ArrayList<Item>(){{add(grenadeCost);}});
          boysIS.setCondition("for all;");
+        
          
          final WeaponSelection shuttacond=new WeaponSelection();
          shuttacond.setWeapon(new ArrayList<Weapon>(){{add(shutac);}});
@@ -242,6 +248,11 @@ public class testDb {
          final WeaponSelection clawscond=new WeaponSelection();
          clawscond.setWeapon(new ArrayList<Weapon>(){{add(clawsc);}});
          clawscond.setCondition("replace slagga;");
+         
+         ses.save(boysIS);
+         ses.save(shuttacond);
+         ses.save(bigshuttacond);
+         ses.save(clawscond);
          
          
          SquadPartBase boysPart=new SquadPartBase();
@@ -266,6 +277,7 @@ public class testDb {
          ses.save(nobPart);
          ses.save(boysPart);
          ses.save(squadboys);
+         tr.commit();
          ses.close();
          
          // ObjectMapper mapper = new ObjectMapper();
@@ -279,15 +291,37 @@ public class testDb {
          
          
     }
-    @Test
-    public void testDb(){
-       // init();
+   // @Test
+    public void testDb() throws IOException{
+        init();
         Session ses= HibernateUtil.getSessionFactory().openSession();
     //      ses.beginTransaction();
         Query query = ses.createQuery("select wt from WeaponType wt");
         List<WeaponType> itemlist=query.list();
         Assert.assertEquals(itemlist.size(),3);
         ses.close();  
+    }
+    
+     @Test
+    public void testDb1() throws IOException{
+      //  init();
+        Session ses= HibernateUtil.getSessionFactory().openSession();
+        Transaction trans=ses.beginTransaction();
+    //      ses.beginTransaction();
+         UnitType troops=new UnitType();
+         troops.setName("troops");
+         troops.setId("troops");
+         ses.merge(troops);
+         trans.commit();
+        ses.close();  
+        
+           Session ses1= HibernateUtil.getSessionFactory().openSession();
+       // Query query = ses.createQuery("select unittype from UnitType unittype").setMaxResults(10);
+      
+        List<UnitType> itemlist=  ses1.createCriteria(UnitType.class).list();
+        
+        ses1.close();
+        System.out.println(itemlist.get(0).getOptions());
     }
     
 }
