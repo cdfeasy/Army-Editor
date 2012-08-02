@@ -1,4 +1,4 @@
-package com.webadmin.client.mainForm;
+package com.webadmin.client.mainForm.weaponTypeTab;
 
 import com.armyeditor.entrys.WeaponType;
 import com.google.gwt.editor.client.Editor;

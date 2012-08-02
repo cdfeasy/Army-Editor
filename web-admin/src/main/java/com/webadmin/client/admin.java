@@ -1,6 +1,5 @@
 package com.webadmin.client;
 
-import com.armyeditor.entrys.Armor;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.logical.shared.SelectionEvent;
@@ -8,34 +7,19 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.Widget;
-import com.sencha.gxt.core.client.IdentityValueProvider;
-import com.sencha.gxt.core.client.Style;
-import com.sencha.gxt.data.shared.ListStore;
-import com.sencha.gxt.widget.core.client.Dialog;
 import com.sencha.gxt.widget.core.client.TabItemConfig;
 import com.sencha.gxt.widget.core.client.TabPanel;
-import com.sencha.gxt.widget.core.client.button.TextButton;
 import com.sencha.gxt.widget.core.client.container.HorizontalLayoutContainer;
-import com.sencha.gxt.widget.core.client.container.VBoxLayoutContainer;
-import com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer;
-import com.sencha.gxt.widget.core.client.event.RowClickEvent;
-import com.sencha.gxt.widget.core.client.event.SelectEvent;
-import com.sencha.gxt.widget.core.client.form.FieldLabel;
-import com.sencha.gxt.widget.core.client.form.TextField;
-import com.sencha.gxt.widget.core.client.grid.CheckBoxSelectionModel;
-import com.sencha.gxt.widget.core.client.grid.ColumnConfig;
-import com.sencha.gxt.widget.core.client.grid.ColumnModel;
-import com.sencha.gxt.widget.core.client.grid.Grid;
 import com.sencha.gxt.widget.core.client.info.Info;
-import com.webadmin.client.mainForm.*;
+import com.webadmin.client.mainForm.armorTab.ArmorContainer;
+import com.webadmin.client.mainForm.attackTypeTab.AttackTypeContainer;
+import com.webadmin.client.mainForm.specialRuleTab.SpecialRuleContainer;
+import com.webadmin.client.mainForm.unitTypeTab.UnitTypeContainer;
+import com.webadmin.client.mainForm.weaponTypeTab.WeaponTypeContainer;
 import com.webadmin.client.services.CommonService;
 import com.webadmin.client.services.CommonServiceAsync;
-import java.util.ArrayList;
-
-import java.util.List;
 
 /**
  * Entry point classes define

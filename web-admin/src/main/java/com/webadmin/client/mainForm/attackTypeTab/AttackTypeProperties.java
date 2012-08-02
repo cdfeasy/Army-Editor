@@ -1,4 +1,4 @@
-package com.webadmin.client.mainForm;
+package com.webadmin.client.mainForm.attackTypeTab;
 
 import com.armyeditor.entrys.Armor;
 import com.armyeditor.entrys.AttackType;

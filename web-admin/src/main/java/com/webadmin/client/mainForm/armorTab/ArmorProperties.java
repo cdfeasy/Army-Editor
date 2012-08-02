@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.webadmin.client.mainForm;
+package com.webadmin.client.mainForm.armorTab;
 
 import com.armyeditor.entrys.Armor;
 import com.google.gwt.editor.client.Editor;

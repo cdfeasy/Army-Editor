@@ -1,4 +1,4 @@
-package com.webadmin.client.mainForm;
+package com.webadmin.client.mainForm.specialRuleTab;
 
 import com.sencha.gxt.core.client.util.Margins;
 import com.sencha.gxt.widget.core.client.button.TextButton;
@@ -12,17 +12,17 @@ import com.sencha.gxt.widget.core.client.form.TextField;
  * Created with IntelliJ IDEA.
  * User: tau
  * Date: 02.08.12
- * Time: 20:11
+ * Time: 15:47
  * To change this template use File | Settings | File Templates.
  */
-public class WeaponTypeFields extends BorderLayoutContainer {
+public class SpecialRuleFields extends BorderLayoutContainer {
     TextField idFld;
     TextField nameFld;
     TextArea descripFld;
     TextButton saveBtn = new TextButton("Save");
     TextButton saveNewBtn = new TextButton("Save as new item");
 
-    public WeaponTypeFields(){
+    public SpecialRuleFields() {
         VerticalLayoutContainer vc = new VerticalLayoutContainer();
         idFld = new TextField();
         vc.add(new FieldLabel(idFld, "ID"));

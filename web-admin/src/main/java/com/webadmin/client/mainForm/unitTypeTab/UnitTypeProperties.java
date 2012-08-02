@@ -1,4 +1,4 @@
-package com.webadmin.client.mainForm;
+package com.webadmin.client.mainForm.unitTypeTab;
 
 import com.armyeditor.entrys.UnitType;
 import com.google.gwt.editor.client.Editor;

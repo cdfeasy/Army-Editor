@@ -1,4 +1,4 @@
-package com.webadmin.client.mainForm;
+package com.webadmin.client.mainForm.specialRuleTab;
 
 import com.armyeditor.entrys.SpecialRule;
 import com.google.gwt.editor.client.Editor;
