@@ -5,8 +5,10 @@
 
 package com.armyeditor.entrys;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
@@ -17,7 +19,7 @@ import javax.persistence.ManyToMany;
 public class UnitType implements java.io.Serializable  {
     private String  id;
     private String name;
-    private List<Option> options;
+    private List<Option> options = new ArrayList<Option>();;
 
     public UnitType() {
     }
@@ -30,7 +32,7 @@ public class UnitType implements java.io.Serializable  {
     public void setId(String id) {
         this.id = id;
     }
-     @ManyToMany(cascade = CascadeType.REFRESH)
+    @ManyToMany(cascade = CascadeType.REFRESH, fetch= FetchType.EAGER)
     public List<Option> getOptions() {
         return options;
     }

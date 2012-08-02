@@ -35,4 +35,9 @@ public interface CommonService extends RemoteService {
     void delUnitTypes(List<UnitType> list);
     void addUnitType(UnitType u);
     void changeUnitType(UnitType u);
+
+    List<WeaponType> getWeaponType();
+    void delWeaponTypes(List<WeaponType> list);
+    void addWeaponType(WeaponType w);
+    void changeWeaponType(WeaponType w);
 }

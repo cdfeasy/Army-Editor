@@ -191,4 +191,45 @@ public class BaseService extends RemoteServiceServlet implements CommonService {
         ses.close();
     }
 
+    @Override
+    public List<WeaponType> getWeaponType() {
+        Session ses= HibernateUtil.getSessionFactory().openSession();
+        Query query = ses.createQuery("select weapontype from WeaponType weapontype").setMaxResults(10);
+        List<WeaponType> itemlist=query.list();
+        ses.close();
+        return itemlist;
+    }
+
+    @Override
+    public void delWeaponTypes(List<WeaponType> list) {
+        Session ses= HibernateUtil.getSessionFactory().openSession();
+        Transaction trans=ses.beginTransaction();
+        for(WeaponType a:list){
+            a = (WeaponType) ses.merge(a);
+            ses.delete(a);
+        }
+        ses.flush();
+        trans.commit();
+        ses.close();
+    }
+
+    @Override
+    public void addWeaponType(WeaponType w) {
+        Session ses = HibernateUtil.getSessionFactory().openSession();
+        Transaction trans = ses.beginTransaction();
+        ses.save(w);
+        trans.commit();
+        ses.close();
+    }
+
+    @Override
+    public void changeWeaponType(WeaponType w) {
+        Session ses = HibernateUtil.getSessionFactory().openSession();
+        Transaction trans = ses.beginTransaction();
+        ses.merge(w);
+        ses.flush();
+        trans.commit();
+        ses.close();
+    }
+
 }
