@@ -16,6 +16,9 @@
     <ui:with type="com.sencha.gxt.widget.core.client.TabItemConfig" field="specialRuleConfig">
         <ui:attributes text="Special Rules" />
     </ui:with>
+    <ui:with type="com.sencha.gxt.widget.core.client.TabItemConfig" field="unitTypeConfig">
+        <ui:attributes text="Unit Types" />
+    </ui:with>
     <ui:style>
         .sep {
             margin-top: 20px;
@@ -38,6 +41,12 @@
 
             <tabs:child config="{specialRuleConfig}">
                 <container:HorizontalLayoutContainer ui:field="specialRuleGridContainer">
+                    <!--вкладка с AttackType-->
+                </container:HorizontalLayoutContainer>
+            </tabs:child>
+
+            <tabs:child config="{unitTypeConfig}">
+                <container:HorizontalLayoutContainer ui:field="unitTypeGridContainer">
                     <!--вкладка с AttackType-->
                 </container:HorizontalLayoutContainer>
             </tabs:child>
