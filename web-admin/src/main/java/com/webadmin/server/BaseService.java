@@ -1,10 +1,7 @@
 package com.webadmin.server;
 
 import com.armyeditor.HibernateUtil;
-import com.armyeditor.entrys.Armor;
-import com.armyeditor.entrys.AttackType;
-import com.armyeditor.entrys.SpecialRule;
-import com.armyeditor.entrys.Unit;
+import com.armyeditor.entrys.*;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.webadmin.client.services.CommonService;
 import org.hibernate.Query;
@@ -148,6 +145,47 @@ public class BaseService extends RemoteServiceServlet implements CommonService {
         Session ses = HibernateUtil.getSessionFactory().openSession();
         Transaction trans = ses.beginTransaction();
         ses.merge(s);
+        ses.flush();
+        trans.commit();
+        ses.close();
+    }
+
+    @Override
+    public List<UnitType> getUnitType() {
+        Session ses= HibernateUtil.getSessionFactory().openSession();
+        Query query = ses.createQuery("select unittype from UnitType unittype").setMaxResults(10);
+        List<UnitType> itemlist=query.list();
+        ses.close();
+        return itemlist;
+    }
+
+    @Override
+    public void delUnitTypes(List<UnitType> list) {
+        Session ses= HibernateUtil.getSessionFactory().openSession();
+        Transaction trans=ses.beginTransaction();
+        for(UnitType a:list){
+            a = (UnitType) ses.merge(a);
+            ses.delete(a);
+        }
+        ses.flush();
+        trans.commit();
+        ses.close();
+    }
+
+    @Override
+    public void addUnitType(UnitType u) {
+        Session ses = HibernateUtil.getSessionFactory().openSession();
+        Transaction trans = ses.beginTransaction();
+        ses.save(u);
+        trans.commit();
+        ses.close();
+    }
+
+    @Override
+    public void changeUnitType(UnitType u) {
+        Session ses = HibernateUtil.getSessionFactory().openSession();
+        Transaction trans = ses.beginTransaction();
+        ses.merge(u);
         ses.flush();
         trans.commit();
         ses.close();

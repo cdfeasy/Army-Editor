@@ -1,9 +1,6 @@
 package com.webadmin.client.services;
 
-import com.armyeditor.entrys.Armor;
-import com.armyeditor.entrys.AttackType;
-import com.armyeditor.entrys.SpecialRule;
-import com.armyeditor.entrys.Unit;
+import com.armyeditor.entrys.*;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
@@ -33,4 +30,9 @@ public interface CommonService extends RemoteService {
     void delSpecialRules(List<SpecialRule> list);
     void addSpecialRule(SpecialRule s);
     void changeSpecialRule(SpecialRule s);
+
+    List<UnitType> getUnitType();
+    void delUnitTypes(List<UnitType> list);
+    void addUnitType(UnitType u);
+    void changeUnitType(UnitType u);
 }
