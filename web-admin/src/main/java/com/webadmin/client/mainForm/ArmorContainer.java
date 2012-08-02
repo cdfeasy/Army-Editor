@@ -167,24 +167,7 @@ public class ArmorContainer extends HorizontalLayoutContainer {
             }
         });
 
-        delSelBtn.addSelectHandler(new SelectEvent.SelectHandler() {
-            @Override
-            public void onSelect(SelectEvent event) {
-                Info.display("Click", ((TextButton) event.getSource()).getText() + " clicked");
-                List selectList = armorGrid.getSelectionModel().getSelectedItems();
-                commonService.delArmors(selectList,new AsyncCallback<Void>() {
-                    @Override
-                    public void onFailure(Throwable throwable) {
-                        System.out.println("Запрос упал " + throwable.getMessage());
-                    }
 
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        updateStore();
-                    }
-                });
-            }
-        });
 
     }
 

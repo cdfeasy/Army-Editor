@@ -13,6 +13,9 @@
     <ui:with type="com.sencha.gxt.widget.core.client.TabItemConfig" field="attackTypeTextTabConfig">
         <ui:attributes text="Attack Types" />
     </ui:with>
+    <ui:with type="com.sencha.gxt.widget.core.client.TabItemConfig" field="specialRuleConfig">
+        <ui:attributes text="Special Rules" />
+    </ui:with>
     <ui:style>
         .sep {
             margin-top: 20px;
@@ -29,6 +32,12 @@
 
             <tabs:child config="{attackTypeTextTabConfig}">
                 <container:HorizontalLayoutContainer ui:field="attackTyteGridContainer">
+                    <!--вкладка с AttackType-->
+                </container:HorizontalLayoutContainer>
+            </tabs:child>
+
+            <tabs:child config="{specialRuleConfig}">
+                <container:HorizontalLayoutContainer ui:field="specialRuleGridContainer">
                     <!--вкладка с AttackType-->
                 </container:HorizontalLayoutContainer>
             </tabs:child>
