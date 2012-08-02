@@ -1,6 +1,6 @@
-package com.webadmin.client.mainForm;
+package com.webadmin.client.mainForm.unitTypeTab;
 
-import com.armyeditor.entrys.WeaponType;
+import com.armyeditor.entrys.UnitType;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.sencha.gxt.core.client.IdentityValueProvider;
@@ -27,36 +27,33 @@ import java.util.List;
  * Created with IntelliJ IDEA.
  * User: tau
  * Date: 02.08.12
- * Time: 20:17
+ * Time: 19:28
  * To change this template use File | Settings | File Templates.
  */
-public class WeaponTypeContainer extends HorizontalLayoutContainer {
+public class UnitTypeContainer extends HorizontalLayoutContainer {
     private final CommonServiceAsync commonService = GWT.create(CommonService.class);
     VerticalLayoutContainer gridContainer;
-    Grid<WeaponType> specialRuleGrid;
-    ColumnModel<WeaponType> cm;
-    ListStore<WeaponType> store;
+    Grid<UnitType> specialRuleGrid;
+    ColumnModel<UnitType> cm;
+    ListStore<UnitType> store;
     TextButton updateBtn = new TextButton("Update");
     TextButton delSelBtn = new TextButton("Delete Selection");
-    final WeaponTypeFields weaponTypeFields = new WeaponTypeFields();
+    final UnitTypeFields unitTypeFields = new UnitTypeFields();
 
-    public WeaponTypeContainer() {
-        WeaponTypeProperties props = GWT.create(WeaponTypeProperties.class);
-        IdentityValueProvider<WeaponType> identity = new IdentityValueProvider<WeaponType>();
-        final CheckBoxSelectionModel<WeaponType> sm = new CheckBoxSelectionModel<WeaponType>(identity);
-        ColumnConfig<WeaponType, String> idColumn = new ColumnConfig<WeaponType, String>(props.id(), 50, "id");
-        ColumnConfig<WeaponType, String> nameColumn = new ColumnConfig<WeaponType, String>(props.name(), 150, "name");
-        ColumnConfig<WeaponType, String> descripColumn = new ColumnConfig<WeaponType, String>(props.description(), 150, "description");
-
-        List<ColumnConfig<WeaponType, ?>> l = new ArrayList<ColumnConfig<WeaponType, ?>>();
+    public UnitTypeContainer(){
+        UnitTypeProperties props = GWT.create(UnitTypeProperties.class);
+        IdentityValueProvider<UnitType> identity = new IdentityValueProvider<UnitType>();
+        final CheckBoxSelectionModel<UnitType> sm = new CheckBoxSelectionModel<UnitType>(identity);
+        ColumnConfig<UnitType, String> idColumn = new ColumnConfig<UnitType, String>(props.id(), 50, "id");
+        ColumnConfig<UnitType, String> nameColumn = new ColumnConfig<UnitType, String>(props.name(), 150, "name");
+        List<ColumnConfig<UnitType, ?>> l = new ArrayList<ColumnConfig<UnitType, ?>>();
         l.add(sm.getColumn());
         l.add(idColumn);
         l.add(nameColumn);
-        l.add(descripColumn);
-        cm = new ColumnModel<WeaponType>(l);
+        cm = new ColumnModel<UnitType>(l);
         sm.setSelectionMode(Style.SelectionMode.MULTI);
-        store = new ListStore<WeaponType>(props.key());
-        specialRuleGrid= new Grid<WeaponType>(store, cm);
+        store = new ListStore<UnitType>(props.key());
+        specialRuleGrid= new Grid<UnitType>(store, cm);
         updateStore();
         specialRuleGrid.setSelectionModel(sm);
         gridContainer = new VerticalLayoutContainer();
@@ -65,13 +62,13 @@ public class WeaponTypeContainer extends HorizontalLayoutContainer {
         gridContainer.add(delSelBtn);
         this.add(gridContainer);
         VerticalLayoutContainer vc = new VerticalLayoutContainer();
-        vc.add(weaponTypeFields, new VerticalLayoutContainer.VerticalLayoutData(350,200,new Margins(5,5,5,5)));
+        vc.add(unitTypeFields, new VerticalLayoutContainer.VerticalLayoutData(350,200,new Margins(5,5,5,5)));
         this.add(vc);
         initHandlers();
     }
 
     public void updateStore(){
-        commonService.getWeaponType(new AsyncCallback<List<WeaponType>>() {
+        commonService.getUnitType(new AsyncCallback<List<UnitType>>() {
 
             @Override
             public void onFailure(Throwable caught) {
@@ -79,9 +76,9 @@ public class WeaponTypeContainer extends HorizontalLayoutContainer {
             }
 
             @Override
-            public void onSuccess(List<WeaponType> result) {
+            public void onSuccess(List<UnitType> result) {
                 store.clear();
-                for (WeaponType a : result) {
+                for (UnitType a : result) {
                     store.add(a);
                 }
                 specialRuleGrid.reconfigure(store, cm);
@@ -94,20 +91,18 @@ public class WeaponTypeContainer extends HorizontalLayoutContainer {
             @Override
             public void onRowClick(RowClickEvent event) {
                 int row = event.getRowIndex();
-                WeaponType a =(WeaponType) event.getSource().getStore().get(row);
-                weaponTypeFields.getIdFld().setText(a.getId());
-                weaponTypeFields.getNameFld().setText(a.getName());
-                weaponTypeFields.getDescripFld().setText(a.getDescription());
+                UnitType a =(UnitType) event.getSource().getStore().get(row);
+                unitTypeFields.getIdFld().setText(a.getId());
+                unitTypeFields.getNameFld().setText(a.getName());
             }
         });
-        weaponTypeFields.getSaveBtn().addSelectHandler(new SelectEvent.SelectHandler() {
+        unitTypeFields.getSaveBtn().addSelectHandler(new SelectEvent.SelectHandler() {
             @Override
             public void onSelect(SelectEvent event) {
-                WeaponType a = new WeaponType();
-                a.setId(weaponTypeFields.getIdFld().getText());
-                a.setName(weaponTypeFields.getNameFld().getText());
-                a.setDescription(weaponTypeFields.getDescripFld().getText());
-                commonService.changeWeaponType(a, new AsyncCallback<Void>() {
+                UnitType a = new UnitType();
+                a.setId(unitTypeFields.getIdFld().getText());
+                a.setName(unitTypeFields.getNameFld().getText());
+                commonService.changeUnitType(a, new AsyncCallback<Void>() {
                     @Override
                     public void onFailure(Throwable throwable) {
                         System.out.println("Запрос упал " + throwable.getMessage());
@@ -120,14 +115,13 @@ public class WeaponTypeContainer extends HorizontalLayoutContainer {
                 });
             }
         });
-        weaponTypeFields.getSaveNewBtn().addSelectHandler(new SelectEvent.SelectHandler() {
+        unitTypeFields.getSaveNewBtn().addSelectHandler(new SelectEvent.SelectHandler() {
             @Override
             public void onSelect(SelectEvent event) {
-                WeaponType a = new WeaponType();
-                a.setId(weaponTypeFields.getIdFld().getText());
-                a.setName(weaponTypeFields.getNameFld().getText());
-                a.setDescription(weaponTypeFields.getDescripFld().getText());
-                commonService.addWeaponType(a, new AsyncCallback<Void>() {
+                UnitType a = new UnitType();
+                a.setId(unitTypeFields.getIdFld().getText());
+                a.setName(unitTypeFields.getNameFld().getText());
+                commonService.addUnitType(a, new AsyncCallback<Void>() {
                     @Override
                     public void onFailure(Throwable throwable) {
                         System.out.println("Запрос упал " + throwable.getMessage());
@@ -146,7 +140,7 @@ public class WeaponTypeContainer extends HorizontalLayoutContainer {
             public void onSelect(SelectEvent event) {
                 Info.display("Click", ((TextButton) event.getSource()).getText() + " clicked");
                 List selectList = specialRuleGrid.getSelectionModel().getSelectedItems();
-                commonService.delSpecialRules(selectList, new AsyncCallback<Void>() {
+                commonService.delUnitTypes(selectList, new AsyncCallback<Void>() {
                     @Override
                     public void onFailure(Throwable throwable) {
                         System.out.println("Запрос упал " + throwable.getMessage());

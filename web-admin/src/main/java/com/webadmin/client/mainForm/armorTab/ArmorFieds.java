@@ -1,4 +1,4 @@
-package com.webadmin.client.mainForm;
+package com.webadmin.client.mainForm.armorTab;
 
 import com.sencha.gxt.core.client.util.Margins;
 import com.sencha.gxt.widget.core.client.button.TextButton;
@@ -11,22 +11,25 @@ import com.sencha.gxt.widget.core.client.form.TextField;
 /**
  * Created with IntelliJ IDEA.
  * User: tau
- * Date: 02.08.12
- * Time: 19:16
+ * Date: 26.07.12
+ * Time: 1:02
  * To change this template use File | Settings | File Templates.
  */
-public class UnitTypeFields extends BorderLayoutContainer {
+public class ArmorFieds extends BorderLayoutContainer {
     TextField idFld;
     TextField nameFld;
+    TextArea descripFld;
     TextButton saveBtn = new TextButton("Save");
     TextButton saveNewBtn = new TextButton("Save as new item");
 
-    public UnitTypeFields(){
+    public ArmorFieds() {
         VerticalLayoutContainer vc = new VerticalLayoutContainer();
         idFld = new TextField();
         vc.add(new FieldLabel(idFld, "ID"));
         nameFld = new TextField();
         vc.add(new FieldLabel(nameFld, "Name"));
+        descripFld = new TextArea();
+        vc.add(new FieldLabel(descripFld, "Description"));
         vc.add(saveBtn);
         vc.add(saveNewBtn);
 
@@ -52,6 +55,14 @@ public class UnitTypeFields extends BorderLayoutContainer {
         this.nameFld = nameFld;
     }
 
+    public TextArea getDescripFld() {
+        return descripFld;
+    }
+
+    public void setDescripFld(TextArea descripFld) {
+        this.descripFld = descripFld;
+    }
+
     public TextButton getSaveBtn() {
         return saveBtn;
     }
@@ -67,4 +78,5 @@ public class UnitTypeFields extends BorderLayoutContainer {
     public void setSaveNewBtn(TextButton saveNewBtn) {
         this.saveNewBtn = saveNewBtn;
     }
+
 }
