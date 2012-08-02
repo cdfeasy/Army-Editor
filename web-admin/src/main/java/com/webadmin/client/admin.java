@@ -56,6 +56,8 @@ public class admin implements EntryPoint {
     HorizontalLayoutContainer specialRuleGridContainer;
     @UiField
     HorizontalLayoutContainer unitTypeGridContainer;
+    @UiField
+    HorizontalLayoutContainer weaponTypeGridContainer;
 
     public Widget asWidget() {
         Widget d=uiBinder.createAndBindUi(this);
@@ -63,6 +65,7 @@ public class admin implements EntryPoint {
         attackTyteGridContainer.add(new AttackTypeContainer());
         specialRuleGridContainer.add(new SpecialRuleContainer());
         unitTypeGridContainer.add(new UnitTypeContainer());
+        weaponTypeGridContainer.add(new WeaponTypeContainer());
         return d;
 	}
 
