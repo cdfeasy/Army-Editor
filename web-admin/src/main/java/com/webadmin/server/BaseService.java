@@ -3,6 +3,7 @@ package com.webadmin.server;
 import com.armyeditor.HibernateUtil;
 import com.armyeditor.entrys.Armor;
 import com.armyeditor.entrys.AttackType;
+import com.armyeditor.entrys.SpecialRule;
 import com.armyeditor.entrys.Unit;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.webadmin.client.services.CommonService;
@@ -111,5 +112,45 @@ public class BaseService extends RemoteServiceServlet implements CommonService {
         ses.close();
     }
 
+    @Override
+    public List<SpecialRule> getSpecialRule() {
+        Session ses= HibernateUtil.getSessionFactory().openSession();
+        Query query = ses.createQuery("select specialrule from SpecialRule specialrule").setMaxResults(10);
+        List<SpecialRule> itemlist=query.list();
+        ses.close();
+        return itemlist;
+    }
+
+    @Override
+    public void delSpecialRules(List<SpecialRule> list) {
+        Session ses= HibernateUtil.getSessionFactory().openSession();
+        Transaction trans=ses.beginTransaction();
+        for(SpecialRule a:list){
+            a = (SpecialRule) ses.merge(a);
+            ses.delete(a);
+        }
+        ses.flush();
+        trans.commit();
+        ses.close();
+    }
+
+    @Override
+    public void addSpecialRule(SpecialRule s) {
+        Session ses = HibernateUtil.getSessionFactory().openSession();
+        Transaction trans = ses.beginTransaction();
+        ses.save(s);
+        trans.commit();
+        ses.close();
+    }
+
+    @Override
+    public void changeSpecialRule(SpecialRule s) {
+        Session ses = HibernateUtil.getSessionFactory().openSession();
+        Transaction trans = ses.beginTransaction();
+        ses.merge(s);
+        ses.flush();
+        trans.commit();
+        ses.close();
+    }
 
 }
