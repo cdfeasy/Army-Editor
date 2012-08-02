@@ -44,16 +44,18 @@ public class SpecialRuleContainer extends HorizontalLayoutContainer {
         SpecialRuleProperties props = GWT.create(SpecialRuleProperties.class);
         IdentityValueProvider<SpecialRule> identity = new IdentityValueProvider<SpecialRule>();
         final CheckBoxSelectionModel<SpecialRule> sm = new CheckBoxSelectionModel<SpecialRule>(identity);
+        ColumnConfig<SpecialRule, String> idColumn = new ColumnConfig<SpecialRule, String>(props.id(), 50, "id");
         ColumnConfig<SpecialRule, String> nameColumn = new ColumnConfig<SpecialRule, String>(props.name(), 150, "name");
         ColumnConfig<SpecialRule, String> descripColumn = new ColumnConfig<SpecialRule, String>(props.description(), 150, "description");
 
         List<ColumnConfig<SpecialRule, ?>> l = new ArrayList<ColumnConfig<SpecialRule, ?>>();
         l.add(sm.getColumn());
+        l.add(idColumn);
         l.add(nameColumn);
         l.add(descripColumn);
         cm = new ColumnModel<SpecialRule>(l);
         sm.setSelectionMode(Style.SelectionMode.MULTI);
-        store = new ListStore<SpecialRule>(props.id());
+        store = new ListStore<SpecialRule>(props.key());
         specialRuleGrid= new Grid<SpecialRule>(store, cm);
         updateStore();
         specialRuleGrid.setSelectionModel(sm);

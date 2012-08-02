@@ -47,16 +47,18 @@ public class ArmorContainer extends HorizontalLayoutContainer {
         ArmorProperties props = GWT.create(ArmorProperties.class);
         IdentityValueProvider<Armor> identity = new IdentityValueProvider<Armor>();
         final CheckBoxSelectionModel<Armor> sm = new CheckBoxSelectionModel<Armor>(identity);
+        ColumnConfig<Armor, String> idColumn = new ColumnConfig<Armor, String>(props.id(), 50, "id");
         ColumnConfig<Armor, String> nameColumn = new ColumnConfig<Armor, String>(props.name(), 150, "name");
         ColumnConfig<Armor, String> descripColumn = new ColumnConfig<Armor, String>(props.description(), 150, "description");
 
         List<ColumnConfig<Armor, ?>> l = new ArrayList<ColumnConfig<Armor, ?>>();
         l.add(sm.getColumn());
+        l.add(idColumn);
         l.add(nameColumn);
         l.add(descripColumn);
         cm = new ColumnModel<Armor>(l);
         sm.setSelectionMode(Style.SelectionMode.MULTI);
-        store = new ListStore<Armor>(props.id());
+        store = new ListStore<Armor>(props.key());
         armorGrid= new Grid<Armor>(store, cm);
         updateStore();
         armorGrid.setSelectionModel(sm);

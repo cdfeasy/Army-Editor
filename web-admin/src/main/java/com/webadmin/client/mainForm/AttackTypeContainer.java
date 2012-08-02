@@ -43,16 +43,18 @@ public class AttackTypeContainer extends HorizontalLayoutContainer {
         AttackTypeProperties props = GWT.create(AttackTypeProperties.class);
         IdentityValueProvider<AttackType> identity = new IdentityValueProvider<AttackType>();
         final CheckBoxSelectionModel<AttackType> sm = new CheckBoxSelectionModel<AttackType>(identity);
+        ColumnConfig<AttackType, String> idColumn = new ColumnConfig<AttackType, String>(props.id(), 50, "id");
         ColumnConfig<AttackType, String> nameColumn = new ColumnConfig<AttackType,String>(props.name(),150,"name");
         ColumnConfig<AttackType, String> descripColumn = new ColumnConfig<AttackType,String>(props.description(),150,"description");
 
         List<ColumnConfig<AttackType, ?>> l = new ArrayList<ColumnConfig<AttackType, ?>>();
         l.add(sm.getColumn());
+        l.add(idColumn);
         l.add(nameColumn);
         l.add(descripColumn);
         cm = new ColumnModel<AttackType>(l);
         sm.setSelectionMode(Style.SelectionMode.MULTI);
-        store = new ListStore<AttackType>(props.id());
+        store = new ListStore<AttackType>(props.key());
         updateStore();
         attackTypeGrid = new Grid<AttackType>(store,cm);
         attackTypeGrid.setSelectionModel(sm);
