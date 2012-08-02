@@ -81,8 +81,9 @@ public class AttackTypeContainer extends HorizontalLayoutContainer {
         });
 
         gridContainer = new VerticalLayoutContainer();
-        gridContainer.add(updateBtn);
         gridContainer.add(attackTypeGrid);
+        gridContainer.add(updateBtn);
+        gridContainer.add(delSelBtn);
         this.add(gridContainer);
         VerticalLayoutContainer vc = new VerticalLayoutContainer();
         vc.add(attackTypeFields, new VerticalLayoutContainer.VerticalLayoutData(350,200,new Margins(5,5,5,5)));

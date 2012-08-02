@@ -1,6 +1,8 @@
 package com.webadmin.client.mainForm;
 
+import com.sencha.gxt.core.client.util.Margins;
 import com.sencha.gxt.widget.core.client.button.TextButton;
+import com.sencha.gxt.widget.core.client.container.BorderLayoutContainer;
 import com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer;
 import com.sencha.gxt.widget.core.client.form.FieldLabel;
 import com.sencha.gxt.widget.core.client.form.TextArea;
@@ -13,7 +15,7 @@ import com.sencha.gxt.widget.core.client.form.TextField;
  * Time: 1:02
  * To change this template use File | Settings | File Templates.
  */
-public class ArmorFieds extends VerticalLayoutContainer {
+public class ArmorFieds extends BorderLayoutContainer {
     TextField idFld;
     TextField nameFld;
     TextArea descripFld;
@@ -21,15 +23,20 @@ public class ArmorFieds extends VerticalLayoutContainer {
     TextButton saveNewBtn = new TextButton("Save as new item");
 
     public ArmorFieds() {
+        VerticalLayoutContainer vc = new VerticalLayoutContainer();
         idFld = new TextField();
-        this.add(new FieldLabel(idFld,"ID"));
+        vc.add(new FieldLabel(idFld, "ID"));
         nameFld = new TextField();
-        this.add(new FieldLabel(nameFld,"Name"));
+        vc.add(new FieldLabel(nameFld, "Name"));
         descripFld = new TextArea();
-        this.add(new FieldLabel(descripFld,"Description"));
-        this.add(saveBtn);
-        this.add(saveNewBtn);
-//        idFld.disable();
+        vc.add(new FieldLabel(descripFld, "Description"));
+        vc.add(saveBtn);
+        vc.add(saveNewBtn);
+
+        this.setBorders(true);
+        this.setHeight(200);
+        this.setWidth(350);
+        this.add(vc,new VerticalLayoutContainer.VerticalLayoutData(350,200,new Margins(5,5,5,5)));
     }
 
     public TextField getIdFld() {

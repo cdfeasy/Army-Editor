@@ -66,9 +66,6 @@ public class AttackTypeFields extends BorderLayoutContainer {
     }
 
     public AttackTypeFields() {
-        VBoxLayoutContainer innerCon = new VBoxLayoutContainer(VBoxLayoutContainer.VBoxLayoutAlign.STRETCH);
-        Padding padding = new Padding(5,5,5,5);
-        innerCon.setPadding(padding);
         VerticalLayoutContainer vc = new VerticalLayoutContainer();
         idFld = new TextField();
         vc.add(new FieldLabel(idFld, "ID"));
@@ -82,13 +79,6 @@ public class AttackTypeFields extends BorderLayoutContainer {
         this.setBorders(true);
         this.setHeight(200);
         this.setWidth(350);
-        BorderLayoutData ld = new BorderLayoutData(150);
-        Margins margins = new Margins(5,5,5,5);
-        ld.setMargins(margins);
-//        innerCon.setLayoutData(ld);
-        innerCon.add(vc);
-//        this.add(innerCon);
-        this.setCenterWidget(innerCon,ld);
-//        VerticalLayoutContainer.VerticalLayoutData
+        this.add(vc,new VerticalLayoutContainer.VerticalLayoutData(350,200,new Margins(5,5,5,5)));
     }
 }

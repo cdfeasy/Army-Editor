@@ -64,7 +64,7 @@ public class BaseService extends RemoteServiceServlet implements CommonService {
     public void changeArmor(Armor a) {
         Session ses = HibernateUtil.getSessionFactory().openSession();
         Transaction trans = ses.beginTransaction();
-        a = (Armor)ses.merge(a);
+        ses.merge(a);
         ses.flush();
         trans.commit();
         ses.close();
@@ -105,7 +105,7 @@ public class BaseService extends RemoteServiceServlet implements CommonService {
     public void changeAttackType(AttackType a) {
         Session ses = HibernateUtil.getSessionFactory().openSession();
         Transaction trans = ses.beginTransaction();
-        a = (AttackType)ses.merge(a);
+        ses.merge(a);
         ses.flush();
         trans.commit();
         ses.close();

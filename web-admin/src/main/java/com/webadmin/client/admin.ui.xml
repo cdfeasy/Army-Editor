@@ -13,17 +13,6 @@
     <ui:with type="com.sencha.gxt.widget.core.client.TabItemConfig" field="attackTypeTextTabConfig">
         <ui:attributes text="Attack Types" />
     </ui:with>
-    <ui:with type="com.sencha.gxt.core.client.util.Margins" field="margins5">
-        <ui:attributes top="5" right="5" bottom="5" left="5" />
-    </ui:with>
-    <ui:with type="com.sencha.gxt.core.client.util.Padding" field="padding5">
-        <ui:attributes top="5" right="5" bottom="5" left="5" />
-    </ui:with>
-    <ui:with type="com.sencha.gxt.widget.core.client.container.BorderLayoutContainer.BorderLayoutData" field="westData">
-        <ui:attributes size="150" margins="{margins5}"  />
-    </ui:with>
-    <ui:with type="java.lang.String" field="txt" />
-
     <ui:style>
         .sep {
             margin-top: 20px;
@@ -33,35 +22,14 @@
     <container:FlowLayoutContainer borders="false">
         <tabs:TabPanel ui:field="folder"  addStyleNames="margin-10">
             <tabs:child config="{armorConfig}">
-                <container:HorizontalLayoutContainer>
-                    <container:VerticalLayoutContainer ui:field="gridContainer" >
-                        <container:child>
-                            <container:VerticalLayoutContainer>
-                                <button:TextButton ui:field="updateBtn" text="Update" />
-                                <button:TextButton ui:field="addBtn" text="Add new item"/>
-                            </container:VerticalLayoutContainer>
-                        </container:child>
-                        <container:child>
-                            <container:VerticalLayoutContainer ui:field="con"/>
-                        </container:child>
-                        <button:TextButton ui:field="delSelBtn" text="Delete Selected"  />
-                    </container:VerticalLayoutContainer>
-                    <container:BorderLayoutContainer borders="true" height="200" width="350" layoutData="{westData}" >
-                        <container:center>
-                            <container:VBoxLayoutContainer ui:field="fldsCon" padding="{padding5}" vBoxLayoutAlign="STRETCH">
-                            <!--fields panel-->
-                            </container:VBoxLayoutContainer>
-                        </container:center>
-                    </container:BorderLayoutContainer>
+                <container:HorizontalLayoutContainer ui:field="armorGridContainer">
+                    <!--вкладка с Armor-->
                 </container:HorizontalLayoutContainer>
             </tabs:child>
 
             <tabs:child config="{attackTypeTextTabConfig}">
                 <container:HorizontalLayoutContainer ui:field="attackTyteGridContainer">
-                    <!--<container:VerticalLayoutContainer >
-                        <g:Label text="{txt}" addStyleNames="pad-text"  />
-                        <g:Label text="{txt}" addStyleNames="pad-text {style.sep}" />
-                    </container:VerticalLayoutContainer>-->
+                    <!--вкладка с AttackType-->
                 </container:HorizontalLayoutContainer>
             </tabs:child>
         </tabs:TabPanel>
