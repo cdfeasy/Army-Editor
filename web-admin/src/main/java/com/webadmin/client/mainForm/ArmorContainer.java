@@ -93,6 +93,7 @@ public class ArmorContainer extends HorizontalLayoutContainer {
         VerticalLayoutContainer vc = new VerticalLayoutContainer();
         vc.add(armorFieds, new VerticalLayoutContainer.VerticalLayoutData(350,200,new Margins(5,5,5,5)));
         this.add(vc);
+        initHandlers();
     }
 
     public void updateStore(){

@@ -88,6 +88,7 @@ public class AttackTypeContainer extends HorizontalLayoutContainer {
         VerticalLayoutContainer vc = new VerticalLayoutContainer();
         vc.add(attackTypeFields, new VerticalLayoutContainer.VerticalLayoutData(350,200,new Margins(5,5,5,5)));
         this.add(vc);
+        initHandlers();
     }
 
     void initHandlers() {
