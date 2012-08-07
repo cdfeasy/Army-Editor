@@ -5,6 +5,7 @@
 
 package com.armyeditor.dto;
 
+import com.armyeditor.entrys.Option;
 import javax.persistence.Id;
 
 /**
@@ -18,6 +19,22 @@ public class OptionDTO implements java.io.Serializable  {
 
     public OptionDTO() {
     }
+
+	public OptionDTO(Option option) {
+		this.id = option.getId();
+		this.name =  option.getName();
+		this.description = option.getDescription();
+	}
+	
+	public Option getOption(){
+		Option option=new Option();
+		option.setId(id);
+		option.setName(name);
+		option.setDescription(description);
+		return option;
+	}
+	
+	
 
     public String getDescription() {
         return description;

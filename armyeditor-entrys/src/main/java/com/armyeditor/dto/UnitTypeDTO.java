@@ -5,6 +5,7 @@
 
 package com.armyeditor.dto;
 
+import com.armyeditor.entrys.Option;
 import com.armyeditor.entrys.UnitType;
 import java.util.ArrayList;
 import java.util. ArrayList;
@@ -28,11 +29,18 @@ public class UnitTypeDTO implements java.io.Serializable{
     public UnitTypeDTO(UnitType type) {
         this.id = type.getId();
         this.name = type.getName();
+		for(Option opt:type.getOptions()){
+			options.add(new OptionDTO(opt));
+		}
     }
     public UnitType toUnitType(){
         UnitType ut=new UnitType();
         ut.setId(id);
         ut.setName(name);
+		for(OptionDTO opt:options){
+			ut.getOptions().add(opt.getOption());
+		}
+		
         return ut;
     }
     
