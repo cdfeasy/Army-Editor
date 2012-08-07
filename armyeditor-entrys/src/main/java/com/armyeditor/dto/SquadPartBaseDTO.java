@@ -7,7 +7,7 @@ package com.armyeditor.dto;
 
 //import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.ArrayList;
-import java.util.List;
+import java.util. ArrayList;
 import javax.persistence.CascadeType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -23,9 +23,9 @@ public class SquadPartBaseDTO implements java.io.Serializable  {
     private UnitBaseDTO unit;
     private int minSize;
     private int maxSize;
-    private List<ItemSelectionDTO> itemSelection=new ArrayList<ItemSelectionDTO>();
-    private List<WeaponSelectionDTO> weaponSelection=new ArrayList<WeaponSelectionDTO>();
-    private List<SquadPartBaseDTO> modifications=new ArrayList<SquadPartBaseDTO>();
+    private  ArrayList<ItemSelectionDTO> itemSelection=new ArrayList<ItemSelectionDTO>();
+    private  ArrayList<WeaponSelectionDTO> weaponSelection=new ArrayList<WeaponSelectionDTO>();
+    private  ArrayList<SquadPartBaseDTO> modifications=new ArrayList<SquadPartBaseDTO>();
     private SquadPartBaseDTO parent;
     private String conditions;
 
@@ -40,19 +40,19 @@ public class SquadPartBaseDTO implements java.io.Serializable  {
         this.conditions = conditions;
     }
     
-    public List<ItemSelectionDTO> getItemSelection() {
+    public  ArrayList<ItemSelectionDTO> getItemSelection() {
         return itemSelection;
     }
 
-    public void setItemSelection(List<ItemSelectionDTO> itemSelection) {
+    public void setItemSelection( ArrayList<ItemSelectionDTO> itemSelection) {
         this.itemSelection = itemSelection;
     }
    
-    public List<WeaponSelectionDTO> getWeaponSelection() {
+    public  ArrayList<WeaponSelectionDTO> getWeaponSelection() {
         return weaponSelection;
     }
 
-    public void setWeaponSelection(List<WeaponSelectionDTO> weaponSelection) {
+    public void setWeaponSelection( ArrayList<WeaponSelectionDTO> weaponSelection) {
         this.weaponSelection = weaponSelection;
     }
   
@@ -82,11 +82,11 @@ public class SquadPartBaseDTO implements java.io.Serializable  {
         this.minSize = minSize;
     }
     
-    public List<SquadPartBaseDTO> getModifications() {
+    public  ArrayList<SquadPartBaseDTO> getModifications() {
         return modifications;
     }
 
-    public void setModifications(List<SquadPartBaseDTO> modifications) {
+    public void setModifications( ArrayList<SquadPartBaseDTO> modifications) {
         this.modifications = modifications;
     }
 

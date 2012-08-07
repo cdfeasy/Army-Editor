@@ -8,7 +8,7 @@ import com.armyeditor.entrys.classes.Description;
 //import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.List;
+import java.util. ArrayList;
 import javax.persistence.*;
 
 /**
@@ -28,10 +28,10 @@ public class VenicleBaseDTO implements Serializable {
     private int Side;
     private int Rear;
     private int cost;
-    private List<OptionDTO> options=new ArrayList<OptionDTO>();
+    private  ArrayList<OptionDTO> options=new ArrayList<OptionDTO>();
     private UnitTypeDTO unitType;
-    private List<WeaponDTO>  weapons=new ArrayList<WeaponDTO>();
-    private List<ItemDTO>  items=new ArrayList<ItemDTO>();
+    private  ArrayList<WeaponDTO>  weapons=new ArrayList<WeaponDTO>();
+    private  ArrayList<ItemDTO>  items=new ArrayList<ItemDTO>();
     private FractionDTO fraction;
 
     public int getA() {
@@ -130,19 +130,19 @@ public class VenicleBaseDTO implements Serializable {
         this.id = id;
     }
 
-    public List<ItemDTO> getItems() {
+    public  ArrayList<ItemDTO> getItems() {
         return items;
     }
 
-    public void setItems(List<ItemDTO> items) {
+    public void setItems( ArrayList<ItemDTO> items) {
         this.items = items;
     }
     
-    public List<OptionDTO> getOptions() {
+    public  ArrayList<OptionDTO> getOptions() {
         return options;
     }
 
-    public void setOptions(List<OptionDTO> options) {
+    public void setOptions( ArrayList<OptionDTO> options) {
         this.options = options;
     }
 
@@ -154,11 +154,11 @@ public class VenicleBaseDTO implements Serializable {
         this.unitType = unitType;
     }
     
-    public List<WeaponDTO> getWeapons() {
+    public  ArrayList<WeaponDTO> getWeapons() {
         return weapons;
     }
 
-    public void setWeapons(List<WeaponDTO> weapons) {
+    public void setWeapons( ArrayList<WeaponDTO> weapons) {
         this.weapons = weapons;
     }
     

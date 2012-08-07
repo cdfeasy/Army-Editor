@@ -7,7 +7,7 @@ package com.armyeditor.dto;
 
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
+import java.util. ArrayList;
 import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.FetchType;
@@ -24,7 +24,7 @@ public class CodexDTO implements java.io.Serializable  {
     private String  id;
     private String name;
     private String description;
-    private List<SquadBaseDTO> squads=new ArrayList<SquadBaseDTO>();
+    private  ArrayList<SquadBaseDTO> squads=new ArrayList<SquadBaseDTO>();
 
     public CodexDTO(){
 
@@ -54,11 +54,11 @@ public class CodexDTO implements java.io.Serializable  {
         this.name = name;
     }
     
-    public List<SquadBaseDTO> getSquads() {
+    public  ArrayList<SquadBaseDTO> getSquads() {
         return squads;
     }
 
-    public void setSquads(List<SquadBaseDTO> squads) {
+    public void setSquads( ArrayList<SquadBaseDTO> squads) {
         this.squads = squads;
     }
 	
@@ -94,7 +94,7 @@ public class CodexDTO implements java.io.Serializable  {
 		for(WeaponSelectionDTO wp:part.getWeaponSelection()){
 			
 			smain.append(offset+"\t").append("condition=").append(wp.getCondition()).append(";");
-			smain.append("weaponlist[");
+			smain.append("weapon ArrayList[");
 			for(WeaponDTO w:wp.getWeapon()){
 				lstweap.add(w.getWeapon());
 				smain.append("weaponBase=").append(w.getWeapon().getId()).append(",");
@@ -106,7 +106,7 @@ public class CodexDTO implements java.io.Serializable  {
 		for(ItemSelectionDTO wp:part.getItemSelection()){
 			
 			smain.append(offset+"\t").append("condition=").append(wp.getCondition()).append(";");
-			smain.append("Itemlist[");
+			smain.append("Item ArrayList[");
 			for(ItemDTO w:wp.getItem()){
 				lstitems.add(w.getItemBase());
 				smain.append("weaponBase=").append(w.getItemBase().getId()).append(",");

@@ -6,7 +6,7 @@
 package com.armyeditor.dto;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util. ArrayList;
 import javax.persistence.CascadeType;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
@@ -21,18 +21,18 @@ public class FractionDTO implements java.io.Serializable  {
     private String  id;
     private String name;
     private String description;
-    private List<CodexDTO> codexes =new ArrayList<CodexDTO>();
+    private  ArrayList<CodexDTO> codexes =new ArrayList<CodexDTO>();
 
     public FractionDTO() {
     }
 
     
    
-    public List<CodexDTO> getCodexes() {
+    public  ArrayList<CodexDTO> getCodexes() {
         return codexes;
     }
 
-    public void setCodexes(List<CodexDTO> codexes) {
+    public void setCodexes( ArrayList<CodexDTO> codexes) {
         this.codexes = codexes;
     }
 

@@ -6,7 +6,7 @@
 package com.armyeditor.dto;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util. ArrayList;
 import javax.persistence.CascadeType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -21,35 +21,35 @@ public class SquadPartDTO implements java.io.Serializable {
     private String  id;
     private SquadPartBaseDTO base;
     private int squadsize;
-    private List<ItemDTO> Items=new ArrayList<ItemDTO>();
-    private List<WeaponDTO> Weapons=new ArrayList<WeaponDTO>();
-    private List<ArmorDTO> Armors=new ArrayList<ArmorDTO>();
+    private  ArrayList<ItemDTO> Items=new ArrayList<ItemDTO>();
+    private  ArrayList<WeaponDTO> Weapons=new ArrayList<WeaponDTO>();
+    private  ArrayList<ArmorDTO> Armors=new ArrayList<ArmorDTO>();
 
     public SquadPartDTO() {
     }
 
     
-    public List<ArmorDTO> getArmors() {
+    public  ArrayList<ArmorDTO> getArmors() {
         return Armors;
     }
 
-    public void setArmors(List<ArmorDTO> Armors) {
+    public void setArmors( ArrayList<ArmorDTO> Armors) {
         this.Armors = Armors;
     }
     
-    public List<ItemDTO> getItems() {
+    public  ArrayList<ItemDTO> getItems() {
         return Items;
     }
 
-    public void setItems(List<ItemDTO> Items) {
+    public void setItems( ArrayList<ItemDTO> Items) {
         this.Items = Items;
     }
     
-    public List<WeaponDTO> getWeapons() {
+    public  ArrayList<WeaponDTO> getWeapons() {
         return Weapons;
     }
 
-    public void setWeapons(List<WeaponDTO> Weapons) {
+    public void setWeapons( ArrayList<WeaponDTO> Weapons) {
         this.Weapons = Weapons;
     }
 

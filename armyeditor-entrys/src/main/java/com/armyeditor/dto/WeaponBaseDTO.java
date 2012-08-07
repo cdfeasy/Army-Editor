@@ -7,7 +7,7 @@ package com.armyeditor.dto;
 
 //import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.ArrayList;
-import java.util.List;
+import java.util. ArrayList;
 import javax.persistence.CascadeType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -27,7 +27,7 @@ public class WeaponBaseDTO implements java.io.Serializable  {
     private String AP;
     private String STR;
     private String fireCount;
-    private List<OptionDTO> options=new ArrayList<OptionDTO>();
+    private  ArrayList<OptionDTO> options=new ArrayList<OptionDTO>();
     
     private FractionDTO fraction;
 
@@ -91,11 +91,11 @@ public class WeaponBaseDTO implements java.io.Serializable  {
         this.name = name;
     }
     
-    public List<OptionDTO> getOptions() {
+    public  ArrayList<OptionDTO> getOptions() {
         return options;
     }
 
-    public void setOptions(List<OptionDTO> options) {
+    public void setOptions( ArrayList<OptionDTO> options) {
         this.options = options;
     }
 

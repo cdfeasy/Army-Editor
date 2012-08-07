@@ -8,7 +8,7 @@ package com.armyeditor.dto;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
+import java.util. ArrayList;
 import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Id;
@@ -22,7 +22,7 @@ public class ArmyDTO  implements Serializable {
     private Long id;
     private String name;
     private String description;
-    private List<SquadDTO> squads=new ArrayList<SquadDTO>();
+    private  ArrayList<SquadDTO> squads=new ArrayList<SquadDTO>();
 
     public ArmyDTO() {
     }
@@ -52,11 +52,11 @@ public class ArmyDTO  implements Serializable {
         this.name = name;
     }
     
-    public List<SquadDTO> getSquads() {
+    public  ArrayList<SquadDTO> getSquads() {
         return squads;
     }
 
-    public void setSquads(List<SquadDTO> squads) {
+    public void setSquads( ArrayList<SquadDTO> squads) {
         this.squads = squads;
     }
     

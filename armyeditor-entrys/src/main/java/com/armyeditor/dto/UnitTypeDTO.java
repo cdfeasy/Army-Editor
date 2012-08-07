@@ -6,9 +6,8 @@
 package com.armyeditor.dto;
 
 import com.armyeditor.entrys.UnitType;
-import com.google.gwt.user.client.rpc.IsSerializable;
 import java.util.ArrayList;
-import java.util.List;
+import java.util. ArrayList;
 import javax.persistence.CascadeType;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
@@ -18,10 +17,10 @@ import javax.persistence.ManyToMany;
  *
  * @author Dmitry
  */
-public class UnitTypeDTO implements IsSerializable, java.io.Serializable{
+public class UnitTypeDTO implements java.io.Serializable{
     private String  id;
     private String name;
-    private List<OptionDTO> options = new ArrayList<OptionDTO>();;
+    private  ArrayList<OptionDTO> options = new ArrayList<OptionDTO>();;
 
     public UnitTypeDTO() {
     }
@@ -46,11 +45,11 @@ public class UnitTypeDTO implements IsSerializable, java.io.Serializable{
         this.id = id;
     }
 
-    public List<OptionDTO> getOptions() {
+    public  ArrayList<OptionDTO> getOptions() {
         return options;
     }
 
-    public void setOptions(List<OptionDTO> options) {
+    public void setOptions( ArrayList<OptionDTO> options) {
         this.options = options;
     }
 

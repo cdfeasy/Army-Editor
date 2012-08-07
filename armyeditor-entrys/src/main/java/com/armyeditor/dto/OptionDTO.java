@@ -5,14 +5,13 @@
 
 package com.armyeditor.dto;
 
-import com.google.gwt.user.client.rpc.IsSerializable;
 import javax.persistence.Id;
 
 /**
  *
  * @author Dmitry
  */
-public class OptionDTO implements IsSerializable,java.io.Serializable  {
+public class OptionDTO implements java.io.Serializable  {
     private String  id;
     private String name;
     private String description;

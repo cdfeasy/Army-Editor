@@ -7,7 +7,7 @@ package com.armyeditor.dto;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
+import java.util. ArrayList;
 import java.util.Map;
 import javax.persistence.CascadeType;
 import javax.persistence.FetchType;
@@ -24,7 +24,7 @@ import javax.persistence.OneToMany;
 public class SquadBaseDTO  implements java.io.Serializable {
     private String  id;
     private SquadPartBaseDTO squadPartBase;
-    private List<OptionDTO> options=new ArrayList<OptionDTO>();
+    private  ArrayList<OptionDTO> options=new ArrayList<OptionDTO>();
     private String name;
     private String description;
 	/**
@@ -69,11 +69,11 @@ public class SquadBaseDTO  implements java.io.Serializable {
         this.name = name;
     }
     
-    public List<OptionDTO> getOptions() {
+    public  ArrayList<OptionDTO> getOptions() {
         return options;
     }
 
-    public void setOptions(List<OptionDTO> options) {
+    public void setOptions( ArrayList<OptionDTO> options) {
         this.options = options;
     }
 

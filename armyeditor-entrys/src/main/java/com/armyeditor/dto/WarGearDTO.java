@@ -6,7 +6,7 @@
 package com.armyeditor.dto;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util. ArrayList;
 import javax.persistence.CascadeType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
@@ -17,8 +17,8 @@ import javax.persistence.ManyToMany;
  */
 public class WarGearDTO implements java.io.Serializable  {
     private Long id;
-    private List<ItemDTO> items=new ArrayList<ItemDTO>();
-    private List<WeaponDTO> weapon=new ArrayList<WeaponDTO>();
+    private  ArrayList<ItemDTO> items=new ArrayList<ItemDTO>();
+    private  ArrayList<WeaponDTO> weapon=new ArrayList<WeaponDTO>();
 
     public WarGearDTO() {
     }
@@ -32,19 +32,19 @@ public class WarGearDTO implements java.io.Serializable  {
         this.id = id;
     }
     
-    public List<ItemDTO> getItems() {
+    public  ArrayList<ItemDTO> getItems() {
         return items;
     }
 
-    public void setItems(List<ItemDTO> items) {
+    public void setItems( ArrayList<ItemDTO> items) {
         this.items = items;
     }
     
-    public List<WeaponDTO> getWeapon() {
+    public  ArrayList<WeaponDTO> getWeapon() {
         return weapon;
     }
 
-    public void setWeapon(List<WeaponDTO> weapon) {
+    public void setWeapon( ArrayList<WeaponDTO> weapon) {
         this.weapon = weapon;
     }
     

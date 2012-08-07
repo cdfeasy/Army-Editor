@@ -4,7 +4,7 @@
  */
 package com.armyeditor.dto;
 
-import java.util.List;
+import java.util. ArrayList;
 import javax.persistence.*;
 
 /**
@@ -15,7 +15,7 @@ import javax.persistence.*;
 public class ItemSelectionDTO implements java.io.Serializable{
 
     private Long id;
-    private List<ItemDTO> item;
+    private  ArrayList<ItemDTO> item;
     private String condition;
 
     
@@ -28,11 +28,11 @@ public class ItemSelectionDTO implements java.io.Serializable{
         this.id = id;
     }
     
-    public List<ItemDTO> getItem() {
+    public  ArrayList<ItemDTO> getItem() {
         return item;
     }
 
-    public void setItem(List<ItemDTO> item) {
+    public void setItem( ArrayList<ItemDTO> item) {
         this.item = item;
     }
 
