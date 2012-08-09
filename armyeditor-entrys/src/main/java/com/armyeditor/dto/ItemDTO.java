@@ -5,6 +5,8 @@
 
 package com.armyeditor.dto;
 
+import com.armyeditor.entrys.Item;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -21,6 +23,20 @@ public class ItemDTO implements java.io.Serializable {
     private int cost;
 
     public ItemDTO() {
+    }
+
+    public ItemDTO(Item item){
+        this.id = item.getId();
+        this.itemBase = new ItemBaseDTO(item.getItemBase());
+        this.cost = item.getCost();
+    }
+
+    public Item toItem(){
+        Item item = new Item();
+        item.setId(id);
+        item.setItemBase(itemBase.toItemBase());
+        item.setCost(cost);
+        return item;
     }
 
     public ItemBaseDTO getItemBase() {

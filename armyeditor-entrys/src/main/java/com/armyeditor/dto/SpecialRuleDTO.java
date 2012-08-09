@@ -5,6 +5,8 @@
 
 package com.armyeditor.dto;
 
+import com.armyeditor.entrys.SpecialRule;
+
 import javax.persistence.Id;
 
 /**
@@ -17,6 +19,20 @@ public class SpecialRuleDTO  implements java.io.Serializable {
     private String description;
 
     public SpecialRuleDTO() {
+    }
+
+    public SpecialRuleDTO(SpecialRule specialRule){
+        this.id = specialRule.getId();
+        this.name = specialRule.getName();
+        this.description = specialRule.getDescription();
+    }
+
+    public SpecialRule toSpecialRule(){
+        SpecialRule specialRule = new SpecialRule();
+        specialRule.setId(id);
+        specialRule.setName(name);
+        specialRule.setDescription(description);
+        return specialRule;
     }
 
     public String getDescription() {

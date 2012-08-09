@@ -6,6 +6,10 @@
 package com.armyeditor.dto;
 
 //import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.armyeditor.entrys.ItemSelection;
+import com.armyeditor.entrys.SquadPartBase;
+import com.armyeditor.entrys.WeaponSelection;
+
 import java.util.ArrayList;
 import java.util. ArrayList;
 import javax.persistence.CascadeType;
@@ -23,13 +27,51 @@ public class SquadPartBaseDTO implements java.io.Serializable  {
     private UnitBaseDTO unit;
     private int minSize;
     private int maxSize;
-    private  ArrayList<ItemSelectionDTO> itemSelection=new ArrayList<ItemSelectionDTO>();
-    private  ArrayList<WeaponSelectionDTO> weaponSelection=new ArrayList<WeaponSelectionDTO>();
-    private  ArrayList<SquadPartBaseDTO> modifications=new ArrayList<SquadPartBaseDTO>();
+    private ArrayList<ItemSelectionDTO> itemSelection=new ArrayList<ItemSelectionDTO>();
+    private ArrayList<WeaponSelectionDTO> weaponSelection=new ArrayList<WeaponSelectionDTO>();
+    private ArrayList<SquadPartBaseDTO> modifications=new ArrayList<SquadPartBaseDTO>();
     private SquadPartBaseDTO parent;
     private String conditions;
 
     public SquadPartBaseDTO() {
+    }
+
+    public SquadPartBaseDTO(SquadPartBase squadPartBase){
+        this.id = squadPartBase.getId();
+        this.unit = new UnitBaseDTO(squadPartBase.getUnit());
+        this.minSize = squadPartBase.getMinSize();
+        this.maxSize = squadPartBase.getMaxSize();
+        for(ItemSelection i:squadPartBase.getItemSelection()){
+            itemSelection.add(new ItemSelectionDTO(i));
+        }
+        for (WeaponSelection w:squadPartBase.getWeaponSelection()){
+            weaponSelection.add(new WeaponSelectionDTO(w));
+        }
+        for (SquadPartBase s:squadPartBase.getModifications()){
+            modifications.add(new SquadPartBaseDTO(s));
+        }
+        this.parent = new SquadPartBaseDTO(squadPartBase.getParent());
+        this.conditions = squadPartBase.getConditions();
+    }
+
+    public SquadPartBase toSquadPartBase(){
+        SquadPartBase squadPartBase = new SquadPartBase();
+        squadPartBase.setId(id);
+        squadPartBase.setUnit(unit.toUnitBase());
+        squadPartBase.setMinSize(minSize);
+        squadPartBase.setMaxSize(maxSize);
+        for (ItemSelectionDTO i:itemSelection){
+            squadPartBase.getItemSelection().add(i.toItemSelection());
+        }
+        for (WeaponSelectionDTO w:weaponSelection){
+            squadPartBase.getWeaponSelection().add(w.toWeaponSelection());
+        }
+        for (SquadPartBaseDTO s:modifications){
+            squadPartBase.getModifications().add(s.toSquadPartBase());
+        }
+        squadPartBase.setParent(parent.toSquadPartBase());
+        squadPartBase.setConditions(conditions);
+        return squadPartBase;
     }
 
     public String getConditions() {

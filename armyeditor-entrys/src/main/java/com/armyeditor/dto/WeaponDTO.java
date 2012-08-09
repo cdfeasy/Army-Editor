@@ -4,6 +4,8 @@
  */
 package com.armyeditor.dto;
 
+import com.armyeditor.entrys.Weapon;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -21,7 +23,20 @@ public class WeaponDTO implements java.io.Serializable {
 
     public WeaponDTO() {
     }
-    
+
+    public WeaponDTO(Weapon w){
+        this.id = w.getId();
+        this.weapon = new WeaponBaseDTO(w.getWeapon());
+        this.cost = w.getCost();
+    }
+
+    public Weapon toWeapon(){
+        Weapon w = new Weapon();
+        w.setId(id);
+        w.setWeapon(weapon.toWeaponBase());
+        w.setCost(cost);
+        return w;
+    }
 
     public int getCost() {
         return cost;
@@ -30,8 +45,6 @@ public class WeaponDTO implements java.io.Serializable {
     public void setCost(int cost) {
         this.cost = cost;
     }
-
-    
     
     public Long getId() {
         return id;

@@ -5,6 +5,8 @@
 
 package com.armyeditor.dto;
 
+import com.armyeditor.entrys.WeaponType;
+
 import javax.persistence.Id;
 
 /**
@@ -19,7 +21,20 @@ public class WeaponTypeDTO implements java.io.Serializable  {
     public WeaponTypeDTO() {
     }
 
-    
+    public WeaponTypeDTO(WeaponType weaponType){
+        this.id = weaponType.getId();
+        this.name = weaponType.getName();
+        this.description = weaponType.getDescription();
+    }
+
+    public WeaponType toWeaponType(){
+        WeaponType w = new WeaponType();
+        w.setId(id);
+        w.setName(name);
+        w.setDescription(description);
+        return w;
+    }
+
     public String getId() {
         return id;
     }

@@ -5,6 +5,9 @@
 
 package com.armyeditor.dto;
 
+import com.armyeditor.entrys.Army;
+import com.armyeditor.entrys.Squad;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -22,11 +25,27 @@ public class ArmyDTO  implements Serializable {
     private Long id;
     private String name;
     private String description;
-    private  ArrayList<SquadDTO> squads=new ArrayList<SquadDTO>();
+    private ArrayList<SquadDTO> squads=new ArrayList<SquadDTO>();
 
     public ArmyDTO() {
     }
 
+    public ArmyDTO(Army army){
+        this.id = army.getId();
+        this.name = army.getName();
+        this.description = army.getDescription();
+        for (Squad squad:army.getSquads()){
+            squads.add(new SquadDTO(squad));
+        }
+    }
+
+    public Army toArmy() {
+        Army a = new Army();
+        a.setId(id);
+        a.setName(name);
+        a.setDescription(description);
+        return a;
+    }
      
     public Long getId() {
         return id;

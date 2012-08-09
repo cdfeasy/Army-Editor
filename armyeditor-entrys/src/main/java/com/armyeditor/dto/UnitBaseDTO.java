@@ -5,6 +5,10 @@
 
 package com.armyeditor.dto;
 
+import com.armyeditor.entrys.Item;
+import com.armyeditor.entrys.Option;
+import com.armyeditor.entrys.UnitBase;
+import com.armyeditor.entrys.Weapon;
 import com.armyeditor.entrys.classes.Description;
 //import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.ArrayList;
@@ -39,6 +43,58 @@ public class UnitBaseDTO implements java.io.Serializable  {
     private FractionDTO fraction;
 
     public UnitBaseDTO() {
+    }
+
+    public UnitBaseDTO(UnitBase unit){
+        this.id = unit.getId();
+        this.WS = unit.getWS();
+        this.BS = unit.getBS();
+        this.S = unit.getS();
+        this.T = unit.getT();
+        this.W = unit.getW();
+        this.I = unit.getI();
+        this.A = unit.getA();
+        this.LD = unit.getLD();
+        this.SV = unit.getSV();
+        this.cost = unit.getCost();
+        for (Option o:unit.getOptions()){
+            options.add(new OptionDTO(o));
+        }
+        this.unitType = new UnitTypeDTO(unit.getUnitType());
+        for (Weapon w:unit.getWeapons()){
+            weapons.add(new WeaponDTO(w));
+        }
+        for (Item i:unit.getItems()){
+            items.add(new ItemDTO(i));
+        }
+        this.fraction = new FractionDTO(unit.getFraction());
+    }
+
+    public UnitBase toUnitBase(){
+        UnitBase unitBase = new UnitBase();
+        unitBase.setId(id);
+        unitBase.setWS(WS);
+        unitBase.setBS(BS);
+        unitBase.setS(S);
+        unitBase.setT(T);
+        unitBase.setW(W);
+        unitBase.setI(I);
+        unitBase.setA(A);
+        unitBase.setLD(LD);
+        unitBase.setSV(SV);
+        unitBase.setCost(cost);
+        for (OptionDTO o:options){
+            unitBase.getOptions().add(o.toOption());
+        }
+        unitBase.setUnitType(unitType.toUnitType());
+        for (WeaponDTO w:weapons){
+            unitBase.getWeapons().add(w.toWeapon());
+        }
+        for (ItemDTO i:items){
+            unitBase.getItems().add(i.toItem());
+        }
+        unitBase.setFraction(fraction.toFraction());
+        return unitBase;
     }
 
     public int getA() {

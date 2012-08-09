@@ -26,15 +26,13 @@ public class OptionDTO implements java.io.Serializable  {
 		this.description = option.getDescription();
 	}
 	
-	public Option getOption(){
+	public Option toOption(){
 		Option option=new Option();
 		option.setId(id);
 		option.setName(name);
 		option.setDescription(description);
 		return option;
 	}
-	
-	
 
     public String getDescription() {
         return description;

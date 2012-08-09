@@ -4,19 +4,21 @@
  */
 package com.armyeditor.dto;
 
+import com.armyeditor.entrys.Item;
+import com.armyeditor.entrys.Option;
+import com.armyeditor.entrys.VenicleBase;
+import com.armyeditor.entrys.Weapon;
 import com.armyeditor.entrys.classes.Description;
 //import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util. ArrayList;
-import javax.persistence.*;
 
 /**
  *
  * @author dmitry
  */
 public class VenicleBaseDTO implements Serializable {
-    private String  id;
+    private String id;
     @Description(textRus="WS")
     private int WS;
     private int BS;
@@ -24,15 +26,71 @@ public class VenicleBaseDTO implements Serializable {
     private int W;
     private int I;
     private int A;
-    private int Front;
-    private int Side;
-    private int Rear;
+    private int front;
+    private int side;
+    private int rear;
     private int cost;
-    private  ArrayList<OptionDTO> options=new ArrayList<OptionDTO>();
+    private ArrayList<OptionDTO> options=new ArrayList<OptionDTO>();
     private UnitTypeDTO unitType;
-    private  ArrayList<WeaponDTO>  weapons=new ArrayList<WeaponDTO>();
-    private  ArrayList<ItemDTO>  items=new ArrayList<ItemDTO>();
+    private ArrayList<WeaponDTO> weapons=new ArrayList<WeaponDTO>();
+    private ArrayList<ItemDTO> items=new ArrayList<ItemDTO>();
     private FractionDTO fraction;
+
+    public VenicleBaseDTO(){
+
+    }
+
+    public VenicleBaseDTO(VenicleBase venicleBase){
+        this.id = venicleBase.getId();
+        this.WS = venicleBase.getWS();
+        this.BS = venicleBase.getBS();
+        this.S = venicleBase.getS();
+        this.W = venicleBase.getW();
+        this.I = venicleBase.getI();
+        this.A = venicleBase.getA();
+        this.front = venicleBase.getFront();
+        this.side = venicleBase.getSide();
+        this.rear = venicleBase.getRear();
+        this.cost = venicleBase.getCost();
+        for (Option o:venicleBase.getOptions()){
+            options.add(new OptionDTO(o));
+        }
+        this.unitType = new UnitTypeDTO(venicleBase.getUnitType());
+        for (Weapon w:venicleBase.getWeapons()){
+            weapons.add(new WeaponDTO(w));
+        }
+        for (Item i:venicleBase.getItems()){
+            items.add(new ItemDTO(i));
+        }
+        this.fraction = new FractionDTO(venicleBase.getFraction());
+    }
+
+    public VenicleBase toVenicleBase(){
+        VenicleBase venicleBase = new VenicleBase();
+        venicleBase.setId(id);
+        venicleBase.setWS(WS);
+        venicleBase.setBS(BS);
+        venicleBase.setS(S);
+        venicleBase.setW(W);
+        venicleBase.setI(I);
+        venicleBase.setA(A);
+        venicleBase.setFront(front);
+        venicleBase.setSide(side);
+        venicleBase.setRear(rear);
+        venicleBase.setCost(cost);
+        for (OptionDTO o:options){
+            venicleBase.getOptions().add(o.toOption());
+        }
+        venicleBase.setUnitType(unitType.toUnitType());
+        for (WeaponDTO w:weapons){
+            venicleBase.getWeapons().add(w.toWeapon());
+        }
+        for (ItemDTO i:items){
+            venicleBase.getItems().add(i.toItem());
+        }
+        venicleBase.setFraction(fraction.toFraction());
+        return venicleBase;
+    }
 
     public int getA() {
         return A;
@@ -51,11 +109,11 @@ public class VenicleBaseDTO implements Serializable {
     }
 
     public int getFront() {
-        return Front;
+        return front;
     }
 
     public void setFront(int Front) {
-        this.Front = Front;
+        this.front = Front;
     }
 
     public int getI() {
@@ -67,11 +125,11 @@ public class VenicleBaseDTO implements Serializable {
     }
 
     public int getRear() {
-        return Rear;
+        return rear;
     }
 
     public void setRear(int Rear) {
-        this.Rear = Rear;
+        this.rear = Rear;
     }
 
     public int getS() {
@@ -83,11 +141,11 @@ public class VenicleBaseDTO implements Serializable {
     }
 
     public int getSide() {
-        return Side;
+        return side;
     }
 
     public void setSide(int Side) {
-        this.Side = Side;
+        this.side = Side;
     }
 
     public int getW() {

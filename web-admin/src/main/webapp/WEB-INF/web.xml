@@ -7,16 +7,6 @@
 
     <!-- Servlets -->
     <servlet>
-        <servlet-name>greetServlet</servlet-name>
-        <servlet-class>com.webadmin.server.GreetingServiceImpl</servlet-class>
-    </servlet>
-
-    <servlet-mapping>
-        <servlet-name>greetServlet</servlet-name>
-        <url-pattern>/admin/greet</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
         <servlet-name>baseService</servlet-name>
         <servlet-class>com.webadmin.server.BaseService</servlet-class>
     </servlet>

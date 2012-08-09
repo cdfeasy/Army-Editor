@@ -5,6 +5,8 @@
 
 package com.armyeditor.dto;
 
+import com.armyeditor.entrys.Armor;
+
 import java.io.Serializable;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -20,6 +22,20 @@ public class ArmorDTO implements Serializable {
     private String description;
 
     public ArmorDTO() {
+    }
+
+    public ArmorDTO(Armor armor){
+        this.id = armor.getId();
+        this.name = armor.getName();
+        this.description = armor.getDescription();
+    }
+
+    public Armor toArmor(){
+        Armor armor = new Armor();
+        armor.setId(id);
+        armor.setName(name);
+        armor.setDescription(description);
+        return armor;
     }
 
     public String getDescription() {

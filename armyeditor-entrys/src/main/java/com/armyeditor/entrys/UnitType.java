@@ -15,7 +15,8 @@ import javax.persistence.ManyToMany;
 /**
  *
  * @author Dmitry
- */@javax.persistence.Entity
+ */
+@javax.persistence.Entity
 public class UnitType implements java.io.Serializable  {
     private String  id;
     private String name;

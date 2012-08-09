@@ -5,6 +5,8 @@
 
 package com.armyeditor.dto;
 
+import com.armyeditor.entrys.Squad;
+
 import javax.persistence.CascadeType;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
@@ -23,6 +25,10 @@ public class SquadDTO implements java.io.Serializable {
     public SquadDTO() {
     }
 
+    public SquadDTO(Squad squad){
+        this.id = squad.getId();
+        this.squadBase = squad.getSquadBase();
+    }
      
     public Long getId() {
         return id;

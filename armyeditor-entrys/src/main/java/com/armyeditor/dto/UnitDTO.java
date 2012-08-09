@@ -5,6 +5,8 @@
 
 package com.armyeditor.dto;
 
+import com.armyeditor.entrys.Unit;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -22,6 +24,11 @@ public class UnitDTO  implements java.io.Serializable {
     public UnitDTO() {
     }
 
+    public UnitDTO(Unit u){
+        this.id = u.getId();
+        this.unit = new UnitBaseDTO(u.getUnit());
+        this.warGear = new WarGearDTO(u.getWarGear());
+    }
      
     public Long getId() {
         return id;

@@ -6,6 +6,9 @@
 package com.armyeditor.dto;
 
 //import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.armyeditor.entrys.Option;
+import com.armyeditor.entrys.WeaponBase;
+
 import java.util.ArrayList;
 import java.util. ArrayList;
 import javax.persistence.CascadeType;
@@ -27,8 +30,41 @@ public class WeaponBaseDTO implements java.io.Serializable  {
     private String AP;
     private String STR;
     private String fireCount;
-    private  ArrayList<OptionDTO> options=new ArrayList<OptionDTO>();
-    
+    private ArrayList<OptionDTO> options=new ArrayList<OptionDTO>();
+
+    public WeaponBaseDTO() {
+    }
+
+    public WeaponBaseDTO(WeaponBase weaponBase){
+        this.id = weaponBase.getId();
+        this.type = new WeaponTypeDTO(weaponBase.getType());
+        this.name = weaponBase.getName();
+        this.description = weaponBase.getDescription();
+        this.range = weaponBase.getRange();
+        this.AP = weaponBase.getAP();
+        this.STR = weaponBase.getSTR();
+        this.fireCount = weaponBase.getFireCount();
+        for(Option o:weaponBase.getOptions()){
+            options.add(new OptionDTO(o));
+        }
+    }
+
+    public WeaponBase toWeaponBase(){
+        WeaponBase w = new WeaponBase();
+        w.setId(id);
+        w.setType(type.toWeaponType());
+        w.setName(name);
+        w.setDescription(description);
+        w.setRange(range);
+        w.setAP(AP);
+        w.setSTR(STR);
+        w.setFireCount(fireCount);
+        for(OptionDTO o:options){
+            w.getOptions().add(o.toOption());
+        }
+        return w;
+    }
+
     private FractionDTO fraction;
 
     public FractionDTO getFraction() {
@@ -37,9 +73,6 @@ public class WeaponBaseDTO implements java.io.Serializable  {
 
     public void setFraction(FractionDTO fraction) {
         this.fraction = fraction;
-    }
-
-    public WeaponBaseDTO() {
     }
 
     public String getFireCount() {

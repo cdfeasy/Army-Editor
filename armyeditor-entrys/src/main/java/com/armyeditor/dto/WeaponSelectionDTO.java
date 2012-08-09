@@ -4,6 +4,9 @@
  */
 package com.armyeditor.dto;
 
+import com.armyeditor.entrys.Weapon;
+import com.armyeditor.entrys.WeaponSelection;
+
 import java.util. ArrayList;
 import javax.persistence.CascadeType;
 import javax.persistence.Id;
@@ -20,8 +23,28 @@ public class WeaponSelectionDTO implements java.io.Serializable{
     private  ArrayList<WeaponDTO> weapon;
     private String condition;
 
-    
-    
+    public WeaponSelectionDTO(){
+
+    }
+
+    public WeaponSelectionDTO(WeaponSelection weaponSelection){
+        this.id = weaponSelection.getId();
+        for (Weapon w:weaponSelection.getWeapon()){
+            weapon.add(new WeaponDTO(w));
+        }
+        this.condition = weaponSelection.getCondition();
+    }
+
+    public WeaponSelection toWeaponSelection(){
+        WeaponSelection weaponSelection = new WeaponSelection();
+        weaponSelection.setId(id);
+        for (WeaponDTO w:weapon){
+            weaponSelection.getWeapon().add(w.toWeapon());
+        }
+        weaponSelection.setCondition(condition);
+        return weaponSelection;
+    }
+
     public Long getId() {
         return id;
     }

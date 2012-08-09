@@ -5,6 +5,9 @@
 
 package com.armyeditor.dto;
 
+import com.armyeditor.entrys.Codex;
+import com.armyeditor.entrys.SquadBase;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util. ArrayList;
@@ -24,10 +27,41 @@ public class CodexDTO implements java.io.Serializable  {
     private String  id;
     private String name;
     private String description;
-    private  ArrayList<SquadBaseDTO> squads=new ArrayList<SquadBaseDTO>();
+    private ArrayList<SquadBaseDTO> squads=new ArrayList<SquadBaseDTO>();
 
     public CodexDTO(){
 
+    }
+
+    public CodexDTO(Codex codex){
+        this.id = codex.getId();
+        this.name = codex.getName();
+        this.description = codex.getDescription();
+        for (SquadBase s:codex.getSquads()){
+            squads.add(new SquadBaseDTO(s));
+        }
+    }
+
+    public CodexDTO(Codex codex, boolean isRoot){
+        this.id = codex.getId();
+        this.name = codex.getName();
+        this.description = codex.getDescription();
+        if (isRoot) {
+            for (SquadBase s:codex.getSquads()){
+            squads.add(new SquadBaseDTO(s));
+            }
+        }
+    }
+
+    public Codex toCodex(){
+        Codex codex = new Codex();
+        codex.setId(id);
+        codex.setName(name);
+        codex.setDescription(description);
+        for (SquadBaseDTO s:squads){
+            codex.getSquads().add(s.toSquadBase());
+        }
+        return codex;
     }
 
     public String getDescription() {

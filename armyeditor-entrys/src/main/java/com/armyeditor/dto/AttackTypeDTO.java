@@ -5,6 +5,8 @@
 
 package com.armyeditor.dto;
 
+import com.armyeditor.entrys.AttackType;
+
 import javax.persistence.Id;
 
 /**
@@ -18,6 +20,20 @@ public class AttackTypeDTO implements java.io.Serializable  {
 
     public AttackTypeDTO(){
 
+    }
+
+    public AttackTypeDTO(AttackType attackType){
+        this.id = attackType.getId();
+        this.name = attackType.getName();
+        this.description = attackType.getDescription();
+    }
+
+    public AttackType toAttackType(){
+        AttackType attackType = new AttackType();
+        attackType.setId(id);
+        attackType.setName(name);
+        attackType.setDescription(description);
+        return attackType;
     }
 
     public String getDescription() {

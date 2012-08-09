@@ -5,6 +5,9 @@
 
 package com.armyeditor.dto;
 
+import com.armyeditor.entrys.Option;
+import com.armyeditor.entrys.SquadBase;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util. ArrayList;
@@ -21,10 +24,10 @@ import javax.persistence.OneToMany;
  *
  * @author Dmitry
  */
-public class SquadBaseDTO  implements java.io.Serializable {
+public class SquadBaseDTO implements java.io.Serializable {
     private String  id;
     private SquadPartBaseDTO squadPartBase;
-    private  ArrayList<OptionDTO> options=new ArrayList<OptionDTO>();
+    private ArrayList<OptionDTO> options=new ArrayList<OptionDTO>();
     private String name;
     private String description;
 	/**
@@ -35,6 +38,28 @@ public class SquadBaseDTO  implements java.io.Serializable {
     public SquadBaseDTO() {
     }
 
+    public SquadBaseDTO(SquadBase squadBase){
+        this.id = squadBase.getId();
+        this.squadPartBase = new SquadPartBaseDTO(squadBase.getSquadPartBase());
+        for (Option o:squadBase.getOptions()){
+            options.add(new OptionDTO(o));
+        }
+        this.name = squadBase.getName();
+        this.description = squadBase.getDescription();
+    }
+
+    public SquadBase toSquadBase(){
+        SquadBase squadBase = new SquadBase();
+        squadBase.setId(id);
+        squadBase.setSquadPartBase(squadPartBase.toSquadPartBase());
+        for (OptionDTO o:options){
+            squadBase.getOptions().add(o.toOption());
+        }
+        squadBase.setName(name);
+        squadBase.setDescription(description);
+        return squadBase;
+    }
+
 	public int getFoqType() {
 		return foqType;
 	}
@@ -42,8 +67,6 @@ public class SquadBaseDTO  implements java.io.Serializable {
 	public void setFoqType(int foqType) {
 		this.foqType = foqType;
 	}
-
-	
 	
     public String getDescription() {
         return description;

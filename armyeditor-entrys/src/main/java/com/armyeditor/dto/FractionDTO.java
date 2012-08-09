@@ -5,6 +5,9 @@
 
 package com.armyeditor.dto;
 
+import com.armyeditor.entrys.Codex;
+import com.armyeditor.entrys.Fraction;
+
 import java.util.ArrayList;
 import java.util. ArrayList;
 import javax.persistence.CascadeType;
@@ -21,12 +24,30 @@ public class FractionDTO implements java.io.Serializable  {
     private String  id;
     private String name;
     private String description;
-    private  ArrayList<CodexDTO> codexes =new ArrayList<CodexDTO>();
+    private ArrayList<CodexDTO> codexes =new ArrayList<CodexDTO>();
 
     public FractionDTO() {
     }
 
-    
+    public FractionDTO(Fraction fraction){
+        this.id = fraction.getId();
+        this.name = fraction.getName();
+        this.description = fraction.getDescription();
+        for (Codex c:fraction.getCodexes()){
+            codexes.add(new CodexDTO(c));
+        }
+    }
+
+    public Fraction toFraction(){
+        Fraction fraction = new Fraction();
+        fraction.setId(id);
+        fraction.setName(name);
+        fraction.setDescription(description);
+        for (CodexDTO c:codexes){
+            fraction.getCodexes().add(c.toCodex());
+        }
+        return fraction;
+    }
    
     public  ArrayList<CodexDTO> getCodexes() {
         return codexes;
