@@ -1,5 +1,6 @@
 package com.webadmin.client.mainForm.unitTypeTab;
 
+import com.armyeditor.dto.UnitTypeDTO;
 import com.armyeditor.entrys.UnitType;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -33,27 +34,27 @@ import java.util.List;
 public class UnitTypeContainer extends HorizontalLayoutContainer {
     private final CommonServiceAsync commonService = GWT.create(CommonService.class);
     VerticalLayoutContainer gridContainer;
-    Grid<UnitType> specialRuleGrid;
-    ColumnModel<UnitType> cm;
-    ListStore<UnitType> store;
+    Grid<UnitTypeDTO> specialRuleGrid;
+    ColumnModel<UnitTypeDTO> cm;
+    ListStore<UnitTypeDTO> store;
     TextButton updateBtn = new TextButton("Update");
     TextButton delSelBtn = new TextButton("Delete Selection");
     final UnitTypeFields unitTypeFields = new UnitTypeFields();
 
     public UnitTypeContainer(){
         UnitTypeProperties props = GWT.create(UnitTypeProperties.class);
-        IdentityValueProvider<UnitType> identity = new IdentityValueProvider<UnitType>();
-        final CheckBoxSelectionModel<UnitType> sm = new CheckBoxSelectionModel<UnitType>(identity);
-        ColumnConfig<UnitType, String> idColumn = new ColumnConfig<UnitType, String>(props.id(), 50, "id");
-        ColumnConfig<UnitType, String> nameColumn = new ColumnConfig<UnitType, String>(props.name(), 150, "name");
-        List<ColumnConfig<UnitType, ?>> l = new ArrayList<ColumnConfig<UnitType, ?>>();
+        IdentityValueProvider<UnitTypeDTO> identity = new IdentityValueProvider<UnitTypeDTO>();
+        final CheckBoxSelectionModel<UnitTypeDTO> sm = new CheckBoxSelectionModel<UnitTypeDTO>(identity);
+        ColumnConfig<UnitTypeDTO, String> idColumn = new ColumnConfig<UnitTypeDTO, String>(props.id(), 50, "id");
+        ColumnConfig<UnitTypeDTO, String> nameColumn = new ColumnConfig<UnitTypeDTO, String>(props.name(), 150, "name");
+        List<ColumnConfig<UnitTypeDTO, ?>> l = new ArrayList<ColumnConfig<UnitTypeDTO, ?>>();
         l.add(sm.getColumn());
         l.add(idColumn);
         l.add(nameColumn);
-        cm = new ColumnModel<UnitType>(l);
+        cm = new ColumnModel<UnitTypeDTO>(l);
         sm.setSelectionMode(Style.SelectionMode.MULTI);
-        store = new ListStore<UnitType>(props.key());
-        specialRuleGrid= new Grid<UnitType>(store, cm);
+        store = new ListStore<UnitTypeDTO>(props.key());
+        specialRuleGrid= new Grid<UnitTypeDTO>(store, cm);
         updateStore();
         specialRuleGrid.setSelectionModel(sm);
         gridContainer = new VerticalLayoutContainer();
@@ -68,7 +69,7 @@ public class UnitTypeContainer extends HorizontalLayoutContainer {
     }
 
     public void updateStore(){
-        commonService.getUnitType(new AsyncCallback<List<UnitType>>() {
+        commonService.getUnitType(new AsyncCallback<List<UnitTypeDTO>>() {
 
             @Override
             public void onFailure(Throwable caught) {
@@ -76,9 +77,9 @@ public class UnitTypeContainer extends HorizontalLayoutContainer {
             }
 
             @Override
-            public void onSuccess(List<UnitType> result) {
+            public void onSuccess(List<UnitTypeDTO> result) {
                 store.clear();
-                for (UnitType a : result) {
+                for (UnitTypeDTO a : result) {
                     store.add(a);
                 }
                 specialRuleGrid.reconfigure(store, cm);
@@ -91,7 +92,7 @@ public class UnitTypeContainer extends HorizontalLayoutContainer {
             @Override
             public void onRowClick(RowClickEvent event) {
                 int row = event.getRowIndex();
-                UnitType a =(UnitType) event.getSource().getStore().get(row);
+                UnitTypeDTO a =(UnitTypeDTO) event.getSource().getStore().get(row);
                 unitTypeFields.getIdFld().setText(a.getId());
                 unitTypeFields.getNameFld().setText(a.getName());
             }
@@ -99,7 +100,7 @@ public class UnitTypeContainer extends HorizontalLayoutContainer {
         unitTypeFields.getSaveBtn().addSelectHandler(new SelectEvent.SelectHandler() {
             @Override
             public void onSelect(SelectEvent event) {
-                UnitType a = new UnitType();
+                UnitTypeDTO a = new UnitTypeDTO();
                 a.setId(unitTypeFields.getIdFld().getText());
                 a.setName(unitTypeFields.getNameFld().getText());
                 commonService.changeUnitType(a, new AsyncCallback<Void>() {
@@ -118,7 +119,7 @@ public class UnitTypeContainer extends HorizontalLayoutContainer {
         unitTypeFields.getSaveNewBtn().addSelectHandler(new SelectEvent.SelectHandler() {
             @Override
             public void onSelect(SelectEvent event) {
-                UnitType a = new UnitType();
+                UnitTypeDTO a = new UnitTypeDTO();
                 a.setId(unitTypeFields.getIdFld().getText());
                 a.setName(unitTypeFields.getNameFld().getText());
                 commonService.addUnitType(a, new AsyncCallback<Void>() {

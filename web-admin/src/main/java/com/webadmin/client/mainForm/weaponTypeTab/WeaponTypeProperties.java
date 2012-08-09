@@ -1,5 +1,6 @@
 package com.webadmin.client.mainForm.weaponTypeTab;
 
+import com.armyeditor.dto.WeaponTypeDTO;
 import com.armyeditor.entrys.WeaponType;
 import com.google.gwt.editor.client.Editor;
 import com.sencha.gxt.core.client.ValueProvider;
@@ -15,10 +16,10 @@ import static com.google.gwt.editor.client.Editor.*;
  * Time: 20:05
  * To change this template use File | Settings | File Templates.
  */
-public interface WeaponTypeProperties extends PropertyAccess<WeaponType> {
+public interface WeaponTypeProperties extends PropertyAccess<WeaponTypeDTO> {
     @Path("id")
-    ModelKeyProvider<WeaponType> key();
-    ValueProvider<WeaponType, String> id();
-    ValueProvider<WeaponType, String> name();
-    ValueProvider<WeaponType, String> description();
+    ModelKeyProvider<WeaponTypeDTO> key();
+    ValueProvider<WeaponTypeDTO, String> id();
+    ValueProvider<WeaponTypeDTO, String> name();
+    ValueProvider<WeaponTypeDTO, String> description();
 }

@@ -4,6 +4,7 @@
  */
 package com.webadmin.client.mainForm.armorTab;
 
+import com.armyeditor.dto.ArmorDTO;
 import com.armyeditor.entrys.Armor;
 import com.google.gwt.editor.client.Editor;
 import com.sencha.gxt.core.client.ValueProvider;
@@ -16,10 +17,10 @@ import static com.google.gwt.editor.client.Editor.*;
  *
  * @author d.asadullin
  */
-public interface ArmorProperties extends PropertyAccess<Armor> {
+public interface ArmorProperties extends PropertyAccess<ArmorDTO> {
     @Path("id")
-    ModelKeyProvider<Armor> key();
-    ValueProvider<Armor, String> id();
-    ValueProvider<Armor, String> name();
-    ValueProvider<Armor, String> description();
+    ModelKeyProvider<ArmorDTO> key();
+    ValueProvider<ArmorDTO, String> id();
+    ValueProvider<ArmorDTO, String> name();
+    ValueProvider<ArmorDTO, String> description();
 	}

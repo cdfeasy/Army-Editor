@@ -1,5 +1,6 @@
 package com.webadmin.client.mainForm.unitTypeTab;
 
+import com.armyeditor.dto.UnitTypeDTO;
 import com.armyeditor.entrys.UnitType;
 import com.google.gwt.editor.client.Editor;
 import com.sencha.gxt.core.client.ValueProvider;
@@ -13,9 +14,9 @@ import com.sencha.gxt.data.shared.PropertyAccess;
  * Time: 19:36
  * To change this template use File | Settings | File Templates.
  */
-public interface UnitTypeProperties extends PropertyAccess<UnitType> {
+public interface UnitTypeProperties extends PropertyAccess<UnitTypeDTO> {
     @Editor.Path("id")
-    ModelKeyProvider<UnitType> key();
-    ValueProvider<UnitType, String> id();
-    ValueProvider<UnitType, String> name();
+    ModelKeyProvider<UnitTypeDTO> key();
+    ValueProvider<UnitTypeDTO, String> id();
+    ValueProvider<UnitTypeDTO, String> name();
 }

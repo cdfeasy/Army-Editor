@@ -1,5 +1,6 @@
 package com.webadmin.client.services;
 
+import com.armyeditor.dto.*;
 import com.armyeditor.entrys.*;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
@@ -15,29 +16,29 @@ import java.util.List;
  */
 @RemoteServiceRelativePath("server/BaseService")
 public interface CommonService extends RemoteService {
-    List<Unit> getUnits();
-    List<Armor> getArmors();
-    void delArmors(List<Armor> list);
-    void addArmor(Armor a);
-    void changeArmor(Armor a);
+    List<UnitDTO> getUnits();
+    List<ArmorDTO> getArmors();
+    void delArmors(List<ArmorDTO> list);
+    void addArmor(ArmorDTO a);
+    void changeArmor(ArmorDTO a);
 
-    List<AttackType> getAttackTypes();
-    void delAttackTypes(List<AttackType> list);
-    void addAttackType(AttackType a);
-    void changeAttackType(AttackType a);
+    List<AttackTypeDTO> getAttackTypes();
+    void delAttackTypes(List<AttackTypeDTO> list);
+    void addAttackType(AttackTypeDTO a);
+    void changeAttackType(AttackTypeDTO a);
 
-    List<SpecialRule> getSpecialRule();
-    void delSpecialRules(List<SpecialRule> list);
-    void addSpecialRule(SpecialRule s);
-    void changeSpecialRule(SpecialRule s);
+    List<SpecialRuleDTO> getSpecialRule();
+    void delSpecialRules(List<SpecialRuleDTO> list);
+    void addSpecialRule(SpecialRuleDTO s);
+    void changeSpecialRule(SpecialRuleDTO s);
 
-    List<UnitType> getUnitType();
-    void delUnitTypes(List<UnitType> list);
-    void addUnitType(UnitType u);
-    void changeUnitType(UnitType u);
+    List<UnitTypeDTO> getUnitType();
+    void delUnitTypes(List<UnitTypeDTO> list);
+    void addUnitType(UnitTypeDTO u);
+    void changeUnitType(UnitTypeDTO u);
 
-    List<WeaponType> getWeaponType();
-    void delWeaponTypes(List<WeaponType> list);
-    void addWeaponType(WeaponType w);
-    void changeWeaponType(WeaponType w);
+    List<WeaponTypeDTO> getWeaponType();
+    void delWeaponTypes(List<WeaponTypeDTO> list);
+    void addWeaponType(WeaponTypeDTO w);
+    void changeWeaponType(WeaponTypeDTO w);
 }

@@ -1,5 +1,6 @@
 package com.webadmin.client.mainForm.specialRuleTab;
 
+import com.armyeditor.dto.SpecialRuleDTO;
 import com.armyeditor.entrys.SpecialRule;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -33,30 +34,30 @@ import java.util.List;
 public class SpecialRuleContainer extends HorizontalLayoutContainer {
     private final CommonServiceAsync commonService = GWT.create(CommonService.class);
     VerticalLayoutContainer gridContainer;
-    Grid<SpecialRule> specialRuleGrid;
-    ColumnModel<SpecialRule> cm;
-    ListStore<SpecialRule> store;
+    Grid<SpecialRuleDTO> specialRuleGrid;
+    ColumnModel<SpecialRuleDTO> cm;
+    ListStore<SpecialRuleDTO> store;
     TextButton updateBtn = new TextButton("Update");
     TextButton delSelBtn = new TextButton("Delete Selection");
     final SpecialRuleFields specialRuleFields = new SpecialRuleFields();
 
     public SpecialRuleContainer() {
         SpecialRuleProperties props = GWT.create(SpecialRuleProperties.class);
-        IdentityValueProvider<SpecialRule> identity = new IdentityValueProvider<SpecialRule>();
-        final CheckBoxSelectionModel<SpecialRule> sm = new CheckBoxSelectionModel<SpecialRule>(identity);
-        ColumnConfig<SpecialRule, String> idColumn = new ColumnConfig<SpecialRule, String>(props.id(), 50, "id");
-        ColumnConfig<SpecialRule, String> nameColumn = new ColumnConfig<SpecialRule, String>(props.name(), 150, "name");
-        ColumnConfig<SpecialRule, String> descripColumn = new ColumnConfig<SpecialRule, String>(props.description(), 150, "description");
+        IdentityValueProvider<SpecialRuleDTO> identity = new IdentityValueProvider<SpecialRuleDTO>();
+        final CheckBoxSelectionModel<SpecialRuleDTO> sm = new CheckBoxSelectionModel<SpecialRuleDTO>(identity);
+        ColumnConfig<SpecialRuleDTO, String> idColumn = new ColumnConfig<SpecialRuleDTO, String>(props.id(), 50, "id");
+        ColumnConfig<SpecialRuleDTO, String> nameColumn = new ColumnConfig<SpecialRuleDTO, String>(props.name(), 150, "name");
+        ColumnConfig<SpecialRuleDTO, String> descripColumn = new ColumnConfig<SpecialRuleDTO, String>(props.description(), 150, "description");
 
-        List<ColumnConfig<SpecialRule, ?>> l = new ArrayList<ColumnConfig<SpecialRule, ?>>();
+        List<ColumnConfig<SpecialRuleDTO, ?>> l = new ArrayList<ColumnConfig<SpecialRuleDTO, ?>>();
         l.add(sm.getColumn());
         l.add(idColumn);
         l.add(nameColumn);
         l.add(descripColumn);
-        cm = new ColumnModel<SpecialRule>(l);
+        cm = new ColumnModel<SpecialRuleDTO>(l);
         sm.setSelectionMode(Style.SelectionMode.MULTI);
-        store = new ListStore<SpecialRule>(props.key());
-        specialRuleGrid= new Grid<SpecialRule>(store, cm);
+        store = new ListStore<SpecialRuleDTO>(props.key());
+        specialRuleGrid= new Grid<SpecialRuleDTO>(store, cm);
         updateStore();
         specialRuleGrid.setSelectionModel(sm);
         gridContainer = new VerticalLayoutContainer();
@@ -71,7 +72,7 @@ public class SpecialRuleContainer extends HorizontalLayoutContainer {
     }
 
     public void updateStore(){
-        commonService.getSpecialRule(new AsyncCallback<List<SpecialRule>>() {
+        commonService.getSpecialRule(new AsyncCallback<List<SpecialRuleDTO>>() {
 
             @Override
             public void onFailure(Throwable caught) {
@@ -79,9 +80,9 @@ public class SpecialRuleContainer extends HorizontalLayoutContainer {
             }
 
             @Override
-            public void onSuccess(List<SpecialRule> result) {
+            public void onSuccess(List<SpecialRuleDTO> result) {
                 store.clear();
-                for (SpecialRule a : result) {
+                for (SpecialRuleDTO a : result) {
                     store.add(a);
                 }
                 specialRuleGrid.reconfigure(store, cm);
@@ -94,7 +95,7 @@ public class SpecialRuleContainer extends HorizontalLayoutContainer {
             @Override
             public void onRowClick(RowClickEvent event) {
                 int row = event.getRowIndex();
-                SpecialRule a =(SpecialRule) event.getSource().getStore().get(row);
+                SpecialRuleDTO a =(SpecialRuleDTO) event.getSource().getStore().get(row);
                 specialRuleFields.getIdFld().setText(a.getId());
                 specialRuleFields.getNameFld().setText(a.getName());
                 specialRuleFields.getDescripFld().setText(a.getDescription());
@@ -103,7 +104,7 @@ public class SpecialRuleContainer extends HorizontalLayoutContainer {
         specialRuleFields.getSaveBtn().addSelectHandler(new SelectEvent.SelectHandler() {
             @Override
             public void onSelect(SelectEvent event) {
-                SpecialRule a = new SpecialRule();
+                SpecialRuleDTO a = new SpecialRuleDTO();
                 a.setId(specialRuleFields.getIdFld().getText());
                 a.setName(specialRuleFields.getNameFld().getText());
                 a.setDescription(specialRuleFields.getDescripFld().getText());
@@ -123,7 +124,7 @@ public class SpecialRuleContainer extends HorizontalLayoutContainer {
         specialRuleFields.getSaveNewBtn().addSelectHandler(new SelectEvent.SelectHandler() {
             @Override
             public void onSelect(SelectEvent event) {
-                SpecialRule a = new SpecialRule();
+                SpecialRuleDTO a = new SpecialRuleDTO();
                 a.setId(specialRuleFields.getIdFld().getText());
                 a.setName(specialRuleFields.getNameFld().getText());
                 a.setDescription(specialRuleFields.getDescripFld().getText());

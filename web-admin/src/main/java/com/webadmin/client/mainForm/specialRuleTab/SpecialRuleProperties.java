@@ -1,5 +1,6 @@
 package com.webadmin.client.mainForm.specialRuleTab;
 
+import com.armyeditor.dto.SpecialRuleDTO;
 import com.armyeditor.entrys.SpecialRule;
 import com.google.gwt.editor.client.Editor;
 import com.sencha.gxt.core.client.ValueProvider;
@@ -15,10 +16,10 @@ import static com.google.gwt.editor.client.Editor.*;
  * Time: 15:43
  * To change this template use File | Settings | File Templates.
  */
-public interface SpecialRuleProperties extends PropertyAccess<SpecialRule> {
+public interface SpecialRuleProperties extends PropertyAccess<SpecialRuleDTO> {
     @Path("id")
-    ModelKeyProvider<SpecialRule> key();
-    ValueProvider<SpecialRule, String> id();
-    ValueProvider<SpecialRule, String> name();
-    ValueProvider<SpecialRule, String> description();
+    ModelKeyProvider<SpecialRuleDTO> key();
+    ValueProvider<SpecialRuleDTO, String> id();
+    ValueProvider<SpecialRuleDTO, String> name();
+    ValueProvider<SpecialRuleDTO, String> description();
 }

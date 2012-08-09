@@ -1,5 +1,6 @@
 package com.webadmin.client.mainForm.attackTypeTab;
 
+import com.armyeditor.dto.AttackTypeDTO;
 import com.armyeditor.entrys.AttackType;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -32,31 +33,31 @@ import java.util.List;
 public class AttackTypeContainer extends HorizontalLayoutContainer {
     private final CommonServiceAsync commonService = GWT.create(CommonService.class);
     VerticalLayoutContainer gridContainer;
-    Grid<AttackType> attackTypeGrid;
-    ColumnModel<AttackType> cm;
-    ListStore<AttackType> store;
+    Grid<AttackTypeDTO> attackTypeGrid;
+    ColumnModel<AttackTypeDTO> cm;
+    ListStore<AttackTypeDTO> store;
     TextButton updateBtn;
     TextButton delSelBtn;
     final AttackTypeFields attackTypeFields = new AttackTypeFields();
 
     public AttackTypeContainer() {
         AttackTypeProperties props = GWT.create(AttackTypeProperties.class);
-        IdentityValueProvider<AttackType> identity = new IdentityValueProvider<AttackType>();
-        final CheckBoxSelectionModel<AttackType> sm = new CheckBoxSelectionModel<AttackType>(identity);
-        ColumnConfig<AttackType, String> idColumn = new ColumnConfig<AttackType, String>(props.id(), 50, "id");
-        ColumnConfig<AttackType, String> nameColumn = new ColumnConfig<AttackType,String>(props.name(),150,"name");
-        ColumnConfig<AttackType, String> descripColumn = new ColumnConfig<AttackType,String>(props.description(),150,"description");
+        IdentityValueProvider<AttackTypeDTO> identity = new IdentityValueProvider<AttackTypeDTO>();
+        final CheckBoxSelectionModel<AttackTypeDTO> sm = new CheckBoxSelectionModel<AttackTypeDTO>(identity);
+        ColumnConfig<AttackTypeDTO, String> idColumn = new ColumnConfig<AttackTypeDTO, String>(props.id(), 50, "id");
+        ColumnConfig<AttackTypeDTO, String> nameColumn = new ColumnConfig<AttackTypeDTO,String>(props.name(),150,"name");
+        ColumnConfig<AttackTypeDTO, String> descripColumn = new ColumnConfig<AttackTypeDTO,String>(props.description(),150,"description");
 
-        List<ColumnConfig<AttackType, ?>> l = new ArrayList<ColumnConfig<AttackType, ?>>();
+        List<ColumnConfig<AttackTypeDTO, ?>> l = new ArrayList<ColumnConfig<AttackTypeDTO, ?>>();
         l.add(sm.getColumn());
         l.add(idColumn);
         l.add(nameColumn);
         l.add(descripColumn);
-        cm = new ColumnModel<AttackType>(l);
+        cm = new ColumnModel<AttackTypeDTO>(l);
         sm.setSelectionMode(Style.SelectionMode.MULTI);
-        store = new ListStore<AttackType>(props.key());
+        store = new ListStore<AttackTypeDTO>(props.key());
         updateStore();
-        attackTypeGrid = new Grid<AttackType>(store,cm);
+        attackTypeGrid = new Grid<AttackTypeDTO>(store,cm);
         attackTypeGrid.setSelectionModel(sm);
         updateBtn = new TextButton("Update", new SelectEvent.SelectHandler() {
             @Override
@@ -98,7 +99,7 @@ public class AttackTypeContainer extends HorizontalLayoutContainer {
             @Override
             public void onRowClick(RowClickEvent event) {
                 int row = event.getRowIndex();
-                AttackType a =(AttackType) event.getSource().getStore().get(row);
+                AttackTypeDTO a =(AttackTypeDTO) event.getSource().getStore().get(row);
                 attackTypeFields.getIdFld().setText(a.getId());
                 attackTypeFields.getNameFld().setText(a.getName());
                 attackTypeFields.getDescripFld().setText(a.getDescription());
@@ -108,7 +109,7 @@ public class AttackTypeContainer extends HorizontalLayoutContainer {
         attackTypeFields.getSaveBtn().addSelectHandler(new SelectEvent.SelectHandler() {
             @Override
             public void onSelect(SelectEvent event) {
-                AttackType a = new AttackType();
+                AttackTypeDTO a = new AttackTypeDTO();
                 a.setId(attackTypeFields.getIdFld().getText());
                 a.setName(attackTypeFields.getNameFld().getText());
                 a.setDescription(attackTypeFields.getDescripFld().getText());
@@ -129,7 +130,7 @@ public class AttackTypeContainer extends HorizontalLayoutContainer {
         attackTypeFields.getSaveNewBtn().addSelectHandler(new SelectEvent.SelectHandler() {
             @Override
             public void onSelect(SelectEvent event) {
-                AttackType a = new AttackType();
+                AttackTypeDTO a = new AttackTypeDTO();
                 a.setId(attackTypeFields.getIdFld().getText());
                 a.setName(attackTypeFields.getNameFld().getText());
                 a.setDescription(attackTypeFields.getDescripFld().getText());
@@ -149,7 +150,7 @@ public class AttackTypeContainer extends HorizontalLayoutContainer {
     }
 
     public void updateStore(){
-        commonService.getAttackTypes(new AsyncCallback<List<AttackType>>() {
+        commonService.getAttackTypes(new AsyncCallback<List<AttackTypeDTO>>() {
 
             @Override
             public void onFailure(Throwable caught) {
@@ -157,9 +158,9 @@ public class AttackTypeContainer extends HorizontalLayoutContainer {
             }
 
             @Override
-            public void onSuccess(List<AttackType> result) {
+            public void onSuccess(List<AttackTypeDTO> result) {
                 store.clear();
-                for (AttackType a : result) {
+                for (AttackTypeDTO a : result) {
                     store.add(a);
                 }
                 attackTypeGrid.reconfigure(store, cm);

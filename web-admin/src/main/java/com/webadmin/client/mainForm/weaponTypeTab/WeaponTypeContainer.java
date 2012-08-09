@@ -1,5 +1,6 @@
 package com.webadmin.client.mainForm.weaponTypeTab;
 
+import com.armyeditor.dto.WeaponTypeDTO;
 import com.armyeditor.entrys.WeaponType;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -33,30 +34,30 @@ import java.util.List;
 public class WeaponTypeContainer extends HorizontalLayoutContainer {
     private final CommonServiceAsync commonService = GWT.create(CommonService.class);
     VerticalLayoutContainer gridContainer;
-    Grid<WeaponType> specialRuleGrid;
-    ColumnModel<WeaponType> cm;
-    ListStore<WeaponType> store;
+    Grid<WeaponTypeDTO> specialRuleGrid;
+    ColumnModel<WeaponTypeDTO> cm;
+    ListStore<WeaponTypeDTO> store;
     TextButton updateBtn = new TextButton("Update");
     TextButton delSelBtn = new TextButton("Delete Selection");
     final WeaponTypeFields weaponTypeFields = new WeaponTypeFields();
 
     public WeaponTypeContainer() {
         WeaponTypeProperties props = GWT.create(WeaponTypeProperties.class);
-        IdentityValueProvider<WeaponType> identity = new IdentityValueProvider<WeaponType>();
-        final CheckBoxSelectionModel<WeaponType> sm = new CheckBoxSelectionModel<WeaponType>(identity);
-        ColumnConfig<WeaponType, String> idColumn = new ColumnConfig<WeaponType, String>(props.id(), 50, "id");
-        ColumnConfig<WeaponType, String> nameColumn = new ColumnConfig<WeaponType, String>(props.name(), 150, "name");
-        ColumnConfig<WeaponType, String> descripColumn = new ColumnConfig<WeaponType, String>(props.description(), 150, "description");
+        IdentityValueProvider<WeaponTypeDTO> identity = new IdentityValueProvider<WeaponTypeDTO>();
+        final CheckBoxSelectionModel<WeaponTypeDTO> sm = new CheckBoxSelectionModel<WeaponTypeDTO>(identity);
+        ColumnConfig<WeaponTypeDTO, String> idColumn = new ColumnConfig<WeaponTypeDTO, String>(props.id(), 50, "id");
+        ColumnConfig<WeaponTypeDTO, String> nameColumn = new ColumnConfig<WeaponTypeDTO, String>(props.name(), 150, "name");
+        ColumnConfig<WeaponTypeDTO, String> descripColumn = new ColumnConfig<WeaponTypeDTO, String>(props.description(), 150, "description");
 
-        List<ColumnConfig<WeaponType, ?>> l = new ArrayList<ColumnConfig<WeaponType, ?>>();
+        List<ColumnConfig<WeaponTypeDTO, ?>> l = new ArrayList<ColumnConfig<WeaponTypeDTO, ?>>();
         l.add(sm.getColumn());
         l.add(idColumn);
         l.add(nameColumn);
         l.add(descripColumn);
-        cm = new ColumnModel<WeaponType>(l);
+        cm = new ColumnModel<WeaponTypeDTO>(l);
         sm.setSelectionMode(Style.SelectionMode.MULTI);
-        store = new ListStore<WeaponType>(props.key());
-        specialRuleGrid= new Grid<WeaponType>(store, cm);
+        store = new ListStore<WeaponTypeDTO>(props.key());
+        specialRuleGrid= new Grid<WeaponTypeDTO>(store, cm);
         updateStore();
         specialRuleGrid.setSelectionModel(sm);
         gridContainer = new VerticalLayoutContainer();
@@ -71,7 +72,7 @@ public class WeaponTypeContainer extends HorizontalLayoutContainer {
     }
 
     public void updateStore(){
-        commonService.getWeaponType(new AsyncCallback<List<WeaponType>>() {
+        commonService.getWeaponType(new AsyncCallback<List<WeaponTypeDTO>>() {
 
             @Override
             public void onFailure(Throwable caught) {
@@ -79,9 +80,9 @@ public class WeaponTypeContainer extends HorizontalLayoutContainer {
             }
 
             @Override
-            public void onSuccess(List<WeaponType> result) {
+            public void onSuccess(List<WeaponTypeDTO> result) {
                 store.clear();
-                for (WeaponType a : result) {
+                for (WeaponTypeDTO a : result) {
                     store.add(a);
                 }
                 specialRuleGrid.reconfigure(store, cm);
@@ -94,7 +95,7 @@ public class WeaponTypeContainer extends HorizontalLayoutContainer {
             @Override
             public void onRowClick(RowClickEvent event) {
                 int row = event.getRowIndex();
-                WeaponType a =(WeaponType) event.getSource().getStore().get(row);
+                WeaponTypeDTO a =(WeaponTypeDTO) event.getSource().getStore().get(row);
                 weaponTypeFields.getIdFld().setText(a.getId());
                 weaponTypeFields.getNameFld().setText(a.getName());
                 weaponTypeFields.getDescripFld().setText(a.getDescription());
@@ -103,7 +104,7 @@ public class WeaponTypeContainer extends HorizontalLayoutContainer {
         weaponTypeFields.getSaveBtn().addSelectHandler(new SelectEvent.SelectHandler() {
             @Override
             public void onSelect(SelectEvent event) {
-                WeaponType a = new WeaponType();
+                WeaponTypeDTO a = new WeaponTypeDTO();
                 a.setId(weaponTypeFields.getIdFld().getText());
                 a.setName(weaponTypeFields.getNameFld().getText());
                 a.setDescription(weaponTypeFields.getDescripFld().getText());
@@ -123,7 +124,7 @@ public class WeaponTypeContainer extends HorizontalLayoutContainer {
         weaponTypeFields.getSaveNewBtn().addSelectHandler(new SelectEvent.SelectHandler() {
             @Override
             public void onSelect(SelectEvent event) {
-                WeaponType a = new WeaponType();
+                WeaponTypeDTO a = new WeaponTypeDTO();
                 a.setId(weaponTypeFields.getIdFld().getText());
                 a.setName(weaponTypeFields.getNameFld().getText());
                 a.setDescription(weaponTypeFields.getDescripFld().getText());

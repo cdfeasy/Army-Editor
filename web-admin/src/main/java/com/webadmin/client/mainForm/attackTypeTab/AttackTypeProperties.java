@@ -1,5 +1,6 @@
 package com.webadmin.client.mainForm.attackTypeTab;
 
+import com.armyeditor.dto.AttackTypeDTO;
 import com.armyeditor.entrys.Armor;
 import com.armyeditor.entrys.AttackType;
 import com.google.gwt.editor.client.Editor;
@@ -16,10 +17,10 @@ import static com.google.gwt.editor.client.Editor.Path;
  * Time: 12:49
  * To change this template use File | Settings | File Templates.
  */
-public interface AttackTypeProperties extends PropertyAccess<AttackType> {
+public interface AttackTypeProperties extends PropertyAccess<AttackTypeDTO> {
     @Path("id")
-    ModelKeyProvider<AttackType> key();
-    ValueProvider<AttackType, String> id();
-    ValueProvider<AttackType, String> name();
-    ValueProvider<AttackType, String> description();
+    ModelKeyProvider<AttackTypeDTO> key();
+    ValueProvider<AttackTypeDTO, String> id();
+    ValueProvider<AttackTypeDTO, String> name();
+    ValueProvider<AttackTypeDTO, String> description();
 }

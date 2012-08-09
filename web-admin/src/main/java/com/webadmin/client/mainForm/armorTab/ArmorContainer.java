@@ -1,5 +1,6 @@
 package com.webadmin.client.mainForm.armorTab;
 
+import com.armyeditor.dto.ArmorDTO;
 import com.armyeditor.entrys.Armor;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -32,30 +33,30 @@ import java.util.List;
 public class ArmorContainer extends HorizontalLayoutContainer {
     private final CommonServiceAsync commonService = GWT.create(CommonService.class);
     VerticalLayoutContainer gridContainer;
-    Grid<Armor> armorGrid;
-    ColumnModel<Armor> cm;
-    ListStore<Armor> store;
+    Grid<ArmorDTO> armorGrid;
+    ColumnModel<ArmorDTO> cm;
+    ListStore<ArmorDTO> store;
     TextButton updateBtn;
     TextButton delSelBtn;
     final ArmorFieds armorFieds = new ArmorFieds();
 
     public ArmorContainer() {
         ArmorProperties props = GWT.create(ArmorProperties.class);
-        IdentityValueProvider<Armor> identity = new IdentityValueProvider<Armor>();
-        final CheckBoxSelectionModel<Armor> sm = new CheckBoxSelectionModel<Armor>(identity);
-        ColumnConfig<Armor, String> idColumn = new ColumnConfig<Armor, String>(props.id(), 50, "id");
-        ColumnConfig<Armor, String> nameColumn = new ColumnConfig<Armor, String>(props.name(), 150, "name");
-        ColumnConfig<Armor, String> descripColumn = new ColumnConfig<Armor, String>(props.description(), 150, "description");
+        IdentityValueProvider<ArmorDTO> identity = new IdentityValueProvider<ArmorDTO>();
+        final CheckBoxSelectionModel<ArmorDTO> sm = new CheckBoxSelectionModel<ArmorDTO>(identity);
+        ColumnConfig<ArmorDTO, String> idColumn = new ColumnConfig<ArmorDTO, String>(props.id(), 50, "id");
+        ColumnConfig<ArmorDTO, String> nameColumn = new ColumnConfig<ArmorDTO, String>(props.name(), 150, "name");
+        ColumnConfig<ArmorDTO, String> descripColumn = new ColumnConfig<ArmorDTO, String>(props.description(), 150, "description");
 
-        List<ColumnConfig<Armor, ?>> l = new ArrayList<ColumnConfig<Armor, ?>>();
+        List<ColumnConfig<ArmorDTO, ?>> l = new ArrayList<ColumnConfig<ArmorDTO, ?>>();
         l.add(sm.getColumn());
         l.add(idColumn);
         l.add(nameColumn);
         l.add(descripColumn);
-        cm = new ColumnModel<Armor>(l);
+        cm = new ColumnModel<ArmorDTO>(l);
         sm.setSelectionMode(Style.SelectionMode.MULTI);
-        store = new ListStore<Armor>(props.key());
-        armorGrid= new Grid<Armor>(store, cm);
+        store = new ListStore<ArmorDTO>(props.key());
+        armorGrid= new Grid<ArmorDTO>(store, cm);
         updateStore();
         armorGrid.setSelectionModel(sm);
 
@@ -95,7 +96,7 @@ public class ArmorContainer extends HorizontalLayoutContainer {
     }
 
     public void updateStore(){
-        commonService.getArmors(new AsyncCallback<List<Armor>>() {
+        commonService.getArmors(new AsyncCallback<List<ArmorDTO>>() {
 
             @Override
             public void onFailure(Throwable caught) {
@@ -103,9 +104,9 @@ public class ArmorContainer extends HorizontalLayoutContainer {
             }
 
             @Override
-            public void onSuccess(List<Armor> result) {
+            public void onSuccess(List<ArmorDTO> result) {
                 store.clear();
-                for (Armor a : result) {
+                for (ArmorDTO a : result) {
                     store.add(a);
                 }
                 armorGrid.reconfigure(store,cm);
@@ -118,7 +119,7 @@ public class ArmorContainer extends HorizontalLayoutContainer {
             @Override
             public void onRowClick(RowClickEvent event) {
                 int row = event.getRowIndex();
-                Armor a =(Armor) event.getSource().getStore().get(row);
+                ArmorDTO a =(ArmorDTO) event.getSource().getStore().get(row);
                 armorFieds.getIdFld().setText(a.getId());
                 armorFieds.getNameFld().setText(a.getName());
                 armorFieds.getDescripFld().setText(a.getDescription());
@@ -127,7 +128,7 @@ public class ArmorContainer extends HorizontalLayoutContainer {
         armorFieds.getSaveBtn().addSelectHandler(new SelectEvent.SelectHandler() {
             @Override
             public void onSelect(SelectEvent event) {
-                Armor a = new Armor();
+                ArmorDTO a = new ArmorDTO();
                 a.setId(armorFieds.getIdFld().getText());
                 a.setName(armorFieds.getNameFld().getText());
                 a.setDescription(armorFieds.getDescripFld().getText());
@@ -147,7 +148,7 @@ public class ArmorContainer extends HorizontalLayoutContainer {
         armorFieds.getSaveNewBtn().addSelectHandler(new SelectEvent.SelectHandler() {
             @Override
             public void onSelect(SelectEvent event) {
-                Armor a = new Armor();
+                ArmorDTO a = new ArmorDTO();
                 a.setId(armorFieds.getIdFld().getText());
                 a.setName(armorFieds.getNameFld().getText());
                 a.setDescription(armorFieds.getDescripFld().getText());
@@ -164,8 +165,6 @@ public class ArmorContainer extends HorizontalLayoutContainer {
                 });
             }
         });
-
-
 
     }
 

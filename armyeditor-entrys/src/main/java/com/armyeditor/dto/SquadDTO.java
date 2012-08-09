@@ -27,7 +27,7 @@ public class SquadDTO implements java.io.Serializable {
 
     public SquadDTO(Squad squad){
         this.id = squad.getId();
-        this.squadBase = squad.getSquadBase();
+        this.squadBase = new SquadBaseDTO(squad.getSquadBase());
     }
      
     public Long getId() {
