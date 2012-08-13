@@ -1,4 +1,4 @@
-package com.webadmin.client.mainForm.weaponTypeTab;
+package com.webadmin.client.mainForm.properties;
 
 import com.armyeditor.dto.WeaponTypeDTO;
 import com.armyeditor.entrys.WeaponType;

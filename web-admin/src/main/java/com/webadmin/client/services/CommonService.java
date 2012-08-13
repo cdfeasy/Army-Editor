@@ -36,6 +36,7 @@ public interface CommonService extends RemoteService {
     void delUnitTypes(List<UnitTypeDTO> list);
     void addUnitType(UnitTypeDTO u);
     void changeUnitType(UnitTypeDTO u);
+    List<OptionDTO> getOptionsByUnit(String id);
 
     List<WeaponTypeDTO> getWeaponType();
     void delWeaponTypes(List<WeaponTypeDTO> list);

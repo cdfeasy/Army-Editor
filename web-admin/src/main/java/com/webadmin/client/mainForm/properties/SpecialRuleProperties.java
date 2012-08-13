@@ -1,4 +1,4 @@
-package com.webadmin.client.mainForm.specialRuleTab;
+package com.webadmin.client.mainForm.properties;
 
 import com.armyeditor.dto.SpecialRuleDTO;
 import com.armyeditor.entrys.SpecialRule;

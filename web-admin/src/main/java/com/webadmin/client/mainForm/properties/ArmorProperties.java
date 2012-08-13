@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.webadmin.client.mainForm.armorTab;
+package com.webadmin.client.mainForm.properties;
 
 import com.armyeditor.dto.ArmorDTO;
 import com.armyeditor.entrys.Armor;

@@ -1,23 +1,30 @@
-package com.webadmin.client.mainForm.unitTypeTab;
+package com.webadmin.client.mainForm.views;
 
+import com.armyeditor.dto.OptionDTO;
 import com.armyeditor.dto.UnitTypeDTO;
-import com.armyeditor.entrys.UnitType;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.sencha.gxt.core.client.IdentityValueProvider;
 import com.sencha.gxt.core.client.Style;
 import com.sencha.gxt.core.client.util.Margins;
 import com.sencha.gxt.data.shared.ListStore;
+import com.sencha.gxt.widget.core.client.FramedPanel;
 import com.sencha.gxt.widget.core.client.button.TextButton;
+import com.sencha.gxt.widget.core.client.container.BorderLayoutContainer;
+import com.sencha.gxt.widget.core.client.container.BoxLayoutContainer;
 import com.sencha.gxt.widget.core.client.container.HorizontalLayoutContainer;
 import com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer;
 import com.sencha.gxt.widget.core.client.event.RowClickEvent;
 import com.sencha.gxt.widget.core.client.event.SelectEvent;
+import com.sencha.gxt.widget.core.client.form.FieldLabel;
+import com.sencha.gxt.widget.core.client.form.TextField;
 import com.sencha.gxt.widget.core.client.grid.CheckBoxSelectionModel;
 import com.sencha.gxt.widget.core.client.grid.ColumnConfig;
 import com.sencha.gxt.widget.core.client.grid.ColumnModel;
 import com.sencha.gxt.widget.core.client.grid.Grid;
 import com.sencha.gxt.widget.core.client.info.Info;
+import com.webadmin.client.mainForm.properties.OptionProperties;
+import com.webadmin.client.mainForm.properties.UnitTypeProperties;
 import com.webadmin.client.services.CommonService;
 import com.webadmin.client.services.CommonServiceAsync;
 
@@ -95,6 +102,19 @@ public class UnitTypeContainer extends HorizontalLayoutContainer {
                 UnitTypeDTO a =(UnitTypeDTO) event.getSource().getStore().get(row);
                 unitTypeFields.getIdFld().setText(a.getId());
                 unitTypeFields.getNameFld().setText(a.getName());
+                commonService.getOptionsByUnit(a.getId(),new AsyncCallback<List<OptionDTO>>() {
+                    @Override
+                    public void onFailure(Throwable throwable) {
+                        System.out.println("Запрос упал " + throwable.getMessage());
+                    }
+
+                    @Override
+                    public void onSuccess(List<OptionDTO> optionDTOs) {
+                        ListStore<OptionDTO> listStore = unitTypeFields.getStore();
+                        listStore.addAll(optionDTOs);
+                        unitTypeFields.getOptionGrid().reconfigure(listStore,unitTypeFields.getCm());
+                    }
+                });
             }
         });
         unitTypeFields.getSaveBtn().addSelectHandler(new SelectEvent.SelectHandler() {
@@ -162,5 +182,106 @@ public class UnitTypeContainer extends HorizontalLayoutContainer {
             }
         });
 
+    }
+
+    public class UnitTypeFields extends BorderLayoutContainer {
+        TextField idFld;
+        TextField nameFld;
+        TextButton saveBtn = new TextButton("Save");
+        TextButton saveNewBtn = new TextButton("Save as new item");
+        Grid<OptionDTO> optionGrid;
+        private ListStore<OptionDTO> store;
+        private ColumnModel<OptionDTO> cm;
+
+        public UnitTypeFields(){
+            VerticalLayoutContainer vc = new VerticalLayoutContainer();
+            idFld = new TextField();
+            vc.add(new FieldLabel(idFld, "ID"));
+            nameFld = new TextField();
+            vc.add(new FieldLabel(nameFld, "Name"));
+            vc.add(saveBtn);
+            vc.add(saveNewBtn);
+
+            OptionProperties props = GWT.create(OptionProperties.class);
+            IdentityValueProvider<OptionDTO> identity = new IdentityValueProvider<OptionDTO>();
+            ColumnConfig<OptionDTO, String> idColumn = new ColumnConfig<OptionDTO, String>(props.id(), 100, "id");
+            ColumnConfig<OptionDTO, String> nameColumn = new ColumnConfig<OptionDTO, String>(props.name(), 100, "name");
+            ColumnConfig<OptionDTO, String> descripColumn = new ColumnConfig<OptionDTO, String>(props.description(), 100, "description");
+            List<ColumnConfig<OptionDTO, ?>> l = new ArrayList<ColumnConfig<OptionDTO, ?>>();
+            l.add(idColumn);
+            l.add(nameColumn);
+            l.add(descripColumn);
+            cm = new ColumnModel<OptionDTO>(l);
+            store = new ListStore<OptionDTO>(props.key());
+            optionGrid = new Grid<OptionDTO>(store, cm);
+            FramedPanel cp = new FramedPanel();
+            cp.setHeadingText("Options");
+            cp.setCollapsible(true);
+            cp.setAnimCollapse(true);
+            cp.setWidget(optionGrid);
+//            cp.setPixelSize(500, 230);
+            cp.addStyleName("margin-10");
+            vc.add(cp);
+            this.setBorders(true);
+//            this.setHeight(750);
+//            this.setWidth(700);
+            this.add(vc, new VerticalLayoutContainer.VerticalLayoutData(450,200,new Margins(5,5,5,5)));
+        }
+
+        public Grid<OptionDTO> getOptionGrid() {
+            return optionGrid;
+        }
+
+        public void setOptionGrid(Grid<OptionDTO> optionGrid) {
+            this.optionGrid = optionGrid;
+        }
+
+        public ListStore<OptionDTO> getStore() {
+            return store;
+        }
+
+        public void setStore(ListStore<OptionDTO> store) {
+            this.store = store;
+        }
+
+        public ColumnModel<OptionDTO> getCm() {
+            return cm;
+        }
+
+        public void setCm(ColumnModel<OptionDTO> cm) {
+            this.cm = cm;
+        }
+
+        public TextField getIdFld() {
+            return idFld;
+        }
+
+        public void setIdFld(TextField idFld) {
+            this.idFld = idFld;
+        }
+
+        public TextField getNameFld() {
+            return nameFld;
+        }
+
+        public void setNameFld(TextField nameFld) {
+            this.nameFld = nameFld;
+        }
+
+        public TextButton getSaveBtn() {
+            return saveBtn;
+        }
+
+        public void setSaveBtn(TextButton saveBtn) {
+            this.saveBtn = saveBtn;
+        }
+
+        public TextButton getSaveNewBtn() {
+            return saveNewBtn;
+        }
+
+        public void setSaveNewBtn(TextButton saveNewBtn) {
+            this.saveNewBtn = saveNewBtn;
+        }
     }
 }

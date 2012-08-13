@@ -1,4 +1,4 @@
-package com.webadmin.client.mainForm.attackTypeTab;
+package com.webadmin.client.mainForm.properties;
 
 import com.armyeditor.dto.AttackTypeDTO;
 import com.armyeditor.entrys.Armor;

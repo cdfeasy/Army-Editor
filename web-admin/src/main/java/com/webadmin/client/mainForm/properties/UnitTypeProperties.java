@@ -1,4 +1,4 @@
-package com.webadmin.client.mainForm.unitTypeTab;
+package com.webadmin.client.mainForm.properties;
 
 import com.armyeditor.dto.UnitTypeDTO;
 import com.armyeditor.entrys.UnitType;

@@ -13,11 +13,11 @@ import com.sencha.gxt.widget.core.client.TabItemConfig;
 import com.sencha.gxt.widget.core.client.TabPanel;
 import com.sencha.gxt.widget.core.client.container.HorizontalLayoutContainer;
 import com.sencha.gxt.widget.core.client.info.Info;
-import com.webadmin.client.mainForm.armorTab.ArmorContainer;
-import com.webadmin.client.mainForm.attackTypeTab.AttackTypeContainer;
-import com.webadmin.client.mainForm.specialRuleTab.SpecialRuleContainer;
-import com.webadmin.client.mainForm.unitTypeTab.UnitTypeContainer;
-import com.webadmin.client.mainForm.weaponTypeTab.WeaponTypeContainer;
+import com.webadmin.client.mainForm.views.ArmorContainer;
+import com.webadmin.client.mainForm.views.AttackTypeContainer;
+import com.webadmin.client.mainForm.views.SpecialRuleContainer;
+import com.webadmin.client.mainForm.views.UnitTypeContainer;
+import com.webadmin.client.mainForm.views.WeaponTypeContainer;
 import com.webadmin.client.services.CommonService;
 import com.webadmin.client.services.CommonServiceAsync;
 

@@ -238,6 +238,19 @@ public class BaseService extends RemoteServiceServlet implements CommonService {
     }
 
     @Override
+    public List<OptionDTO> getOptionsByUnit(String id) {
+        Session ses = HibernateUtil.getSessionFactory().openSession();
+        Transaction trans = ses.beginTransaction();
+        UnitType unitType = (UnitType)ses.get(UnitType.class, id);
+        List<Option> list = unitType.getOptions();
+        List<OptionDTO> itemlist = new ArrayList<OptionDTO>();
+        for (Option o:list){
+            itemlist.add(new OptionDTO(o));
+        }
+        return itemlist;
+    }
+
+    @Override
     public List<WeaponTypeDTO> getWeaponType() {
         Session ses= HibernateUtil.getSessionFactory().openSession();
         Query query = ses.createQuery("select weapontype from WeaponType weapontype");
