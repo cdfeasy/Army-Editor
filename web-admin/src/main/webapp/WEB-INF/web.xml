@@ -10,10 +10,19 @@
         <servlet-name>baseService</servlet-name>
         <servlet-class>com.webadmin.server.BaseService</servlet-class>
     </servlet>
+     <servlet>
+        <servlet-name>armyService</servlet-name>
+        <servlet-class>com.webadmin.server.ArmyServiceImpl</servlet-class>
+    </servlet>
 
     <servlet-mapping>
         <servlet-name>baseService</servlet-name>
         <url-pattern>/admin/server/BaseService</url-pattern>
+    </servlet-mapping>
+    
+    <servlet-mapping>
+        <servlet-name>armyService</servlet-name>
+        <url-pattern>/admin/server/ArmyService</url-pattern>
     </servlet-mapping>
 
     <!-- Default page to serve -->
