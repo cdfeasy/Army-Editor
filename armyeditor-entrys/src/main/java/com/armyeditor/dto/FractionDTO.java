@@ -29,12 +29,14 @@ public class FractionDTO implements java.io.Serializable  {
     public FractionDTO() {
     }
 
-    public FractionDTO(Fraction fraction){
+    public FractionDTO(Fraction fraction, boolean isRoot) {
         this.id = fraction.getId();
         this.name = fraction.getName();
         this.description = fraction.getDescription();
-        for (Codex c:fraction.getCodexes()){
-            codexes.add(new CodexDTO(c));
+        if (isRoot) {
+            for (Codex c : fraction.getCodexes()) {
+                codexes.add(new CodexDTO(c));
+            }
         }
     }
 

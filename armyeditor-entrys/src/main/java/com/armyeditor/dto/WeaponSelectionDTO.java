@@ -20,7 +20,7 @@ import javax.persistence.ManyToMany;
 public class WeaponSelectionDTO implements java.io.Serializable{
 
     private Long id;
-    private  ArrayList<WeaponDTO> weapon;
+    private  ArrayList<WeaponDTO> weapon=new ArrayList<WeaponDTO>();
     private String condition;
 
     public WeaponSelectionDTO(){

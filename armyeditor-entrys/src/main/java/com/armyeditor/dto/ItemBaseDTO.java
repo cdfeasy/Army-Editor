@@ -27,7 +27,7 @@ public class ItemBaseDTO implements java.io.Serializable  {
         this.id = itemBase.getId();
         this.name = itemBase.getName();
         this.description = itemBase.getDescription();
-        this.fraction = new FractionDTO(itemBase.getFraction());
+        this.fraction = new FractionDTO(itemBase.getFraction(),false);
         for (Option o:itemBase.getOptions()){
             options.add(new OptionDTO(o));
         }

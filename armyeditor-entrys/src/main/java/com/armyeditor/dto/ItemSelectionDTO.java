@@ -18,7 +18,7 @@ import javax.persistence.*;
 public class ItemSelectionDTO implements java.io.Serializable{
 
     private Long id;
-    private ArrayList<ItemDTO> item;
+    private ArrayList<ItemDTO> item=new ArrayList<ItemDTO>();
     private String condition;
 
     public ItemSelectionDTO(){

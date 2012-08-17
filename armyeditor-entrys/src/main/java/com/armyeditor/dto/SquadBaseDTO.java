@@ -40,7 +40,7 @@ public class SquadBaseDTO implements java.io.Serializable {
 
     public SquadBaseDTO(SquadBase squadBase){
         this.id = squadBase.getId();
-        this.squadPartBase = new SquadPartBaseDTO(squadBase.getSquadPartBase());
+        this.squadPartBase = new SquadPartBaseDTO(squadBase.getSquadPartBase(),null);
         for (Option o:squadBase.getOptions()){
             options.add(new OptionDTO(o));
         }

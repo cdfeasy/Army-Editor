@@ -4,6 +4,7 @@
  */
 package com.armyeditor.entrys;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.*;
 
@@ -15,7 +16,7 @@ import javax.persistence.*;
 public class ItemSelection implements java.io.Serializable{
 
     private Long id;
-    private List<Item> item;
+    private List<Item> item=new ArrayList<Item>();
     private String condition;
 
     @Id

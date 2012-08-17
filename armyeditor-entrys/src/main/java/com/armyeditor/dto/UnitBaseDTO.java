@@ -67,7 +67,7 @@ public class UnitBaseDTO implements java.io.Serializable  {
         for (Item i:unit.getItems()){
             items.add(new ItemDTO(i));
         }
-        this.fraction = new FractionDTO(unit.getFraction());
+        this.fraction = new FractionDTO(unit.getFraction(),false);
     }
 
     public UnitBase toUnitBase(){

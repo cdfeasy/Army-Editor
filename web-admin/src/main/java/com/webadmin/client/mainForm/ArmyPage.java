@@ -30,6 +30,10 @@ import com.sencha.gxt.widget.core.client.grid.Grid;
 import com.sencha.gxt.widget.core.client.tree.Tree;
 import com.sencha.gxt.widget.core.client.tree.TreeView;
 import com.webadmin.client.mainForm.properties.ArmorProperties;
+import com.webadmin.client.services.ArmyService;
+import com.webadmin.client.services.ArmyServiceAsync;
+import com.webadmin.client.services.CommonService;
+import com.webadmin.client.services.CommonServiceAsync;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,6 +42,9 @@ import java.util.List;
  * @author dmitry
  */
 public class ArmyPage extends HorizontalLayoutContainer {
+    
+    private final ArmyServiceAsync commonService = GWT.create(ArmyService.class);
+    
     class KeyProvider implements ModelKeyProvider {
     @Override
     public String getKey(Object item) {
@@ -48,11 +55,8 @@ public class ArmyPage extends HorizontalLayoutContainer {
       return s;
     }
     }
-    
-
-  public ArmyPage() {
-      super();
-    FlowLayoutContainer con = new FlowLayoutContainer();
+  private void init(CodexDTO dto){
+       FlowLayoutContainer con = new FlowLayoutContainer();
     con.addStyleName("margin-10");
  
     TreeStore<Object> store = new TreeStore<Object>(new KeyProvider());
@@ -117,6 +121,23 @@ public class ArmyPage extends HorizontalLayoutContainer {
     con.add(buttonBar);
     con.add(tree);
     this.add(con);
+  }  
+
+  public ArmyPage() {
+      super();
+   commonService.getCodex(new AsyncCallback<CodexDTO>() {
+
+          @Override
+          public void onFailure(Throwable caught) {
+              caught.printStackTrace();
+              throw new UnsupportedOperationException(caught.getMessage());
+          }
+
+          @Override
+          public void onSuccess(CodexDTO result) {
+              init(result);
+          }
+      });
   }
    
 }

@@ -62,7 +62,7 @@ public class VenicleBaseDTO implements Serializable {
         for (Item i:venicleBase.getItems()){
             items.add(new ItemDTO(i));
         }
-        this.fraction = new FractionDTO(venicleBase.getFraction());
+        this.fraction = new FractionDTO(venicleBase.getFraction(),false);
     }
 
     public VenicleBase toVenicleBase(){

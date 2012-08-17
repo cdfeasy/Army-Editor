@@ -29,7 +29,7 @@ public class SquadPartDTO implements java.io.Serializable {
 
     public SquadPartDTO(SquadPart squadPart){
         this.id = squadPart.getId();
-        this.base = new SquadPartBaseDTO(squadPart.getBase());
+        this.base = new SquadPartBaseDTO(squadPart.getBase(),null);
         this.squadsize = squadPart.getSquadsize();
         for (Item i:squadPart.getItems()){
            items.add(new ItemDTO(i));

@@ -36,7 +36,7 @@ public class SquadPartBaseDTO implements java.io.Serializable  {
     public SquadPartBaseDTO() {
     }
 
-    public SquadPartBaseDTO(SquadPartBase squadPartBase){
+    public SquadPartBaseDTO(SquadPartBase squadPartBase, SquadPartBaseDTO parent){
         this.id = squadPartBase.getId();
         this.unit = new UnitBaseDTO(squadPartBase.getUnit());
         this.minSize = squadPartBase.getMinSize();
@@ -48,9 +48,9 @@ public class SquadPartBaseDTO implements java.io.Serializable  {
             weaponSelection.add(new WeaponSelectionDTO(w));
         }
         for (SquadPartBase s:squadPartBase.getModifications()){
-            modifications.add(new SquadPartBaseDTO(s));
+            modifications.add(new SquadPartBaseDTO(s,this));
         }
-        this.parent = new SquadPartBaseDTO(squadPartBase.getParent());
+        this.parent = parent;
         this.conditions = squadPartBase.getConditions();
     }
 

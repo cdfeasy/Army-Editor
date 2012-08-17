@@ -4,6 +4,7 @@
  */
 package com.armyeditor.entrys;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Id;
@@ -17,7 +18,7 @@ import javax.persistence.ManyToMany;
 public class WeaponSelection implements java.io.Serializable{
 
     private Long id;
-    private List<Weapon> weapon;
+    private List<Weapon> weapon=new ArrayList<Weapon>();
     private String condition;
 
     @Id

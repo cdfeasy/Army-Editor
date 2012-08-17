@@ -25,15 +25,18 @@ public class ArmyServiceImpl extends RemoteServiceServlet implements ArmyService
 
     @Override
     public CodexDTO getCodex() {
-        Session ses= HibernateUtil.getSessionFactory().openSession();
-        Query query = ses.createQuery("select codex from Codex codex");
-        List<Codex> itemlist=query.list();
-        List<CodexDTO> сodexDTOList = new ArrayList<CodexDTO>();
-        for (Codex u:itemlist){
-            сodexDTOList.add(new CodexDTO(u));
+        try {
+            Session ses = HibernateUtil.getSessionFactory().openSession();
+            Query query = ses.createQuery("select codex from Codex codex");
+            List<Codex> itemlist = query.list();
+            List<CodexDTO> сodexDTOList = new ArrayList<CodexDTO>();
+            for (Codex u : itemlist) {
+                сodexDTOList.add(new CodexDTO(u));
+            }
+            ses.close();
+            return сodexDTOList.get(0);
+        } catch (Throwable th) {
+            throw new RuntimeException(th);
         }
-        ses.close();
-        return сodexDTOList.get(0);
     }
-    
 }
