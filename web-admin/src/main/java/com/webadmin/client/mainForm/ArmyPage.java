@@ -55,21 +55,39 @@ public class ArmyPage extends HorizontalLayoutContainer {
       return s;
     }
     }
+    
+    private void processSquadDTO(SquadPartBaseDTO dto,Object parent, TreeStore<Object> store){
+      store.add(parent,dto);
+      for(SquadPartBaseDTO squad: dto.getModifications()){
+          processSquadDTO(squad,dto,store);
+      }
+  }
+    
+  private void processCodexDTO(CodexDTO dto,TreeStore<Object> store){
+      store.add(dto);
+      for(SquadBaseDTO squad: dto.getSquads()){
+          //store.add(squad.getSquadPartBase(),dto);
+          store.add(dto,squad);
+          processSquadDTO(squad.getSquadPartBase(),squad,store);
+      }
+  }
   private void init(CodexDTO dto){
        FlowLayoutContainer con = new FlowLayoutContainer();
     con.addStyleName("margin-10");
  
     TreeStore<Object> store = new TreeStore<Object>(new KeyProvider());
  
-    CodexDTO root = new CodexDTO();
-    root.setId("orks");
-    root.setName("orks");
-    SquadBaseDTO child=new SquadBaseDTO();
-    child.setId("child1");
-    child.setName("child1");
-    root.getSquads().add(child);
-    store.add(root);
-    store.add(root, child);
+//    CodexDTO root = new CodexDTO();
+//    root.setId("orks");
+//    root.setName("orks");
+//    SquadBaseDTO child=new SquadBaseDTO();
+//    child.setId("child1");
+//    child.setName("child1");
+//    root.getSquads().add(child);
+//    store.add(root);
+//    store.add(root, child);
+    
+    processCodexDTO(dto,store);
     
     final Tree<Object, String> tree = new Tree<Object, String>(store, new ValueProvider<Object, String>() {
  
