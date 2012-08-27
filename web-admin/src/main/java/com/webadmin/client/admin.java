@@ -14,11 +14,7 @@ import com.sencha.gxt.widget.core.client.TabPanel;
 import com.sencha.gxt.widget.core.client.container.HorizontalLayoutContainer;
 import com.sencha.gxt.widget.core.client.info.Info;
 import com.webadmin.client.mainForm.ArmyPage;
-import com.webadmin.client.mainForm.views.ArmorContainer;
-import com.webadmin.client.mainForm.views.AttackTypeContainer;
-import com.webadmin.client.mainForm.views.SpecialRuleContainer;
-import com.webadmin.client.mainForm.views.UnitTypeContainer;
-import com.webadmin.client.mainForm.views.WeaponTypeContainer;
+import com.webadmin.client.mainForm.views.*;
 import com.webadmin.client.services.CommonService;
 import com.webadmin.client.services.CommonServiceAsync;
 
@@ -44,6 +40,8 @@ public class admin implements EntryPoint {
     @UiField
     HorizontalLayoutContainer weaponTypeGridContainer;
     @UiField
+    HorizontalLayoutContainer unitBaseGridContainer;
+    @UiField
     HorizontalLayoutContainer armyContainer;
 
     public Widget asWidget() {
@@ -53,6 +51,7 @@ public class admin implements EntryPoint {
         specialRuleGridContainer.add(new SpecialRuleContainer());
         unitTypeGridContainer.add(new UnitTypeContainer());
         weaponTypeGridContainer.add(new WeaponTypeContainer());
+        unitBaseGridContainer.add(new UnitBaseContainer());
         armyContainer.add(new ArmyPage());
         return d;
 	}

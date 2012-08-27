@@ -42,4 +42,12 @@ public interface CommonService extends RemoteService {
     void delWeaponTypes(List<WeaponTypeDTO> list);
     void addWeaponType(WeaponTypeDTO w);
     void changeWeaponType(WeaponTypeDTO w);
+
+    List<UnitBaseDTO> getUnitBase(String id);
+    void delUnitBases(List<UnitBaseDTO> list);
+    void addUnitBase(UnitBaseDTO u);
+    void changeUnitBase(UnitBaseDTO u);
+    UnitBaseDTO getUnitById(String id); //получаем отсюда 3 списка
+
+    List<FractionDTO> getFractions();
 }

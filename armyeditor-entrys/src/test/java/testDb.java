@@ -11,7 +11,7 @@
 import com.armyeditor.HibernateUtil;
 import com.armyeditor.entrys.Fraction;
 import com.armyeditor.entrys.*;
-import com.fasterxml.jackson.databind.ObjectMapper;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +19,6 @@ import junit.framework.Assert;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import org.junit.Before;
 import org.junit.Test;
 
 public class testDb {
@@ -199,35 +198,35 @@ public class testDb {
          UnitBase ork=new UnitBase();
          ork.setId("ork");
          ork.setA(2);
-         ork.setBS(2);
+         ork.setBs(2);
          ork.setCost(6);
          ork.setFraction(f);
          ork.setI(2);
-         ork.setLD(7);
+         ork.setLd(7);
          ork.setOptions(new ArrayList(){{add(waagh);add(mob);}});
          ork.setS(3);
-         ork.setSV(6);
+         ork.setSv(6);
          ork.setT(4);
          ork.setUnitType(troops);
          ork.setW(1);
-         ork.setWS(4);
+         ork.setWs(4);
          ork.setWeapons(new ArrayList<Weapon>(){{add(slaggac);add(choppac);}});
          
          UnitBase nob=new UnitBase();
          nob.setId("nob");
          nob.setA(3);
-         nob.setBS(2);
+         nob.setBs(2);
          nob.setCost(16);
          nob.setFraction(f);
          nob.setI(2);
-         nob.setLD(7);
+         nob.setLd(7);
          nob.setOptions(new ArrayList(){{add(waagh);add(mob);}});
          nob.setS(4);
-         nob.setSV(6);
+         nob.setSv(6);
          nob.setT(4);
          nob.setUnitType(troops);
          nob.setW(2);
-         nob.setWS(4);
+         nob.setWs(4);
          nob.setWeapons(new ArrayList<Weapon>(){{add(slaggac);add(choppac);}});
          ses.save(nob);
          ses.save(ork);

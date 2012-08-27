@@ -301,4 +301,79 @@ public class BaseService extends RemoteServiceServlet implements CommonService {
         ses.close();
     }
 
+    @Override
+    public List<UnitBaseDTO> getUnitBase(String id1) {
+        Session ses = HibernateUtil.getSessionFactory().openSession();
+        Transaction trans = ses.beginTransaction();
+        Query query = ses.createQuery("select unitbase from UnitBase unitbase where fraction.id=:id");
+        query.setParameter("id",id1);
+        List<UnitBase> itemlist=query.list();
+        List<UnitBaseDTO> unitBaseDTOs = new ArrayList<UnitBaseDTO>();
+        for (UnitBase w:itemlist){
+            unitBaseDTOs.add(new UnitBaseDTO(w));
+        }
+        ses.close();
+        return unitBaseDTOs;
+    }
+
+    @Override
+    public void delUnitBases(List<UnitBaseDTO> list) {
+        Session ses= HibernateUtil.getSessionFactory().openSession();
+        Transaction trans=ses.beginTransaction();
+        List<UnitBase> itemlist = new ArrayList<UnitBase>();
+        for (UnitBaseDTO w:list){
+            itemlist.add(w.toUnitBase());
+        }
+        for(UnitBase a:itemlist){
+            a = (UnitBase) ses.merge(a);
+            ses.delete(a);
+        }
+        ses.flush();
+        trans.commit();
+        ses.close();
+    }
+
+    @Override
+    public void addUnitBase(UnitBaseDTO u) {
+        Session ses = HibernateUtil.getSessionFactory().openSession();
+        Transaction trans = ses.beginTransaction();
+        UnitBase b = u.toUnitBase();
+        ses.save(b);
+        trans.commit();
+        ses.close();
+    }
+
+    @Override
+    public void changeUnitBase(UnitBaseDTO u) {
+        Session ses = HibernateUtil.getSessionFactory().openSession();
+        Transaction trans = ses.beginTransaction();
+        UnitBase b = u.toUnitBase();
+        ses.merge(b);
+        ses.flush();
+        trans.commit();
+        ses.close();
+    }
+
+    @Override
+    public UnitBaseDTO getUnitById(String id) {
+        Session ses = HibernateUtil.getSessionFactory().openSession();
+        Transaction trans = ses.beginTransaction();
+        UnitBase unitBase = (UnitBase)ses.get(UnitBase.class, id);
+        UnitBaseDTO unitBaseDTO = new UnitBaseDTO(unitBase);
+        return unitBaseDTO;
+    }
+
+    @Override
+    public List<FractionDTO> getFractions() {
+        Session ses= HibernateUtil.getSessionFactory().openSession();
+        Query query = ses.createQuery("select fraction from Fraction fraction");
+        List<Fraction> itemlist=query.list();
+        List<FractionDTO> fractionDTOList = new ArrayList<FractionDTO>();
+        for (Fraction w:itemlist){
+            fractionDTOList.add(new FractionDTO(w,false));
+        }
+        ses.close();
+        return fractionDTOList;
+    }
+
 }
