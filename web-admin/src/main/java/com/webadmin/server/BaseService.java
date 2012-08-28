@@ -324,6 +324,20 @@ public class BaseService extends RemoteServiceServlet implements CommonService {
         for (UnitBaseDTO w:list){
             itemlist.add(w.toUnitBase());
         }
+
+        for(UnitBase a:itemlist){
+            a.setItems(null);
+            a.setOptions(null);
+            a.setWeapons(null);
+            a.setFraction(null);
+            ses.merge(a);
+        }
+        ses.flush();
+        trans.commit();
+        ses.close();
+
+        ses.getSessionFactory().openSession();
+        ses.beginTransaction();
         for(UnitBase a:itemlist){
             a = (UnitBase) ses.merge(a);
             ses.delete(a);

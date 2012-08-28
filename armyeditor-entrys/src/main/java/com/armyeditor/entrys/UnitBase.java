@@ -5,7 +5,9 @@
 
 package com.armyeditor.entrys;
 
+import com.armyeditor.HibernateUtil;
 import com.armyeditor.entrys.classes.Description;
+import org.hibernate.Session;
 //import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.ArrayList;
 import java.util.List;
@@ -177,6 +179,4 @@ public class UnitBase implements java.io.Serializable  {
     public String toString() {
         return "UnitBase{" + "id=" + id + ", ws=" + ws + ", bs=" + bs + ", s=" + s + ", t=" + t + ", w=" + w + ", i=" + i + ", a=" + a + ", ld=" + ld + ", sv=" + sv + ", cost=" + cost + ", options=" + options + ", unitType=" + unitType + ", weapons=" + weapons + ", items=" + items + ", fraction=" + fraction + '}';
     }
-    
-    
 }

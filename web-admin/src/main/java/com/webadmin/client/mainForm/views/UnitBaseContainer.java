@@ -107,7 +107,7 @@ public class UnitBaseContainer extends HorizontalLayoutContainer {
             @Override
             public void onSelect(SelectEvent event) {
                 List selectList = unitBaseGrid.getSelectionModel().getSelectedItems();
-                commonService.delAttackTypes(selectList, new AsyncCallback<Void>() {
+                commonService.delUnitBases(selectList, new AsyncCallback<Void>() {
                     @Override
                     public void onFailure(Throwable throwable) {
                         System.out.println("Запрос упал " + throwable.getMessage());
