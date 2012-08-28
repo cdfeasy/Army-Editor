@@ -10,6 +10,7 @@
 
 import com.armyeditor.HibernateUtil;
 import com.armyeditor.entrys.*;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import junit.framework.Assert;
@@ -20,30 +21,34 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class testDbAdmin {
-    @Before
-    public void init(){
+    public void init() throws IOException{
          Session ses= HibernateUtil.getSessionFactory().openSession();
-		 Transaction trans=ses.beginTransaction();
-		 trans.begin();
+         Transaction tr= ses.beginTransaction();
          Fraction f=new Fraction();
          f.setName("orks");
+         f.setId("orks");
          ses.save(f);
          
          final Codex c=new Codex();
          c.setDescription("ork 5 red");
+         c.setId("ork 5 red");
          f.setCodexes(new ArrayList<Codex>(){{add(c);}});
          c.setName("ork 5 red");
          ses.save(c);
          
          final SquadBase squadboys =new SquadBase();
+         squadboys.setId("squadboys");
          c.setSquads(new ArrayList<SquadBase>(){{add(squadboys);}});
          squadboys.setDescription("ork boys");
          squadboys.setName("ork boys");
-		 ses.save(squadboys);
          
          final Option waagh=new Option();
          final Option assaultGrenades=new Option();
          final Option mob=new Option();
+         waagh.setId("waagh");
+         assaultGrenades.setId("assaultGrenades");
+         mob.setId("mob");
+         
          waagh.setName("waagh rules");
          waagh.setDescription("waagh rules");
          mob.setName("mob rules");
@@ -56,15 +61,19 @@ public class testDbAdmin {
          
          UnitType troops=new UnitType();
          troops.setName("troops");
-		 ses.save(troops);
+         troops.setId("troops");
+         ses.save(troops);
          
          WeaponType melee=new WeaponType();
+         melee.setId("melee");
          melee.setName("melee");
          melee.setDescription("melee");
          WeaponType powerclaws=new WeaponType();
+         powerclaws.setId("klaw");
          powerclaws.setName("power claws");
          powerclaws.setDescription("powerclaws");
          WeaponType assault=new WeaponType();
+         assault.setId("assault");
          assault.setName("assault");
          assault.setDescription("assault");
          ses.save(melee);
@@ -72,6 +81,7 @@ public class testDbAdmin {
          ses.save(assault);
          
          final WeaponBase slagga=new WeaponBase();
+         slagga.setId("slagga");
          slagga.setAP("6");
          slagga.setDescription("slagga");
          slagga.setFraction(f);
@@ -81,6 +91,7 @@ public class testDbAdmin {
          slagga.setType(assault);
          
          final WeaponBase bigshuta=new WeaponBase();
+         bigshuta.setId("bigshoota");
          bigshuta.setAP("4");
          bigshuta.setDescription("bigshuta");
          bigshuta.setFraction(f);
@@ -89,8 +100,20 @@ public class testDbAdmin {
          bigshuta.setSTR("5");
          bigshuta.setFireCount("3");
          bigshuta.setType(assault);
+		 
+		 final WeaponBase rokkit=new WeaponBase();
+         rokkit.setId("rokkit");
+         rokkit.setAP("3");
+         rokkit.setDescription("rokkit");
+         rokkit.setFraction(f);
+         rokkit.setName("rokkit");
+         rokkit.setRange("24");
+         rokkit.setSTR("8");
+         rokkit.setFireCount("1");
+         rokkit.setType(assault);
          
          final WeaponBase shuta=new WeaponBase();
+         shuta.setId("shoota");
          shuta.setAP("4");
          shuta.setDescription("shuta");
          shuta.setFraction(f);
@@ -102,6 +125,7 @@ public class testDbAdmin {
          
            
          final WeaponBase choppa=new WeaponBase();
+         choppa.setId("choppa");
          choppa.setAP("-");
          choppa.setDescription("choppa");
          choppa.setFraction(f);
@@ -111,6 +135,7 @@ public class testDbAdmin {
          choppa.setType(melee);
          
          final WeaponBase claws=new WeaponBase();
+         claws.setId("claws");
          claws.setAP("-");
          claws.setDescription("power claws");
          claws.setFraction(f);
@@ -122,28 +147,34 @@ public class testDbAdmin {
          ses.save(choppa);
          ses.save(claws);
          ses.save(shuta);
-         ses.save(bigshuta);
+         ses.save(rokkit);
+		 ses.save(bigshuta);
          final Weapon shutac=new  Weapon();
          shutac.setWeapon(shuta);
          shutac.setCost(0);
          
          final Weapon clawsc=new  Weapon();
-         shutac.setWeapon(claws);
-         shutac.setCost(25);
+         clawsc.setWeapon(claws);
+         clawsc.setCost(25);
          
          final Weapon bigshutac=new  Weapon();
-         shutac.setWeapon(bigshuta);
-         shutac.setCost(5);
+         bigshutac.setWeapon(bigshuta);
+         bigshutac.setCost(5);
+		 
+		 final Weapon rokkitc=new  Weapon();
+         rokkitc.setWeapon(rokkit);
+         rokkitc.setCost(6);
          
          final Weapon slaggac=new  Weapon();
-         shutac.setWeapon(slagga);
-         shutac.setCost(0);
+         slaggac.setWeapon(slagga);
+         slaggac.setCost(0);
          
          final Weapon choppac=new  Weapon();
-         shutac.setWeapon(choppa);
-         shutac.setCost(0);
+         choppac.setWeapon(choppa);
+         choppac.setCost(0);
          
          ses.save(slaggac);
+		 ses.save(rokkitc);
          ses.save(choppac);
          ses.save(clawsc);
          ses.save(shutac);
@@ -151,6 +182,7 @@ public class testDbAdmin {
          
          
          final ItemBase grenade=new ItemBase();
+         grenade.setId("grenade");
          grenade.setFraction(f);
          grenade.setDescription("Grenade");
          grenade.setName("grenade");
@@ -158,11 +190,11 @@ public class testDbAdmin {
          final Item grenadeCost=new  Item();
          grenadeCost.setItemBase(grenade);
          grenadeCost.setCost(1);
-		 
-		 ses.save(grenade);
+         ses.save(grenade);
 		 ses.save(grenadeCost);
         
          UnitBase ork=new UnitBase();
+         ork.setId("ork");
          ork.setA(2);
          ork.setBs(2);
          ork.setCost(6);
@@ -179,6 +211,7 @@ public class testDbAdmin {
          ork.setWeapons(new ArrayList<Weapon>(){{add(slaggac);add(choppac);}});
          
          UnitBase nob=new UnitBase();
+         nob.setId("nob");
          nob.setA(3);
          nob.setBs(2);
          nob.setCost(16);
@@ -199,25 +232,28 @@ public class testDbAdmin {
          final ItemSelection boysIS=new ItemSelection();
          boysIS.setItem(new ArrayList<Item>(){{add(grenadeCost);}});
          boysIS.setCondition("for all;");
-         ses.save(boysIS);
-		 
+        
+         
          final WeaponSelection shuttacond=new WeaponSelection();
          shuttacond.setWeapon(new ArrayList<Weapon>(){{add(shutac);}});
          shuttacond.setCondition("for all;replace;");
-		 ses.save(shuttacond);
          
          final WeaponSelection bigshuttacond=new WeaponSelection();
-         bigshuttacond.setWeapon(new ArrayList<Weapon>(){{add(bigshutac);}});
+         bigshuttacond.setWeapon(new ArrayList<Weapon>(){{add(bigshutac);add(rokkitc);}});
          bigshuttacond.setCondition("replace slagga;count:1 for 10");
-		 ses.save(bigshuttacond);
          
          final WeaponSelection clawscond=new WeaponSelection();
          clawscond.setWeapon(new ArrayList<Weapon>(){{add(clawsc);}});
          clawscond.setCondition("replace slagga;");
-		 ses.save(clawscond);
+         
+         ses.save(boysIS);
+         ses.save(shuttacond);
+         ses.save(bigshuttacond);
+         ses.save(clawscond);
          
          
          SquadPartBase boysPart=new SquadPartBase();
+         boysPart.setId("boyspart");
          boysPart.setMinSize(10);
          boysPart.setMaxSize(30);
          boysPart.setItemSelection(new ArrayList<ItemSelection>(){{add(boysIS);}});
@@ -226,6 +262,7 @@ public class testDbAdmin {
          ses.save(boysPart);
          
          final SquadPartBase nobPart=new SquadPartBase();
+         nobPart.setId("nobPart");
          nobPart.setMinSize(0);
          nobPart.setMaxSize(1);
          nobPart.setConditions("replace");
@@ -233,17 +270,22 @@ public class testDbAdmin {
          nobPart.setUnit(nob);
          nobPart.setParent(boysPart);
          boysPart.setModifications(new ArrayList<SquadPartBase>(){{add(nobPart);}} );
+         squadboys.setSquadPartBase(boysPart);
          ses.save(nobPart);
          ses.save(boysPart);
-		 trans.commit();
+         ses.save(squadboys);
+         tr.commit();
          ses.close();
          
-
+         // ObjectMapper mapper = new ObjectMapper();
+         //String json = mapper.writeValueAsString(f) ; 
+         System.out.println(c.marshall());
+         
 
     }
     @Test
-    public void testDbAdmin(){
-       // init();
+    public void testDbAdmin() throws IOException{
+        init();
         Session ses= HibernateUtil.getSessionFactory().openSession();
     //      ses.beginTransaction();
         Query query = ses.createQuery("select wt from WeaponType wt");
