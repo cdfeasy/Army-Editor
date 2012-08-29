@@ -326,9 +326,9 @@ public class BaseService extends RemoteServiceServlet implements CommonService {
         }
 
         for(UnitBase a:itemlist){
-            a.setItems(null);
-            a.setOptions(null);
-            a.setWeapons(null);
+            a.getOptions().clear();
+            a.getWeapons().clear();
+            a.getItems().clear();
             a.setFraction(null);
             ses.merge(a);
         }
@@ -336,8 +336,8 @@ public class BaseService extends RemoteServiceServlet implements CommonService {
         trans.commit();
         ses.close();
 
-        ses.getSessionFactory().openSession();
-        ses.beginTransaction();
+        ses = HibernateUtil.getSessionFactory().openSession();
+        trans = ses.beginTransaction();
         for(UnitBase a:itemlist){
             a = (UnitBase) ses.merge(a);
             ses.delete(a);
