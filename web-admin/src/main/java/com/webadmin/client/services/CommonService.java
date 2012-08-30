@@ -50,4 +50,6 @@ public interface CommonService extends RemoteService {
     UnitBaseDTO getUnitById(String id); //получаем отсюда 3 списка
 
     List<FractionDTO> getFractions();
+
+    List<OptionDTO> getOptions();
 }

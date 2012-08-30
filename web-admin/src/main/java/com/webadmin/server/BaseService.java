@@ -381,4 +381,17 @@ public class BaseService extends RemoteServiceServlet implements CommonService {
         return fractionDTOList;
     }
 
+    @Override
+    public List<OptionDTO> getOptions() {
+        Session ses= HibernateUtil.getSessionFactory().openSession();
+        Query query = ses.createQuery("select option from Option option");
+        List<Option> itemlist=query.list();
+        List<OptionDTO> optionDTOList = new ArrayList<OptionDTO>();
+        for (Option w:itemlist){
+            optionDTOList.add(new OptionDTO(w));
+        }
+        ses.close();
+        return optionDTOList;
+    }
+
 }

@@ -73,7 +73,7 @@ public class UnitTypeContainer extends HorizontalLayoutContainer {
         gridContainer.add(delSelBtn);
         this.add(gridContainer);
         VerticalLayoutContainer vc = new VerticalLayoutContainer();
-        vc.add(unitTypeFields, new VerticalLayoutContainer.VerticalLayoutData(550,400,new Margins(5,5,5,5)));
+        vc.add(unitTypeFields, new VerticalLayoutContainer.VerticalLayoutData(650,370,new Margins(5,5,5,5)));
         this.add(vc);
         initHandlers();
     }
@@ -114,8 +114,9 @@ public class UnitTypeContainer extends HorizontalLayoutContainer {
                     @Override
                     public void onSuccess(List<OptionDTO> optionDTOs) {
                         ListStore<OptionDTO> listStore = unitTypeFields.getStore();
+                        ColumnModel<OptionDTO> cm = unitTypeFields.getCm();
                         listStore.addAll(optionDTOs);
-                        unitTypeFields.getOptionGrid().reconfigure(listStore,unitTypeFields.getCm());
+                        unitTypeFields.getOptionGrid().reconfigure(listStore,cm);
                     }
                 });
             }
@@ -229,18 +230,51 @@ public class UnitTypeContainer extends HorizontalLayoutContainer {
             GridDropTarget<OptionDTO> target2 = new GridDropTarget<OptionDTO>(optionGrid2);
             target2.setFeedback(DND.Feedback.INSERT);
 
+            commonService.getOptions(new AsyncCallback<List<OptionDTO>>() {
+                @Override
+                public void onFailure(Throwable throwable) {
+                    System.out.println("Запрос упал " + throwable.getMessage());
+                }
+
+                @Override
+                public void onSuccess(List<OptionDTO> optionDTOs) {
+                    ListStore<OptionDTO> listStore = unitTypeFields.getStore2();
+                    ColumnModel<OptionDTO> cm = unitTypeFields.getCm();
+                    listStore.addAll(optionDTOs);
+                    unitTypeFields.getOptionGrid2().reconfigure(listStore, cm);
+                }
+            });
+
             FramedPanel cp = new FramedPanel();
             cp.setHeadingText("Options");
+            cp.setHeight(250);
+            cp.setWidth(630);
             cp.setCollapsible(true);
             cp.setAnimCollapse(true);
             HorizontalLayoutContainer con = new HorizontalLayoutContainer();
-            con.add(optionGrid);
-            con.add(optionGrid2);
-            cp.setWidget(con);
+            con.add(optionGrid, new HorizontalLayoutData(.5, 1, new Margins(5)));
+            con.add(optionGrid2, new HorizontalLayoutData(.5, 1, new Margins(5, 5, 5, 0)));
+            cp.add(con);
             cp.addStyleName("margin-10");
             vc.add(cp);
             this.setBorders(true);
-            this.add(vc, new VerticalLayoutContainer.VerticalLayoutData(450,400,new Margins(5)));
+            this.add(vc, new VerticalLayoutContainer.VerticalLayoutData(630,400,new Margins(5)));
+        }
+
+        public Grid<OptionDTO> getOptionGrid2() {
+            return optionGrid2;
+        }
+
+        public void setOptionGrid2(Grid<OptionDTO> optionGrid2) {
+            this.optionGrid2 = optionGrid2;
+        }
+
+        public ListStore<OptionDTO> getStore2() {
+            return store2;
+        }
+
+        public void setStore2(ListStore<OptionDTO> store2) {
+            this.store2 = store2;
         }
 
         public Grid<OptionDTO> getOptionGrid() {
