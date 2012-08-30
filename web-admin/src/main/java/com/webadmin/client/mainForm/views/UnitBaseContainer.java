@@ -100,7 +100,7 @@ public class UnitBaseContainer extends HorizontalLayoutContainer {
         updateBtn = new TextButton("Update", new SelectEvent.SelectHandler() {
             @Override
             public void onSelect(SelectEvent event) {
-                updateStore(fractionBox.getCurrentValue().getId());
+                updateStore(fractionBox.getValue().getId());
             }
         });
         delSelBtn = new TextButton("Delete Selection", new SelectEvent.SelectHandler() {
@@ -115,7 +115,7 @@ public class UnitBaseContainer extends HorizontalLayoutContainer {
 
                     @Override
                     public void onSuccess(Void aVoid) {
-                        updateStore(fractionBox.getCurrentValue().getId()); //todo
+                        updateStore(fractionBox.getValue().getId()); //todo
                     }
                 });
             }
@@ -203,7 +203,7 @@ public class UnitBaseContainer extends HorizontalLayoutContainer {
 
                     @Override
                     public void onSuccess(Void aVoid) {
-                        updateStore(fractionBox.getCurrentValue().getId());
+                        updateStore(fractionBox.getValue().getId());
                     }
                 });
             }
@@ -231,7 +231,7 @@ public class UnitBaseContainer extends HorizontalLayoutContainer {
 
                     @Override
                     public void onSuccess(Void aVoid) {
-                        updateStore(fractionBox.getCurrentValue().getId());
+                        updateStore(fractionBox.getValue().getId());
                     }
                 });
             }

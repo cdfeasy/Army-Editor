@@ -331,15 +331,6 @@ public class BaseService extends RemoteServiceServlet implements CommonService {
             a.getItems().clear();
             a.setFraction(null);
             ses.merge(a);
-        }
-        ses.flush();
-        trans.commit();
-        ses.close();
-
-        ses = HibernateUtil.getSessionFactory().openSession();
-        trans = ses.beginTransaction();
-        for(UnitBase a:itemlist){
-            a = (UnitBase) ses.merge(a);
             ses.delete(a);
         }
         ses.flush();

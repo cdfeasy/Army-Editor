@@ -8,6 +8,9 @@ import com.sencha.gxt.core.client.IdentityValueProvider;
 import com.sencha.gxt.core.client.Style;
 import com.sencha.gxt.core.client.util.Margins;
 import com.sencha.gxt.data.shared.ListStore;
+import com.sencha.gxt.dnd.core.client.DND;
+import com.sencha.gxt.dnd.core.client.GridDragSource;
+import com.sencha.gxt.dnd.core.client.GridDropTarget;
 import com.sencha.gxt.widget.core.client.FramedPanel;
 import com.sencha.gxt.widget.core.client.button.TextButton;
 import com.sencha.gxt.widget.core.client.container.BorderLayoutContainer;
@@ -70,7 +73,7 @@ public class UnitTypeContainer extends HorizontalLayoutContainer {
         gridContainer.add(delSelBtn);
         this.add(gridContainer);
         VerticalLayoutContainer vc = new VerticalLayoutContainer();
-        vc.add(unitTypeFields, new VerticalLayoutContainer.VerticalLayoutData(350,200,new Margins(5,5,5,5)));
+        vc.add(unitTypeFields, new VerticalLayoutContainer.VerticalLayoutData(550,400,new Margins(5,5,5,5)));
         this.add(vc);
         initHandlers();
     }
@@ -190,7 +193,9 @@ public class UnitTypeContainer extends HorizontalLayoutContainer {
         TextButton saveBtn = new TextButton("Save");
         TextButton saveNewBtn = new TextButton("Save as new item");
         Grid<OptionDTO> optionGrid;
+        Grid<OptionDTO> optionGrid2;
         private ListStore<OptionDTO> store;
+        private ListStore<OptionDTO> store2;
         private ColumnModel<OptionDTO> cm;
 
         public UnitTypeFields(){
@@ -214,18 +219,28 @@ public class UnitTypeContainer extends HorizontalLayoutContainer {
             cm = new ColumnModel<OptionDTO>(l);
             store = new ListStore<OptionDTO>(props.key());
             optionGrid = new Grid<OptionDTO>(store, cm);
+
+            store2 = new ListStore<OptionDTO>(props.key());
+            optionGrid2 = new Grid<OptionDTO>(store2, cm);
+            new GridDragSource<OptionDTO>(optionGrid);
+            new GridDragSource<OptionDTO>(optionGrid2);
+            GridDropTarget<OptionDTO> target1 = new GridDropTarget<OptionDTO>(optionGrid);
+            target1.setFeedback(DND.Feedback.INSERT);
+            GridDropTarget<OptionDTO> target2 = new GridDropTarget<OptionDTO>(optionGrid2);
+            target2.setFeedback(DND.Feedback.INSERT);
+
             FramedPanel cp = new FramedPanel();
             cp.setHeadingText("Options");
             cp.setCollapsible(true);
             cp.setAnimCollapse(true);
-            cp.setWidget(optionGrid);
-//            cp.setPixelSize(500, 230);
+            HorizontalLayoutContainer con = new HorizontalLayoutContainer();
+            con.add(optionGrid);
+            con.add(optionGrid2);
+            cp.setWidget(con);
             cp.addStyleName("margin-10");
             vc.add(cp);
             this.setBorders(true);
-//            this.setHeight(750);
-//            this.setWidth(700);
-            this.add(vc, new VerticalLayoutContainer.VerticalLayoutData(450,200,new Margins(5,5,5,5)));
+            this.add(vc, new VerticalLayoutContainer.VerticalLayoutData(450,400,new Margins(5)));
         }
 
         public Grid<OptionDTO> getOptionGrid() {
