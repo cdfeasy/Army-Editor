@@ -114,9 +114,14 @@ public class UnitTypeContainer extends HorizontalLayoutContainer {
                     @Override
                     public void onSuccess(List<OptionDTO> optionDTOs) {
                         ListStore<OptionDTO> listStore = unitTypeFields.getStore();
+                        listStore.clear();
                         ColumnModel<OptionDTO> cm = unitTypeFields.getCm();
                         listStore.addAll(optionDTOs);
                         unitTypeFields.getOptionGrid().reconfigure(listStore,cm);
+                        ListStore<OptionDTO> listStore2 = unitTypeFields.store2;
+                        listStore2.clear();
+                        listStore2.addAll(unitTypeFields.tempStore2);
+                        unitTypeFields.getOptionGrid2().reconfigure(listStore2, cm);
                     }
                 });
             }
@@ -127,6 +132,8 @@ public class UnitTypeContainer extends HorizontalLayoutContainer {
                 UnitTypeDTO a = new UnitTypeDTO();
                 a.setId(unitTypeFields.getIdFld().getText());
                 a.setName(unitTypeFields.getNameFld().getText());
+                ArrayList<OptionDTO> arrayList = new ArrayList<OptionDTO>(unitTypeFields.getOptionGrid().getStore().getAll());
+                a.setOptions(arrayList);
                 commonService.changeUnitType(a, new AsyncCallback<Void>() {
                     @Override
                     public void onFailure(Throwable throwable) {
@@ -146,6 +153,8 @@ public class UnitTypeContainer extends HorizontalLayoutContainer {
                 UnitTypeDTO a = new UnitTypeDTO();
                 a.setId(unitTypeFields.getIdFld().getText());
                 a.setName(unitTypeFields.getNameFld().getText());
+                ArrayList<OptionDTO> arrayList = new ArrayList<OptionDTO>(unitTypeFields.getOptionGrid().getStore().getAll());
+                a.setOptions(arrayList);
                 commonService.addUnitType(a, new AsyncCallback<Void>() {
                     @Override
                     public void onFailure(Throwable throwable) {
@@ -169,6 +178,7 @@ public class UnitTypeContainer extends HorizontalLayoutContainer {
                     @Override
                     public void onFailure(Throwable throwable) {
                         System.out.println("Запрос упал " + throwable.getMessage());
+                        Info.display("Ошибка", "Нарушается целостность базы");
                     }
 
                     @Override
@@ -197,6 +207,7 @@ public class UnitTypeContainer extends HorizontalLayoutContainer {
         Grid<OptionDTO> optionGrid2;
         private ListStore<OptionDTO> store;
         private ListStore<OptionDTO> store2;
+        private List<OptionDTO> tempStore2;
         private ColumnModel<OptionDTO> cm;
 
         public UnitTypeFields(){
@@ -230,20 +241,7 @@ public class UnitTypeContainer extends HorizontalLayoutContainer {
             GridDropTarget<OptionDTO> target2 = new GridDropTarget<OptionDTO>(optionGrid2);
             target2.setFeedback(DND.Feedback.INSERT);
 
-            commonService.getOptions(new AsyncCallback<List<OptionDTO>>() {
-                @Override
-                public void onFailure(Throwable throwable) {
-                    System.out.println("Запрос упал " + throwable.getMessage());
-                }
-
-                @Override
-                public void onSuccess(List<OptionDTO> optionDTOs) {
-                    ListStore<OptionDTO> listStore = unitTypeFields.getStore2();
-                    ColumnModel<OptionDTO> cm = unitTypeFields.getCm();
-                    listStore.addAll(optionDTOs);
-                    unitTypeFields.getOptionGrid2().reconfigure(listStore, cm);
-                }
-            });
+            updateStore2();
 
             FramedPanel cp = new FramedPanel();
             cp.setHeadingText("Options");
@@ -259,6 +257,22 @@ public class UnitTypeContainer extends HorizontalLayoutContainer {
             vc.add(cp);
             this.setBorders(true);
             this.add(vc, new VerticalLayoutContainer.VerticalLayoutData(630,400,new Margins(5)));
+        }
+
+        void updateStore2() {
+            commonService.getOptions(new AsyncCallback<List<OptionDTO>>() {
+                @Override
+                public void onFailure(Throwable throwable) {
+                    System.out.println("Запрос упал " + throwable.getMessage());
+                }
+
+                @Override
+                public void onSuccess(List<OptionDTO> optionDTOs) {
+                    tempStore2 = optionDTOs;
+                    store2.addAll(optionDTOs);
+                    unitTypeFields.getOptionGrid2().reconfigure(store2, cm);
+                }
+            });
         }
 
         public Grid<OptionDTO> getOptionGrid2() {
