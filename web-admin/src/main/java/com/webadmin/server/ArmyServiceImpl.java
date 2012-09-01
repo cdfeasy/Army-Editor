@@ -10,6 +10,7 @@ import com.armyeditor.dto.UnitDTO;
 import com.armyeditor.entrys.Codex;
 import com.armyeditor.entrys.Unit;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
+import com.webadmin.client.services.ArmyException;
 import com.webadmin.client.services.ArmyService;
 import com.webadmin.client.services.CommonService;
 import java.util.ArrayList;
@@ -24,7 +25,7 @@ import org.hibernate.Session;
 public class ArmyServiceImpl extends RemoteServiceServlet implements ArmyService {
 
     @Override
-    public CodexDTO getCodex() {
+    public CodexDTO getCodex() throws ArmyException {
         try {
             Session ses = HibernateUtil.getSessionFactory().openSession();
             Query query = ses.createQuery("select codex from Codex codex");
@@ -36,7 +37,7 @@ public class ArmyServiceImpl extends RemoteServiceServlet implements ArmyService
             ses.close();
             return сodexDTOList.get(0);
         } catch (Throwable th) {
-            throw new RuntimeException(th);
+            throw new ArmyException(th);
         }
     }
 }

@@ -16,40 +16,40 @@ import java.util.List;
  */
 @RemoteServiceRelativePath("server/BaseService")
 public interface CommonService extends RemoteService {
-    List<UnitDTO> getUnits();
-    List<ArmorDTO> getArmors();
-    void delArmors(List<ArmorDTO> list);
-    void addArmor(ArmorDTO a);
-    void changeArmor(ArmorDTO a);
+    List<UnitDTO> getUnits() throws ArmyException;
+    List<ArmorDTO> getArmors() throws ArmyException;
+    void delArmors(List<ArmorDTO> list) throws ArmyException;
+    void addArmor(ArmorDTO a) throws ArmyException;
+    void changeArmor(ArmorDTO a) throws ArmyException;
 
-    List<AttackTypeDTO> getAttackTypes();
-    void delAttackTypes(List<AttackTypeDTO> list);
-    void addAttackType(AttackTypeDTO a);
-    void changeAttackType(AttackTypeDTO a);
+    List<AttackTypeDTO> getAttackTypes() throws ArmyException;
+    void delAttackTypes(List<AttackTypeDTO> list) throws ArmyException;
+    void addAttackType(AttackTypeDTO a) throws ArmyException;
+    void changeAttackType(AttackTypeDTO a) throws ArmyException;
 
-    List<SpecialRuleDTO> getSpecialRule();
-    void delSpecialRules(List<SpecialRuleDTO> list);
-    void addSpecialRule(SpecialRuleDTO s);
-    void changeSpecialRule(SpecialRuleDTO s);
+    List<SpecialRuleDTO> getSpecialRule() throws ArmyException;
+    void delSpecialRules(List<SpecialRuleDTO> list) throws ArmyException;
+    void addSpecialRule(SpecialRuleDTO s) throws ArmyException;
+    void changeSpecialRule(SpecialRuleDTO s) throws ArmyException;
 
-    List<UnitTypeDTO> getUnitType();
-    void delUnitTypes(List<UnitTypeDTO> list);
-    void addUnitType(UnitTypeDTO u);
-    void changeUnitType(UnitTypeDTO u);
-    List<OptionDTO> getOptionsByUnit(String id);
+    List<UnitTypeDTO> getUnitType() throws ArmyException;
+    void delUnitTypes(List<UnitTypeDTO> list) throws ArmyException;
+    void addUnitType(UnitTypeDTO u) throws ArmyException;
+    void changeUnitType(UnitTypeDTO u) throws ArmyException;
+    List<OptionDTO> getOptionsByUnit(String id) throws ArmyException;
 
-    List<WeaponTypeDTO> getWeaponType();
-    void delWeaponTypes(List<WeaponTypeDTO> list);
-    void addWeaponType(WeaponTypeDTO w);
-    void changeWeaponType(WeaponTypeDTO w);
+    List<WeaponTypeDTO> getWeaponType() throws ArmyException;
+    void delWeaponTypes(List<WeaponTypeDTO> list) throws ArmyException;
+    void addWeaponType(WeaponTypeDTO w) throws ArmyException;
+    void changeWeaponType(WeaponTypeDTO w) throws ArmyException;
 
-    List<UnitBaseDTO> getUnitBase(String id);
-    void delUnitBases(List<UnitBaseDTO> list);
-    void addUnitBase(UnitBaseDTO u);
-    void changeUnitBase(UnitBaseDTO u);
-    UnitBaseDTO getUnitById(String id); //получаем отсюда 3 списка
+    List<UnitBaseDTO> getUnitBase(String id) throws ArmyException;
+    void delUnitBases(List<UnitBaseDTO> list) throws ArmyException;
+    void addUnitBase(UnitBaseDTO u) throws ArmyException;
+    void changeUnitBase(UnitBaseDTO u) throws ArmyException;
+    UnitBaseDTO getUnitById(String id) throws ArmyException; //получаем отсюда 3 списка
 
-    List<FractionDTO> getFractions();
+    List<FractionDTO> getFractions() throws ArmyException;
 
-    List<OptionDTO> getOptions();
+    List<OptionDTO> getOptions() throws ArmyException;
 }

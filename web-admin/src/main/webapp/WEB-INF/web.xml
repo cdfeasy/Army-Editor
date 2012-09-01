@@ -5,12 +5,25 @@
 
 <web-app>
 
+
+
+    <servlet> 
+        <servlet-name>jUnitHostImpl</servlet-name> 
+        <servlet-class>com.google.gwt.junit.server.JUnitHostImpl</servlet-class> 
+    </servlet> 
+    <servlet-mapping> 
+        <servlet-name>jUnitHostImpl</servlet-name> 
+        <url-pattern>/admin/junithost/*</url-pattern> 
+    </servlet-mapping>
+
+
+
     <!-- Servlets -->
     <servlet>
         <servlet-name>baseService</servlet-name>
         <servlet-class>com.webadmin.server.BaseService</servlet-class>
     </servlet>
-     <servlet>
+    <servlet>
         <servlet-name>armyService</servlet-name>
         <servlet-class>com.webadmin.server.ArmyServiceImpl</servlet-class>
     </servlet>

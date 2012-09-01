@@ -16,5 +16,5 @@ import java.util.List;
  */
 @RemoteServiceRelativePath("server/ArmyService")
 public interface ArmyService extends RemoteService {
-     CodexDTO getCodex();
+     CodexDTO getCodex() throws ArmyException;
 }
