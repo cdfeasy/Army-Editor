@@ -1,7 +1,6 @@
 package com.webadmin.client.mainForm.properties;
 
 import com.armyeditor.dto.AttackTypeDTO;
-import com.armyeditor.entrys.Armor;
 import com.armyeditor.entrys.AttackType;
 import com.google.gwt.editor.client.Editor;
 import com.sencha.gxt.core.client.ValueProvider;

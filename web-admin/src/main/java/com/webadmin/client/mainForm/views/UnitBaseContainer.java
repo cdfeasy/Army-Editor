@@ -61,6 +61,7 @@ public class UnitBaseContainer extends HorizontalLayoutContainer {
         ColumnConfig<UnitBaseDTO, Integer> wColumn = new ColumnConfig<UnitBaseDTO, Integer>(props.w(), 50, "w");
         ColumnConfig<UnitBaseDTO, Integer> iColumn = new ColumnConfig<UnitBaseDTO, Integer>(props.i(), 50, "i");
         ColumnConfig<UnitBaseDTO, Integer> aColumn = new ColumnConfig<UnitBaseDTO, Integer>(props.a(), 50, "a");
+        ColumnConfig<UnitBaseDTO, String>  swColumn = new ColumnConfig<UnitBaseDTO, String>(props.sv(), 50, "sw");
         ColumnConfig<UnitBaseDTO, Integer> ldColumn = new ColumnConfig<UnitBaseDTO, Integer>(props.ld(), 50, "ld");
         ColumnConfig<UnitBaseDTO, Integer> costColumn = new ColumnConfig<UnitBaseDTO, Integer>(props.cost(), 50, "cost");
 
@@ -74,6 +75,7 @@ public class UnitBaseContainer extends HorizontalLayoutContainer {
         l.add(wColumn);
         l.add(iColumn);
         l.add(aColumn);
+        l.add(swColumn);
         l.add(ldColumn);
         l.add(costColumn);
         cm = new ColumnModel<UnitBaseDTO>(l);
@@ -174,7 +176,7 @@ public class UnitBaseContainer extends HorizontalLayoutContainer {
                 unitBaseFields.getiFld().setText(Integer.toString(a.getI()));
                 unitBaseFields.getaFld().setText(Integer.toString(a.getA()));
                 unitBaseFields.getLdFld().setText(Integer.toString(a.getLd()));
-                unitBaseFields.getSvFld().setText(Integer.toString(a.getSv()));
+                unitBaseFields.getSvFld().setText(a.getSv());
                 unitBaseFields.getCostFld().setText(Integer.toString(a.getCost()));
                 unitBaseFields.getUnitTypeFld().setText(a.getUnitType().getName());
             }
@@ -192,7 +194,7 @@ public class UnitBaseContainer extends HorizontalLayoutContainer {
                 a.setI(Integer.parseInt(unitBaseFields.getiFld().getText()));
                 a.setA(Integer.parseInt(unitBaseFields.getaFld().getText()));
                 a.setLd(Integer.parseInt(unitBaseFields.getLdFld().getText()));
-                a.setSv(Integer.parseInt(unitBaseFields.getSvFld().getText()));
+                a.setSv(unitBaseFields.getSvFld().getText());
                 a.setCost(Integer.parseInt(unitBaseFields.getCostFld().getText()));
 
                 commonService.changeUnitBase(a, new AsyncCallback<Void>() {
@@ -221,7 +223,7 @@ public class UnitBaseContainer extends HorizontalLayoutContainer {
                 a.setI(Integer.parseInt(unitBaseFields.getiFld().getText()));
                 a.setA(Integer.parseInt(unitBaseFields.getaFld().getText()));
                 a.setLd(Integer.parseInt(unitBaseFields.getLdFld().getText()));
-                a.setSv(Integer.parseInt(unitBaseFields.getSvFld().getText()));
+                a.setSv(unitBaseFields.getSvFld().getText());
                 a.setCost(Integer.parseInt(unitBaseFields.getCostFld().getText()));
                 commonService.addUnitBase(a, new AsyncCallback<Void>() {
                     @Override

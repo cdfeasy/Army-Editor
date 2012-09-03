@@ -16,6 +16,7 @@ public class OptionDTO implements java.io.Serializable  {
     private String  id;
     private String name;
     private String description;
+    private String action;
 
     public OptionDTO() {
     }
@@ -24,6 +25,7 @@ public class OptionDTO implements java.io.Serializable  {
 		this.id = option.getId();
 		this.name =  option.getName();
 		this.description = option.getDescription();
+        this.action=option.getAction();
 	}
 	
 	public Option toOption(){
@@ -31,6 +33,7 @@ public class OptionDTO implements java.io.Serializable  {
 		option.setId(id);
 		option.setName(name);
 		option.setDescription(description);
+        option.setAction(action);
 		return option;
 	}
 

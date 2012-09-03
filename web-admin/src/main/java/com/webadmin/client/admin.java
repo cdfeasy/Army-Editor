@@ -46,7 +46,6 @@ public class admin implements EntryPoint {
 
     public Widget asWidget() {
         Widget d=uiBinder.createAndBindUi(this);
-        armorGridContainer.add(new ArmorContainer());
         attackTyteGridContainer.add(new AttackTypeContainer());
         specialRuleGridContainer.add(new SpecialRuleContainer());
         unitTypeGridContainer.add(new UnitTypeContainer());

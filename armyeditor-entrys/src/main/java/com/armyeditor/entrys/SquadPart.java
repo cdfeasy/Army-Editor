@@ -23,19 +23,11 @@ public class SquadPart implements java.io.Serializable {
     private int squadsize;
     private List<Item> Items=new ArrayList<Item>();
     private List<Weapon> Weapons=new ArrayList<Weapon>();
-    private List<Armor> Armors=new ArrayList<Armor>();
 
     public SquadPart() {
     }
 
-    @ManyToMany(cascade = CascadeType.REFRESH)
-    public List<Armor> getArmors() {
-        return Armors;
-    }
-
-    public void setArmors(List<Armor> Armors) {
-        this.Armors = Armors;
-    }
+    
     @ManyToMany(cascade = CascadeType.REFRESH)
     public List<Item> getItems() {
         return Items;

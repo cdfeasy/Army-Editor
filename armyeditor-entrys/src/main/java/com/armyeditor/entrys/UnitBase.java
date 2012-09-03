@@ -32,7 +32,7 @@ public class UnitBase implements java.io.Serializable  {
     private int i;
     private int a;
     private int ld;
-    private int sv;
+    private String sv;
     private int cost;
     private List<Option> options=new ArrayList<Option>();
     private UnitType unitType;
@@ -84,11 +84,11 @@ public class UnitBase implements java.io.Serializable  {
         this.s = S;
     }
 
-    public int getSv() {
+    public String getSv() {
         return sv;
     }
 
-    public void setSv(int sv) {
+    public void setSv(String sv) {
         this.sv = sv;
     }
 

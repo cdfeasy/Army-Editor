@@ -15,6 +15,7 @@ public class Option implements java.io.Serializable  {
     private String  id;
     private String name;
     private String description;
+    private String action;
 
     public Option() {
     }
@@ -43,10 +44,20 @@ public class Option implements java.io.Serializable  {
         this.name = name;
     }
 
-	@Override
-	public String toString() {
-		return "Option{" + "id=" + id + ", name=" + name + ", description=" + description + '}';
-	}
+    public String getAction() {
+        return action;
+    }
+
+    public void setAction(String action) {
+        this.action = action;
+    }
+
+    @Override
+    public String toString() {
+        return "Option{" + "id=" + id + ", name=" + name + ", description=" + description + ", action=" + action + '}';
+    }
+    
+
 	
 	
 }

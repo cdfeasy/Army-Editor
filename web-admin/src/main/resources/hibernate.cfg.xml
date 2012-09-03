@@ -9,7 +9,6 @@
         <property name="hibernate.connection.password">wh40pass</property>
         <property name="hibernate.hbm2ddl.auto">update</property>
         <property name="hibernate.show_sql">true</property>
-        <mapping class="com.armyeditor.entrys.Armor"/>
         <mapping class="com.armyeditor.entrys.Army"/>
         <mapping class="com.armyeditor.entrys.AttackType"/>
         <mapping class="com.armyeditor.entrys.Codex"/>

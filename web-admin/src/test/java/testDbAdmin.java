@@ -203,7 +203,7 @@ public class testDbAdmin {
          ork.setLd(7);
          ork.setOptions(new ArrayList(){{add(waagh);add(mob);}});
          ork.setS(3);
-         ork.setSv(6);
+         ork.setSv("6+");
          ork.setT(4);
          ork.setUnitType(troops);
          ork.setW(1);
@@ -220,7 +220,7 @@ public class testDbAdmin {
          nob.setLd(7);
          nob.setOptions(new ArrayList(){{add(waagh);add(mob);}});
          nob.setS(4);
-         nob.setSv(6);
+         nob.setSv("6+");
          nob.setT(4);
          nob.setUnitType(troops);
          nob.setW(2);

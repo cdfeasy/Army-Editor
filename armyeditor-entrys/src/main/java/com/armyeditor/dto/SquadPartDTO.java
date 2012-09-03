@@ -5,7 +5,6 @@
 
 package com.armyeditor.dto;
 
-import com.armyeditor.entrys.Armor;
 import com.armyeditor.entrys.Item;
 import com.armyeditor.entrys.SquadPart;
 import com.armyeditor.entrys.Weapon;
@@ -22,7 +21,7 @@ public class SquadPartDTO implements java.io.Serializable {
     private int squadsize;
     private  ArrayList<ItemDTO> items =new ArrayList<ItemDTO>();
     private  ArrayList<WeaponDTO> weapons =new ArrayList<WeaponDTO>();
-    private  ArrayList<ArmorDTO> armors =new ArrayList<ArmorDTO>();
+   
 
     public SquadPartDTO() {
     }
@@ -37,17 +36,7 @@ public class SquadPartDTO implements java.io.Serializable {
         for (Weapon w:squadPart.getWeapons()){
            weapons.add(new WeaponDTO(w));
         }
-        for (Armor a:squadPart.getArmors()){
-            armors.add(new ArmorDTO(a));
-        }
-    }
-    
-    public  ArrayList<ArmorDTO> getArmors() {
-        return armors;
-    }
 
-    public void setArmors( ArrayList<ArmorDTO> Armors) {
-        this.armors = Armors;
     }
     
     public  ArrayList<ItemDTO> getItems() {

@@ -17,11 +17,7 @@ import java.util.List;
 @RemoteServiceRelativePath("server/BaseService")
 public interface CommonService extends RemoteService {
     List<UnitDTO> getUnits() throws ArmyException;
-    List<ArmorDTO> getArmors() throws ArmyException;
-    void delArmors(List<ArmorDTO> list) throws ArmyException;
-    void addArmor(ArmorDTO a) throws ArmyException;
-    void changeArmor(ArmorDTO a) throws ArmyException;
-
+   
     List<AttackTypeDTO> getAttackTypes() throws ArmyException;
     void delAttackTypes(List<AttackTypeDTO> list) throws ArmyException;
     void addAttackType(AttackTypeDTO a) throws ArmyException;

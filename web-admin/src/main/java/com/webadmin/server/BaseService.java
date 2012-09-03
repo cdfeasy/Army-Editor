@@ -35,57 +35,6 @@ public class BaseService extends RemoteServiceServlet implements CommonService {
     }
 
     @Override
-    public List<ArmorDTO> getArmors() throws ArmyException {
-        Session ses= HibernateUtil.getSessionFactory().openSession();
-        Query query = ses.createQuery("select armor from Armor armor");
-        List<Armor> itemlist=query.list();
-        List<ArmorDTO> armorDTOList = new ArrayList<ArmorDTO>();
-        for (Armor a:itemlist){
-            armorDTOList.add(new ArmorDTO(a));
-        }
-        ses.close();
-        return armorDTOList;
-    }
-
-    @Override
-    public void delArmors(List<ArmorDTO> list) throws ArmyException {
-        Session ses= HibernateUtil.getSessionFactory().openSession();
-        Transaction trans=ses.beginTransaction();
-        List<Armor> itemlist = new ArrayList<Armor>();
-        for (ArmorDTO a:list){
-            itemlist.add(a.toArmor());
-        }
-        for(Armor a:itemlist){
-            a= (Armor) ses.merge(a);
-            ses.delete(a);
-        }
-        ses.flush();
-        trans.commit();
-        ses.close();
-    }
-
-    @Override
-    public void addArmor(ArmorDTO a) throws ArmyException {
-        Session ses = HibernateUtil.getSessionFactory().openSession();
-        Transaction trans = ses.beginTransaction();
-        Armor b = a.toArmor();
-        ses.save(b);
-        trans.commit();
-        ses.close();
-    }
-
-    @Override
-    public void changeArmor(ArmorDTO a) throws ArmyException {
-        Session ses = HibernateUtil.getSessionFactory().openSession();
-        Transaction trans = ses.beginTransaction();
-        Armor b = a.toArmor();
-        ses.merge(b);
-        ses.flush();
-        trans.commit();
-        ses.close();
-    }
-
-    @Override
     public List<AttackTypeDTO> getAttackTypes() throws ArmyException {
         Session ses= HibernateUtil.getSessionFactory().openSession();
         Query query = ses.createQuery("select attacktype from AttackType attacktype").setMaxResults(10);

@@ -25,7 +25,7 @@ public interface UnitBaseProperties extends PropertyAccess<UnitBaseDTO> {
     ValueProvider<UnitBaseDTO, Integer> i();
     ValueProvider<UnitBaseDTO, Integer> a();
     ValueProvider<UnitBaseDTO, Integer> ld();
-    ValueProvider<UnitBaseDTO, Integer> sv();
+    ValueProvider<UnitBaseDTO, String> sv();
     ValueProvider<UnitBaseDTO, Integer> cost();
     @Editor.Path("unitType.name")
     ValueProvider<UnitBaseDTO, String> unitType(); //todo

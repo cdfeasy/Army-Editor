@@ -28,7 +28,7 @@ public class UnitBaseDTO implements java.io.Serializable  {
     private int i;
     private int a;
     private int ld;
-    private int sv;
+    private String sv;
     private int cost;
     private ArrayList<OptionDTO> options=new ArrayList<OptionDTO>();
     private UnitTypeDTO unitType;
@@ -134,11 +134,11 @@ public class UnitBaseDTO implements java.io.Serializable  {
         this.s = S;
     }
 
-    public int getSv() {
+    public String getSv() {
         return sv;
     }
 
-    public void setSv(int sv) {
+    public void setSv(String sv) {
         this.sv = sv;
     }
 
