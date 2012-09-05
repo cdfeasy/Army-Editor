@@ -30,8 +30,6 @@ public class admin implements EntryPoint {
 	private final CommonServiceAsync commonService = GWT.create(CommonService.class);
 
     @UiField
-    HorizontalLayoutContainer armorGridContainer;
-    @UiField
     HorizontalLayoutContainer attackTyteGridContainer;
     @UiField
     HorizontalLayoutContainer specialRuleGridContainer;

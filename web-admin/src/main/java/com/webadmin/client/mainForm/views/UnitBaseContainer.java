@@ -2,6 +2,7 @@ package com.webadmin.client.mainForm.views;
 
 import com.armyeditor.dto.FractionDTO;
 import com.armyeditor.dto.UnitBaseDTO;
+import com.armyeditor.dto.UnitTypeDTO;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.logical.shared.SelectionEvent;
 import com.google.gwt.event.logical.shared.SelectionHandler;
@@ -23,8 +24,10 @@ import com.sencha.gxt.widget.core.client.grid.CheckBoxSelectionModel;
 import com.sencha.gxt.widget.core.client.grid.ColumnConfig;
 import com.sencha.gxt.widget.core.client.grid.ColumnModel;
 import com.sencha.gxt.widget.core.client.grid.Grid;
+import com.sencha.gxt.widget.core.client.info.Info;
 import com.webadmin.client.mainForm.properties.FractionProperties;
 import com.webadmin.client.mainForm.properties.UnitBaseProperties;
+import com.webadmin.client.mainForm.properties.UnitTypeProperties;
 import com.webadmin.client.services.CommonService;
 import com.webadmin.client.services.CommonServiceAsync;
 
@@ -113,11 +116,12 @@ public class UnitBaseContainer extends HorizontalLayoutContainer {
                     @Override
                     public void onFailure(Throwable throwable) {
                         System.out.println("Запрос упал " + throwable.getMessage());
+                        Info.display("Ошибка", "Нарушается целостность базы");
                     }
 
                     @Override
                     public void onSuccess(Void aVoid) {
-                        updateStore(fractionBox.getValue().getId()); //todo
+                        updateStore(fractionBox.getValue().getId());
                     }
                 });
             }
@@ -178,7 +182,10 @@ public class UnitBaseContainer extends HorizontalLayoutContainer {
                 unitBaseFields.getLdFld().setText(Integer.toString(a.getLd()));
                 unitBaseFields.getSvFld().setText(a.getSv());
                 unitBaseFields.getCostFld().setText(Integer.toString(a.getCost()));
-                unitBaseFields.getUnitTypeFld().setText(a.getUnitType().getName());
+                String typeKey = new String(a.getUnitType().getId());
+                UnitTypeDTO type = unitBaseFields.getUnitTypeBox().getStore().findModelWithKey(typeKey);    //проверить
+                int ind = unitBaseFields.getUnitTypeBox().getStore().indexOf(type);
+                unitBaseFields.getUnitTypeBox().select(ind);
             }
         });
         unitBaseFields.getSaveBtn().addSelectHandler(new SelectEvent.SelectHandler() {
@@ -253,7 +260,8 @@ public class UnitBaseContainer extends HorizontalLayoutContainer {
         TextField ldFld;
         TextField svFld;
         TextField costFld;
-        TextField unitTypeFld;
+        ComboBox<UnitTypeDTO> unitTypeBox;
+        ListStore<UnitTypeDTO> unitTypeStore;
         TextButton saveBtn = new TextButton("Save");
         TextButton saveNewBtn = new TextButton("Save as new item");
 
@@ -281,8 +289,22 @@ public class UnitBaseContainer extends HorizontalLayoutContainer {
             vc.add(new FieldLabel(svFld,"SV"));
             costFld = new TextField();
             vc.add(new FieldLabel(costFld,"Cost"));
-            unitTypeFld = new TextField();
-            vc.add(new FieldLabel(unitTypeFld,"Unit Base"));
+            UnitTypeProperties props = GWT.create(UnitTypeProperties.class);
+            IdentityValueProvider<UnitTypeDTO> identity = new IdentityValueProvider<UnitTypeDTO>();
+            unitTypeStore = new ListStore<UnitTypeDTO>(props.key());
+            commonService.getUnitType(new AsyncCallback<List<UnitTypeDTO>>() {
+                @Override
+                public void onFailure(Throwable throwable) {
+                    System.out.println("Запрос упал " + throwable.getMessage());
+                }
+
+                @Override
+                public void onSuccess(List<UnitTypeDTO> unitTypeDTOs) {
+                    unitTypeStore.addAll(unitTypeDTOs);
+                }
+            });
+            unitTypeBox = new ComboBox<UnitTypeDTO>(unitTypeStore, props.nameLabel());
+            vc.add(new FieldLabel(unitTypeBox,"Unit Base"));
             vc.add(saveBtn);
             vc.add(saveNewBtn);
 
@@ -380,12 +402,20 @@ public class UnitBaseContainer extends HorizontalLayoutContainer {
             this.costFld = costFld;
         }
 
-        public TextField getUnitTypeFld() {
-            return unitTypeFld;
+        public ComboBox<UnitTypeDTO> getUnitTypeBox() {
+            return unitTypeBox;
         }
 
-        public void setUnitTypeFld(TextField unitTypeFld) {
-            this.unitTypeFld = unitTypeFld;
+        public void setUnitTypeBox(ComboBox<UnitTypeDTO> unitTypeBox) {
+            this.unitTypeBox = unitTypeBox;
+        }
+
+        public ListStore<UnitTypeDTO> getUnitTypeStore() {
+            return unitTypeStore;
+        }
+
+        public void setUnitTypeStore(ListStore<UnitTypeDTO> unitTypeStore) {
+            this.unitTypeStore = unitTypeStore;
         }
 
         public TextButton getSaveBtn() {

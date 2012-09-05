@@ -7,9 +7,6 @@
              xmlns:button="urn:import:com.sencha.gxt.widget.core.client.button"
              xmlns:form="urn:import:com.sencha.gxt.widget.core.client.form">
 
-    <ui:with type="com.sencha.gxt.widget.core.client.TabItemConfig" field="armorConfig">
-        <ui:attributes text="Armors" />
-    </ui:with>
     <ui:with type="com.sencha.gxt.widget.core.client.TabItemConfig" field="attackTypeTextTabConfig">
         <ui:attributes text="Attack Types" />
     </ui:with>
@@ -36,11 +33,6 @@
 
     <container:FlowLayoutContainer borders="false">
         <tabs:TabPanel ui:field="folder"  addStyleNames="margin-10">
-            <tabs:child config="{armorConfig}">
-                <container:HorizontalLayoutContainer ui:field="armorGridContainer">
-                    <!--вкладка с Armor-->
-                </container:HorizontalLayoutContainer>
-            </tabs:child>
 
             <tabs:child config="{attackTypeTextTabConfig}">
                 <container:HorizontalLayoutContainer ui:field="attackTyteGridContainer">

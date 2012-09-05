@@ -4,6 +4,7 @@ import com.armyeditor.dto.UnitTypeDTO;
 import com.armyeditor.entrys.UnitType;
 import com.google.gwt.editor.client.Editor;
 import com.sencha.gxt.core.client.ValueProvider;
+import com.sencha.gxt.data.shared.LabelProvider;
 import com.sencha.gxt.data.shared.ModelKeyProvider;
 import com.sencha.gxt.data.shared.PropertyAccess;
 
@@ -19,4 +20,6 @@ public interface UnitTypeProperties extends PropertyAccess<UnitTypeDTO> {
     ModelKeyProvider<UnitTypeDTO> key();
     ValueProvider<UnitTypeDTO, String> id();
     ValueProvider<UnitTypeDTO, String> name();
+    @Editor.Path("name")
+    LabelProvider<UnitTypeDTO> nameLabel();
 }

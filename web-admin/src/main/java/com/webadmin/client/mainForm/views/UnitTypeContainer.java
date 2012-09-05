@@ -224,6 +224,7 @@ public class UnitTypeContainer extends HorizontalLayoutContainer {
             ColumnConfig<OptionDTO, String> idColumn = new ColumnConfig<OptionDTO, String>(props.id(), 100, "id");
             ColumnConfig<OptionDTO, String> nameColumn = new ColumnConfig<OptionDTO, String>(props.name(), 100, "name");
             ColumnConfig<OptionDTO, String> descripColumn = new ColumnConfig<OptionDTO, String>(props.description(), 100, "description");
+            ColumnConfig<OptionDTO, String> actionColumn = new ColumnConfig<OptionDTO, String>(props.action(), 100, "action");
             List<ColumnConfig<OptionDTO, ?>> l = new ArrayList<ColumnConfig<OptionDTO, ?>>();
             l.add(idColumn);
             l.add(nameColumn);

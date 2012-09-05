@@ -19,4 +19,5 @@ public interface OptionProperties extends PropertyAccess<OptionDTO> {
     ValueProvider<OptionDTO, String> id();
     ValueProvider<OptionDTO, String> name();
     ValueProvider<OptionDTO, String> description();
+    ValueProvider<OptionDTO, String> action();
 }
