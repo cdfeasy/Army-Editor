@@ -402,6 +402,7 @@ public class UnitBaseContainer extends HorizontalLayoutContainer {
             l.add(idColumn);
             l.add(nameColumn);
             l.add(descripColumn);
+            l.add(actionColumn);
             optionCm = new ColumnModel<OptionDTO>(l);
             optionStore = new ListStore<OptionDTO>(optionProps.key());
             optionGrid = new Grid<OptionDTO>(optionStore, optionCm);
@@ -461,9 +462,9 @@ public class UnitBaseContainer extends HorizontalLayoutContainer {
             new GridDragSource<ItemDTO>(itemGrid);
             new GridDragSource<ItemDTO>(itemGridCommon);
             GridDropTarget<ItemDTO> target1Item = new GridDropTarget<ItemDTO>(itemGrid);
-            target1Weapon.setFeedback(DND.Feedback.INSERT);
+            target1Item.setFeedback(DND.Feedback.INSERT);
             GridDropTarget<ItemDTO> target2Item = new GridDropTarget<ItemDTO>(itemGridCommon);
-            target2Weapon.setFeedback(DND.Feedback.INSERT);
+            target2Item.setFeedback(DND.Feedback.INSERT);
             updateItemCommonStore();
 
             FramedPanel cp = new FramedPanel();

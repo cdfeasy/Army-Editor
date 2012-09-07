@@ -120,7 +120,7 @@ public class BaseService extends RemoteServiceServlet implements CommonService {
         Session ses = HibernateUtil.getSessionFactory().openSession();
         Transaction trans = ses.beginTransaction();
         SpecialRule b = s.toSpecialRule();
-        ses.save(s);
+        ses.save(b);
         trans.commit();
         ses.close();
     }
@@ -262,6 +262,7 @@ public class BaseService extends RemoteServiceServlet implements CommonService {
         for (UnitBase w:itemlist){
             unitBaseDTOs.add(new UnitBaseDTO(w));
         }
+        trans.commit();
         ses.close();
         return unitBaseDTOs;
     }
@@ -343,6 +344,8 @@ public class BaseService extends RemoteServiceServlet implements CommonService {
         Transaction trans = ses.beginTransaction();
         UnitBase unitBase = (UnitBase)ses.get(UnitBase.class, id);
         UnitBaseDTO unitBaseDTO = new UnitBaseDTO(unitBase);
+        trans.commit();
+        ses.close();
         return unitBaseDTO;
     }
 
