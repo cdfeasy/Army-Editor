@@ -73,7 +73,7 @@ public class UnitTypeContainer extends HorizontalLayoutContainer {
         gridContainer.add(delSelBtn);
         this.add(gridContainer);
         VerticalLayoutContainer vc = new VerticalLayoutContainer();
-        vc.add(unitTypeFields, new VerticalLayoutContainer.VerticalLayoutData(650,370,new Margins(5,5,5,5)));
+        vc.add(unitTypeFields, new VerticalLayoutContainer.VerticalLayoutData(650,370,new Margins(5)));
         this.add(vc);
         initHandlers();
     }
@@ -220,7 +220,6 @@ public class UnitTypeContainer extends HorizontalLayoutContainer {
             vc.add(saveNewBtn);
 
             OptionProperties props = GWT.create(OptionProperties.class);
-            IdentityValueProvider<OptionDTO> identity = new IdentityValueProvider<OptionDTO>();
             ColumnConfig<OptionDTO, String> idColumn = new ColumnConfig<OptionDTO, String>(props.id(), 100, "id");
             ColumnConfig<OptionDTO, String> nameColumn = new ColumnConfig<OptionDTO, String>(props.name(), 100, "name");
             ColumnConfig<OptionDTO, String> descripColumn = new ColumnConfig<OptionDTO, String>(props.description(), 100, "description");
@@ -271,7 +270,7 @@ public class UnitTypeContainer extends HorizontalLayoutContainer {
                 public void onSuccess(List<OptionDTO> optionDTOs) {
                     tempStore2 = optionDTOs;
                     store2.addAll(optionDTOs);
-                    unitTypeFields.getOptionGrid2().reconfigure(store2, cm);
+                    optionGrid2.reconfigure(store2, cm);
                 }
             });
         }

@@ -321,6 +321,16 @@ public class BaseService extends RemoteServiceServlet implements CommonService {
         Session ses = HibernateUtil.getSessionFactory().openSession();
         Transaction trans = ses.beginTransaction();
         UnitBase b = u.toUnitBase();
+        List<Item> itemList = new ArrayList<Item>();
+        for(Item i:b.getItems()){
+            itemList.add((Item) ses.merge(i));
+        }
+        b.setItems(itemList);
+        List<Weapon> weaponList = new ArrayList<Weapon>();
+        for(Weapon w:b.getWeapons()) {
+            weaponList.add((Weapon) ses.merge(w));
+        }
+        b.setWeapons(weaponList);
         ses.merge(b);
         ses.flush();
         trans.commit();
@@ -351,7 +361,7 @@ public class BaseService extends RemoteServiceServlet implements CommonService {
 
     @Override
     public List<OptionDTO> getOptions() throws ArmyException {
-        Session ses= HibernateUtil.getSessionFactory().openSession();
+        Session ses = HibernateUtil.getSessionFactory().openSession();
         Query query = ses.createQuery("select option from Option option");
         List<Option> itemlist=query.list();
         List<OptionDTO> optionDTOList = new ArrayList<OptionDTO>();
@@ -360,6 +370,108 @@ public class BaseService extends RemoteServiceServlet implements CommonService {
         }
         ses.close();
         return optionDTOList;
+    }
+
+    @Override
+    public List<WeaponDTO> getWeapons() throws ArmyException {
+        Session ses = HibernateUtil.getSessionFactory().openSession();
+        Query query = ses.createQuery("select weapon from Weapon weapon");
+        List<Weapon> itemlist = query.list();
+        List<WeaponDTO> weaponDTOList = new ArrayList<WeaponDTO>();
+        for (Weapon w:itemlist){
+            weaponDTOList.add(new WeaponDTO(w));
+        }
+        ses.close();
+        return weaponDTOList;
+    }
+
+    @Override
+    public void delWeapons(List<WeaponDTO> list) throws ArmyException {
+        Session ses= HibernateUtil.getSessionFactory().openSession();
+        Transaction trans=ses.beginTransaction();
+        List<Weapon> itemlist = new ArrayList<Weapon>();
+        for (WeaponDTO w:list){
+            itemlist.add(w.toWeapon());
+        }
+        for(Weapon a:itemlist){
+            a = (Weapon) ses.merge(a);
+            ses.delete(a);
+        }
+        ses.flush();
+        trans.commit();
+        ses.close();
+    }
+
+    @Override
+    public void addWeapon(WeaponDTO w) throws ArmyException {
+        Session ses = HibernateUtil.getSessionFactory().openSession();
+        Transaction trans = ses.beginTransaction();
+        Weapon b = w.toWeapon();
+        ses.save(b);
+        trans.commit();
+        ses.close();
+    }
+
+    @Override
+    public void changeWeapon(WeaponDTO w) throws ArmyException {
+        Session ses = HibernateUtil.getSessionFactory().openSession();
+        Transaction trans = ses.beginTransaction();
+        Weapon b = w.toWeapon();
+        ses.merge(b);
+        ses.flush();
+        trans.commit();
+        ses.close();
+    }
+
+    @Override
+    public List<ItemDTO> getItems() throws ArmyException {
+        Session ses = HibernateUtil.getSessionFactory().openSession();
+        Query query = ses.createQuery("select item from Item item");
+        List<Item> itemlist = query.list();
+        List<ItemDTO> itemDTOList = new ArrayList<ItemDTO>();
+        for (Item w:itemlist){
+            itemDTOList.add(new ItemDTO(w));
+        }
+        ses.close();
+        return itemDTOList;
+    }
+
+    @Override
+    public void delItems(List<ItemDTO> list) throws ArmyException {
+        Session ses = HibernateUtil.getSessionFactory().openSession();
+        Transaction trans=ses.beginTransaction();
+        List<Item> itemlist = new ArrayList<Item>();
+        for (ItemDTO w:list){
+            itemlist.add(w.toItem());
+        }
+        for(Item a:itemlist){
+            a = (Item) ses.merge(a);
+            ses.delete(a);
+        }
+        ses.flush();
+        trans.commit();
+        ses.close();
+    }
+
+    @Override
+    public void addItem(ItemDTO i) throws ArmyException {
+        Session ses = HibernateUtil.getSessionFactory().openSession();
+        Transaction trans = ses.beginTransaction();
+        Item b = i.toItem();
+        ses.save(b);
+        trans.commit();
+        ses.close();
+    }
+
+    @Override
+    public void changeItem(ItemDTO i) throws ArmyException {
+        Session ses = HibernateUtil.getSessionFactory().openSession();
+        Transaction trans = ses.beginTransaction();
+        Item b = i.toItem();
+        ses.merge(b);
+        ses.flush();
+        trans.commit();
+        ses.close();
     }
 
 }
