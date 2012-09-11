@@ -5,6 +5,7 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.logical.shared.SelectionEvent;
 import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.sencha.gxt.cell.core.client.form.ComboBoxCell;
 import com.sencha.gxt.core.client.IdentityValueProvider;
 import com.sencha.gxt.core.client.Style;
 import com.sencha.gxt.core.client.util.Margins;
@@ -210,10 +211,6 @@ public class UnitBaseContainer extends HorizontalLayoutContainer {
                         ColumnModel<WeaponDTO> weaponCm = unitBaseFields.getWeaponCm();
                         weaponStore.addAll(unitBaseDTO.getWeapons());
                         unitBaseFields.getWeaponGrid().reconfigure(weaponStore,weaponCm);
-                        ListStore<WeaponDTO> weaponStore2 = unitBaseFields.getWeaponStoreCommon();
-                        weaponStore2.clear();
-                        weaponStore2.addAll(unitBaseFields.getWeaponTempStore());
-                        unitBaseFields.getWeaponGridCommon().reconfigure(weaponStore2, weaponCm);
 
                         ListStore<ItemDTO> itemStore = unitBaseFields.getItemStore();
                         itemStore.clear();
@@ -334,11 +331,12 @@ public class UnitBaseContainer extends HorizontalLayoutContainer {
         private ColumnModel<OptionDTO> optionCm;
 
         Grid<WeaponDTO> weaponGrid;
-        Grid<WeaponDTO> weaponGridCommon;
         private ListStore<WeaponDTO> weaponStore;
-        private ListStore<WeaponDTO> weaponStoreCommon;
-        private List<WeaponDTO> weaponTempStore;
         private ColumnModel<WeaponDTO> weaponCm;
+
+        ComboBox<WeaponBaseDTO> weaponBaseBox;
+        ListStore<WeaponBaseDTO> weaponBaseStore;
+        TextButton addWeaponBtn;
 
         Grid<ItemDTO> itemGrid;
         Grid<ItemDTO> itemGridCommon;
@@ -432,15 +430,22 @@ public class UnitBaseContainer extends HorizontalLayoutContainer {
             NumberPropertyEditor np = new NumberPropertyEditor.IntegerPropertyEditor();
             editing.addEditor(costColumnWeapon, new NumberField<Integer>(np));
 
-            weaponStoreCommon = new ListStore<WeaponDTO>(weaponProps.key());
-            weaponGridCommon = new Grid<WeaponDTO>(weaponStoreCommon, weaponCm);
-            new GridDragSource<WeaponDTO>(weaponGrid);
-            new GridDragSource<WeaponDTO>(weaponGridCommon);
-            GridDropTarget<WeaponDTO> target1Weapon = new GridDropTarget<WeaponDTO>(weaponGrid);
-            target1Weapon.setFeedback(DND.Feedback.INSERT);
-            GridDropTarget<WeaponDTO> target2Weapon = new GridDropTarget<WeaponDTO>(weaponGridCommon);
-            target2Weapon.setFeedback(DND.Feedback.INSERT);
-            updateWeaponCommonStore();
+            WeaponBaseProperties weaponBaseProps = GWT.create(WeaponBaseProperties.class);
+            weaponBaseStore = new ListStore<WeaponBaseDTO>(weaponBaseProps.key());
+            commonService.getWeaponBases(new AsyncCallback<List<WeaponBaseDTO>>() {
+                @Override
+                public void onFailure(Throwable throwable) {
+                    System.out.println("Запрос упал " + throwable.getMessage());
+                }
+
+                @Override
+                public void onSuccess(List<WeaponBaseDTO> weaponBaseDTOs) {
+                    weaponBaseStore.addAll(weaponBaseDTOs);
+                }
+            });
+            weaponBaseBox = new ComboBox<WeaponBaseDTO>(weaponBaseStore, weaponBaseProps.nameLabel());
+            weaponBaseBox.setTypeAhead(true);
+            weaponBaseBox.setTriggerAction(ComboBoxCell.TriggerAction.ALL);
 
             ItemProperties itemProperties = GWT.create(ItemProperties.class);
             ColumnConfig<ItemDTO, Long> idColumnItem = new ColumnConfig<ItemDTO, Long>(itemProperties.id(), 100, "id");
@@ -484,7 +489,22 @@ public class UnitBaseContainer extends HorizontalLayoutContainer {
             cp.setAnimCollapse(true);
             con = new HorizontalLayoutContainer();
             con.add(weaponGrid, new HorizontalLayoutData(.5, 1, new Margins(5)));
-            con.add(weaponGridCommon, new HorizontalLayoutData(.5, 1, new Margins(5, 5, 5, 0)));
+            addWeaponBtn = new TextButton("Add Weapon", new SelectEvent.SelectHandler() {
+                @Override
+                public void onSelect(SelectEvent event) {
+                    WeaponDTO w = new WeaponDTO();
+                    WeaponBaseDTO weaponBaseDTO = weaponBaseBox.getValue();
+                    w.setWeapon(weaponBaseDTO);
+                    w.setCost(0);
+                    weaponStore.add(w);
+                    updateWeaponGrid();
+
+                }
+            });
+            VerticalLayoutContainer verticalLayoutContainer = new VerticalLayoutContainer();
+            verticalLayoutContainer.add(weaponBaseBox);
+            verticalLayoutContainer.add(addWeaponBtn);
+            con.add(verticalLayoutContainer, new HorizontalLayoutData(.5, 1, new Margins(5, 5, 5, 0)));
             cp.add(con);
             cp.addStyleName("margin-10");
             vc.add(cp,new VerticalLayoutContainer.VerticalLayoutData(640,250,new Margins(3,0,3,0)));
@@ -584,36 +604,12 @@ public class UnitBaseContainer extends HorizontalLayoutContainer {
             this.weaponGrid = weaponGrid;
         }
 
-        public Grid<WeaponDTO> getWeaponGridCommon() {
-            return weaponGridCommon;
-        }
-
-        public void setWeaponGridCommon(Grid<WeaponDTO> weaponGridCommon) {
-            this.weaponGridCommon = weaponGridCommon;
-        }
-
         public ListStore<WeaponDTO> getWeaponStore() {
             return weaponStore;
         }
 
         public void setWeaponStore(ListStore<WeaponDTO> weaponStore) {
             this.weaponStore = weaponStore;
-        }
-
-        public ListStore<WeaponDTO> getWeaponStoreCommon() {
-            return weaponStoreCommon;
-        }
-
-        public void setWeaponStoreCommon(ListStore<WeaponDTO> weaponStoreCommon) {
-            this.weaponStoreCommon = weaponStoreCommon;
-        }
-
-        public List<WeaponDTO> getWeaponTempStore() {
-            return weaponTempStore;
-        }
-
-        public void setWeaponTempStore(List<WeaponDTO> weaponTempStore) {
-            this.weaponTempStore = weaponTempStore;
         }
 
         public ColumnModel<WeaponDTO> getWeaponCm() {
@@ -688,20 +684,8 @@ public class UnitBaseContainer extends HorizontalLayoutContainer {
             });
         }
 
-        void updateWeaponCommonStore() {
-            commonService.getWeapons(new AsyncCallback<List<WeaponDTO>>() {
-                @Override
-                public void onFailure(Throwable throwable) {
-                    System.out.println("Запрос упал " + throwable.getMessage());
-                }
-
-                @Override
-                public void onSuccess(List<WeaponDTO> list) {
-                    weaponTempStore = list;
-                    weaponStoreCommon.addAll(list);
-                    weaponGridCommon.reconfigure(weaponStoreCommon, weaponCm);
-                }
-            });
+        void updateWeaponGrid() {
+            weaponGrid.reconfigure(weaponStore, weaponCm);
         }
 
         void updateOptionCommonStore() {

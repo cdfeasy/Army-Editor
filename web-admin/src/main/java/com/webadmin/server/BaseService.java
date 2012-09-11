@@ -477,4 +477,17 @@ public class BaseService extends RemoteServiceServlet implements CommonService {
         ses.close();
     }
 
+    @Override
+    public List<WeaponBaseDTO> getWeaponBases() throws ArmyException {
+        Session ses = HibernateUtil.getSessionFactory().openSession();
+        Query query = ses.createQuery("select weaponbase from WeaponBase weaponbase");
+        List<WeaponBase> itemlist = query.list();
+        List<WeaponBaseDTO> weaponBaseDTOList = new ArrayList<WeaponBaseDTO>();
+        for (WeaponBase w:itemlist){
+            weaponBaseDTOList.add(new WeaponBaseDTO(w));
+        }
+        ses.close();
+        return weaponBaseDTOList;
+    }
+
 }

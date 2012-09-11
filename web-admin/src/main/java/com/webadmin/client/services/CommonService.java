@@ -58,4 +58,6 @@ public interface CommonService extends RemoteService {
     void delItems(List<ItemDTO> list) throws ArmyException;
     void addItem(ItemDTO i) throws ArmyException;
     void changeItem(ItemDTO i) throws ArmyException;
+
+    List<WeaponBaseDTO> getWeaponBases() throws ArmyException;
 }
