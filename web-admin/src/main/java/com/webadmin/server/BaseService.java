@@ -197,6 +197,8 @@ public class BaseService extends RemoteServiceServlet implements CommonService {
         for (Option o:list){
             itemlist.add(new OptionDTO(o));
         }
+        trans.commit();
+        ses.close();
         return itemlist;
     }
 
@@ -488,6 +490,19 @@ public class BaseService extends RemoteServiceServlet implements CommonService {
         }
         ses.close();
         return weaponBaseDTOList;
+    }
+
+    @Override
+    public List<ItemBaseDTO> getItemBases() throws ArmyException {
+        Session ses = HibernateUtil.getSessionFactory().openSession();
+        Query query = ses.createQuery("select itembase from ItemBase itembase");
+        List<ItemBase> itemlist = query.list();
+        List<ItemBaseDTO> itemBaseDTOList = new ArrayList<ItemBaseDTO>();
+        for (ItemBase w:itemlist){
+            itemBaseDTOList.add(new ItemBaseDTO(w));
+        }
+        ses.close();
+        return itemBaseDTOList;
     }
 
 }

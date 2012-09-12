@@ -228,6 +228,7 @@ public class UnitTypeContainer extends HorizontalLayoutContainer {
             l.add(idColumn);
             l.add(nameColumn);
             l.add(descripColumn);
+            l.add(actionColumn);
             cm = new ColumnModel<OptionDTO>(l);
             store = new ListStore<OptionDTO>(props.key());
             optionGrid = new Grid<OptionDTO>(store, cm);

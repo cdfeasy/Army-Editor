@@ -188,6 +188,9 @@ public class UnitBaseContainer extends HorizontalLayoutContainer {
                 unitBaseFields.getSvFld().setText(a.getSv());
                 unitBaseFields.getCostFld().setText(Integer.toString(a.getCost()));
                 unitBaseFields.getUnitTypeBox().setValue(a.getUnitType());
+                unitBaseFields.optionGrid.mask();
+                unitBaseFields.weaponGrid.mask();
+                unitBaseFields.itemGrid.mask();
                 commonService.getUnitById(a.getId(), new AsyncCallback<UnitBaseDTO>() {
                     @Override
                     public void onFailure(Throwable throwable) {
@@ -217,10 +220,9 @@ public class UnitBaseContainer extends HorizontalLayoutContainer {
                         ColumnModel<ItemDTO> itemCm = unitBaseFields.getItemCm();
                         itemStore.addAll(unitBaseDTO.getItems());
                         unitBaseFields.getItemGrid().reconfigure(itemStore,itemCm);
-                        ListStore<ItemDTO> itemStore2 = unitBaseFields.getItemStoreCommon();
-                        itemStore2.clear();
-                        itemStore2.addAll(unitBaseFields.getItemTempStore());
-                        unitBaseFields.getItemGridCommon().reconfigure(itemStore2, itemCm);
+                        unitBaseFields.optionGrid.unmask();
+                        unitBaseFields.weaponGrid.unmask();
+                        unitBaseFields.itemGrid.unmask();
                     }
 
                 });
@@ -339,11 +341,12 @@ public class UnitBaseContainer extends HorizontalLayoutContainer {
         TextButton addWeaponBtn;
 
         Grid<ItemDTO> itemGrid;
-        Grid<ItemDTO> itemGridCommon;
         private ListStore<ItemDTO> itemStore;
-        private ListStore<ItemDTO> itemStoreCommon;
-        private List<ItemDTO> itemTempStore;
         private ColumnModel<ItemDTO> itemCm;
+
+        ComboBox<ItemBaseDTO> itemBaseBox;
+        ListStore<ItemBaseDTO> itemBaseStore;
+        TextButton addItemBtn;
 
         TextButton saveBtn = new TextButton("Save");
         TextButton saveNewBtn = new TextButton("Save as new item");
@@ -462,15 +465,22 @@ public class UnitBaseContainer extends HorizontalLayoutContainer {
             np = new NumberPropertyEditor.IntegerPropertyEditor();
             itemEdit.addEditor(costColumnItem, new NumberField<Integer>(np));
 
-            itemStoreCommon = new ListStore<ItemDTO>(itemProperties.key());
-            itemGridCommon = new Grid<ItemDTO>(itemStoreCommon, itemCm);
-            new GridDragSource<ItemDTO>(itemGrid);
-            new GridDragSource<ItemDTO>(itemGridCommon);
-            GridDropTarget<ItemDTO> target1Item = new GridDropTarget<ItemDTO>(itemGrid);
-            target1Item.setFeedback(DND.Feedback.INSERT);
-            GridDropTarget<ItemDTO> target2Item = new GridDropTarget<ItemDTO>(itemGridCommon);
-            target2Item.setFeedback(DND.Feedback.INSERT);
-            updateItemCommonStore();
+            ItemBaseProperties itemBaseProperties = GWT.create(ItemBaseProperties.class);
+            itemBaseStore = new ListStore<ItemBaseDTO>(itemBaseProperties.key());
+            commonService.getItemBases(new AsyncCallback<List<ItemBaseDTO>>() {
+                @Override
+                public void onFailure(Throwable throwable) {
+                    System.out.println("Запрос упал " + throwable.getMessage());
+                }
+
+                @Override
+                public void onSuccess(List<ItemBaseDTO> itemBaseDTOs) {
+                    itemBaseStore.addAll(itemBaseDTOs);
+                }
+            });
+            itemBaseBox = new ComboBox<ItemBaseDTO>(itemBaseStore, itemBaseProperties.nameLabel());
+            itemBaseBox.setTypeAhead(true);
+            itemBaseBox.setTriggerAction(ComboBoxCell.TriggerAction.ALL);
 
             FramedPanel cp = new FramedPanel();
             cp.setHeadingText("Options");
@@ -515,7 +525,21 @@ public class UnitBaseContainer extends HorizontalLayoutContainer {
             cp.setAnimCollapse(true);
             con = new HorizontalLayoutContainer();
             con.add(itemGrid, new HorizontalLayoutData(.5, 1, new Margins(5)));
-            con.add(itemGridCommon, new HorizontalLayoutData(.5, 1, new Margins(5, 5, 5, 0)));
+            addItemBtn = new TextButton("Add Item", new SelectEvent.SelectHandler() {
+                @Override
+                public void onSelect(SelectEvent event) {
+                    ItemDTO i = new ItemDTO();
+                    ItemBaseDTO itemBaseDTO = itemBaseBox.getValue();
+                    i.setItemBase(itemBaseDTO);
+                    i.setCost(0);
+                    itemStore.add(i);
+                    updateItemGrid();
+                }
+            });
+            verticalLayoutContainer = new VerticalLayoutContainer();
+            verticalLayoutContainer.add(itemBaseBox);
+            verticalLayoutContainer.add(addItemBtn);
+            con.add(verticalLayoutContainer, new HorizontalLayoutData(.5, 1, new Margins(5, 5, 5, 0)));
             cp.add(con);
             cp.addStyleName("margin-10");
             vc.add(cp,new VerticalLayoutContainer.VerticalLayoutData(640,250,new Margins(3,0,3,0)));
@@ -532,36 +556,12 @@ public class UnitBaseContainer extends HorizontalLayoutContainer {
             this.itemGrid = itemGrid;
         }
 
-        public Grid<ItemDTO> getItemGridCommon() {
-            return itemGridCommon;
-        }
-
-        public void setItemGridCommon(Grid<ItemDTO> itemGridCommon) {
-            this.itemGridCommon = itemGridCommon;
-        }
-
         public ListStore<ItemDTO> getItemStore() {
             return itemStore;
         }
 
         public void setItemStore(ListStore<ItemDTO> itemStore) {
             this.itemStore = itemStore;
-        }
-
-        public ListStore<ItemDTO> getItemStoreCommon() {
-            return itemStoreCommon;
-        }
-
-        public void setItemStoreCommon(ListStore<ItemDTO> itemStoreCommon) {
-            this.itemStoreCommon = itemStoreCommon;
-        }
-
-        public List<ItemDTO> getItemTempStore() {
-            return itemTempStore;
-        }
-
-        public void setItemTempStore(List<ItemDTO> itemTempStore) {
-            this.itemTempStore = itemTempStore;
         }
 
         public ColumnModel<ItemDTO> getItemCm() {
@@ -668,24 +668,12 @@ public class UnitBaseContainer extends HorizontalLayoutContainer {
             this.optionCm = optionCm;
         }
 
-        void updateItemCommonStore() {
-            commonService.getItems(new AsyncCallback<List<ItemDTO>>() {
-                @Override
-                public void onFailure(Throwable throwable) {
-                    System.out.println("Запрос упал " + throwable.getMessage());
-                }
-
-                @Override
-                public void onSuccess(List<ItemDTO> list) {
-                    itemTempStore = list;
-                    itemStoreCommon.addAll(list);
-                    itemGridCommon.reconfigure(itemStoreCommon, itemCm);
-                }
-            });
-        }
-
         void updateWeaponGrid() {
             weaponGrid.reconfigure(weaponStore, weaponCm);
+        }
+
+        void updateItemGrid() {
+            itemGrid.reconfigure(itemStore,itemCm);
         }
 
         void updateOptionCommonStore() {
