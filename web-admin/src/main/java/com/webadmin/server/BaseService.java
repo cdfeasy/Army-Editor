@@ -365,6 +365,44 @@ public class BaseService extends RemoteServiceServlet implements CommonService {
     }
 
     @Override
+    public void delFractions(List<FractionDTO> list) throws ArmyException {
+        Session ses= HibernateUtil.getSessionFactory().openSession();
+        Transaction trans=ses.beginTransaction();
+        List<Fraction> itemlist = new ArrayList<Fraction>();
+        for (FractionDTO w:list){
+            itemlist.add(w.toFraction());
+        }
+        for(Fraction a:itemlist){
+            a = (Fraction) ses.merge(a);
+            ses.delete(a);
+        }
+        ses.flush();
+        trans.commit();
+        ses.close();
+    }
+
+    @Override
+    public void addFraction(FractionDTO f) throws ArmyException {
+        Session ses = HibernateUtil.getSessionFactory().openSession();
+        Transaction trans = ses.beginTransaction();
+        Fraction b = f.toFraction();
+        ses.save(b);
+        trans.commit();
+        ses.close();
+    }
+
+    @Override
+    public void changeFraction(FractionDTO f) throws ArmyException {
+        Session ses = HibernateUtil.getSessionFactory().openSession();
+        Transaction trans = ses.beginTransaction();
+        Fraction b = f.toFraction();
+        ses.merge(b);
+        ses.flush();
+        trans.commit();
+        ses.close();
+    }
+
+    @Override
     public List<OptionDTO> getOptions() throws ArmyException {
         Session ses = HibernateUtil.getSessionFactory().openSession();
         Query query = ses.createQuery("select option from Option option");
@@ -503,6 +541,57 @@ public class BaseService extends RemoteServiceServlet implements CommonService {
         }
         ses.close();
         return itemBaseDTOList;
+    }
+
+    @Override
+    public List<CodexDTO> getCodexs() throws ArmyException {
+        Session ses = HibernateUtil.getSessionFactory().openSession();
+        Query query = ses.createQuery("select codex from Codex codex");
+        List<Codex> itemlist = query.list();
+        List<CodexDTO> codexDTOList = new ArrayList<CodexDTO>();
+        for (Codex w:itemlist){
+            codexDTOList.add(new CodexDTO(w));
+        }
+        ses.close();
+        return codexDTOList;
+    }
+
+    @Override
+    public void delCodexs(List<CodexDTO> list) throws ArmyException {
+        Session ses = HibernateUtil.getSessionFactory().openSession();
+        Transaction trans=ses.beginTransaction();
+        List<Codex> itemlist = new ArrayList<Codex>();
+        for (CodexDTO w:list){
+            itemlist.add(w.toCodex());
+        }
+        for(Codex a:itemlist){
+            a = (Codex) ses.merge(a);
+            ses.delete(a);
+        }
+        ses.flush();
+        trans.commit();
+        ses.close();
+    }
+
+    @Override
+    public void addCodex(CodexDTO c) throws ArmyException {
+        Session ses = HibernateUtil.getSessionFactory().openSession();
+        Transaction trans = ses.beginTransaction();
+        Codex b = c.toCodex();
+        ses.save(b);
+        trans.commit();
+        ses.close();
+    }
+
+    @Override
+    public void changeCodex(CodexDTO c) throws ArmyException {
+        Session ses = HibernateUtil.getSessionFactory().openSession();
+        Transaction trans = ses.beginTransaction();
+        Codex b = c.toCodex();
+        ses.merge(b);
+        ses.flush();
+        trans.commit();
+        ses.close();
     }
 
 }

@@ -511,9 +511,29 @@ public class UnitBaseContainer extends HorizontalLayoutContainer {
 
                 }
             });
+            TextButton delWeaponBtn = new TextButton("Delete Selected Weapon", new SelectEvent.SelectHandler() {
+                @Override
+                public void onSelect(SelectEvent event) {
+                    WeaponDTO w = weaponGrid.getSelectionModel().getSelectedItem();
+                    List<WeaponDTO> list = new ArrayList<WeaponDTO>();
+                    list.add(w);
+                    commonService.delWeapons(list, new AsyncCallback<Void>() {
+                        @Override
+                        public void onFailure(Throwable throwable) {
+                            System.out.println("Запрос упал " + throwable.getMessage());
+                        }
+
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            updateWeaponGrid();
+                        }
+                    });
+                }
+            });
             VerticalLayoutContainer verticalLayoutContainer = new VerticalLayoutContainer();
             verticalLayoutContainer.add(weaponBaseBox);
             verticalLayoutContainer.add(addWeaponBtn);
+            verticalLayoutContainer.add(delWeaponBtn);
             con.add(verticalLayoutContainer, new HorizontalLayoutData(.5, 1, new Margins(5, 5, 5, 0)));
             cp.add(con);
             cp.addStyleName("margin-10");
@@ -534,6 +554,25 @@ public class UnitBaseContainer extends HorizontalLayoutContainer {
                     i.setCost(0);
                     itemStore.add(i);
                     updateItemGrid();
+                }
+            });
+            TextButton delItemBtn = new TextButton("Delete Selected Item", new SelectEvent.SelectHandler() {
+                @Override
+                public void onSelect(SelectEvent event) {
+                    ItemDTO i = itemGrid.getSelectionModel().getSelectedItem();
+                    List<ItemDTO> list = new ArrayList<ItemDTO>();
+                    list.add(i);
+                    commonService.delItems(list, new AsyncCallback<Void>() {
+                        @Override
+                        public void onFailure(Throwable throwable) {
+                            System.out.println("Запрос упал " + throwable.getMessage());
+                        }
+
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            updateItemGrid();
+                        }
+                    });
                 }
             });
             verticalLayoutContainer = new VerticalLayoutContainer();

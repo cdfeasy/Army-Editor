@@ -45,8 +45,6 @@ public interface CommonService extends RemoteService {
     void changeUnitBase(UnitBaseDTO u) throws ArmyException;
     UnitBaseDTO getUnitById(String id) throws ArmyException; //получаем отсюда 3 списка
 
-    List<FractionDTO> getFractions() throws ArmyException;
-
     List<OptionDTO> getOptions() throws ArmyException;
 
     List<WeaponDTO> getWeapons() throws ArmyException;
@@ -62,4 +60,14 @@ public interface CommonService extends RemoteService {
     List<WeaponBaseDTO> getWeaponBases() throws ArmyException;
 
     List<ItemBaseDTO> getItemBases() throws ArmyException;
+
+    List<CodexDTO> getCodexs() throws ArmyException;
+    void delCodexs(List<CodexDTO> list) throws ArmyException;
+    void addCodex(CodexDTO c) throws ArmyException;
+    void changeCodex(CodexDTO c) throws ArmyException;
+
+    List<FractionDTO> getFractions() throws ArmyException;
+    void delFractions(List<FractionDTO> list) throws ArmyException;
+    void addFraction(FractionDTO f) throws ArmyException;
+    void changeFraction(FractionDTO f) throws ArmyException;
 }
