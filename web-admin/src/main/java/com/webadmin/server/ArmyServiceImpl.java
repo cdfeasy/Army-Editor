@@ -6,9 +6,10 @@ package com.webadmin.server;
 
 import com.armyeditor.HibernateUtil;
 import com.armyeditor.dto.CodexDTO;
+import com.armyeditor.dto.SquadPartBaseDTO;
+import com.armyeditor.dto.SquadPartDTO;
 import com.armyeditor.dto.UnitDTO;
-import com.armyeditor.entrys.Codex;
-import com.armyeditor.entrys.Unit;
+import com.armyeditor.entrys.*;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.webadmin.client.services.ArmyException;
 import com.webadmin.client.services.ArmyService;
@@ -36,6 +37,19 @@ public class ArmyServiceImpl extends RemoteServiceServlet implements ArmyService
             }
             ses.close();
             return сodexDTOList.get(0);
+        } catch (Throwable th) {
+            throw new ArmyException(th);
+        }
+    }
+
+    @Override
+    public SquadPartBaseDTO getSquadPart(String id) throws ArmyException {
+          try {
+            Session ses = HibernateUtil.getSessionFactory().openSession();
+            SquadPartBase squad = (SquadPartBase)ses.get(SquadPartBase.class, id);
+            SquadPartBaseDTO ss=new SquadPartBaseDTO(squad,null);
+            ses.close();
+            return ss;
         } catch (Throwable th) {
             throw new ArmyException(th);
         }
