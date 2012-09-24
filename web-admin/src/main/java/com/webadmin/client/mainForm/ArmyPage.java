@@ -11,11 +11,13 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.text.shared.SimpleSafeHtmlRenderer;
+import com.google.gwt.thirdparty.guava.common.base.Splitter;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.sencha.gxt.cell.core.client.SimpleSafeHtmlCell;
 import com.sencha.gxt.core.client.ValueProvider;
+import com.sencha.gxt.data.shared.ListStore;
 import com.sencha.gxt.data.shared.ModelKeyProvider;
 import com.sencha.gxt.data.shared.TreeStore;
 import com.sencha.gxt.widget.core.client.button.ButtonBar;
@@ -28,15 +30,20 @@ import com.sencha.gxt.widget.core.client.event.CheckChangeEvent;
 import com.sencha.gxt.widget.core.client.event.SelectEvent;
 import com.sencha.gxt.widget.core.client.event.SelectEvent.SelectHandler;
 import com.sencha.gxt.widget.core.client.form.TextField;
+import com.sencha.gxt.widget.core.client.grid.ColumnConfig;
+import com.sencha.gxt.widget.core.client.grid.ColumnModel;
 import com.sencha.gxt.widget.core.client.grid.Grid;
 import com.sencha.gxt.widget.core.client.grid.editing.GridEditing;
 import com.sencha.gxt.widget.core.client.grid.editing.GridRowEditing;
 import com.sencha.gxt.widget.core.client.info.Info;
 import com.sencha.gxt.widget.core.client.tree.Tree;
+import com.webadmin.client.mainForm.properties.WeaponProperties;
 import com.webadmin.client.services.ArmyService;
 import com.webadmin.client.services.ArmyServiceAsync;
 import com.webadmin.client.services.CommonService;
 import com.webadmin.client.services.CommonServiceAsync;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -76,14 +83,59 @@ public class ArmyPage extends HorizontalLayoutContainer {
       }
   }
   
+    public void filldata(final TextField unitName,
+            final TextField cost,
+            final TextField min,
+            final TextField max,
+            final TextField condition,
+            final VerticalLayoutContainer modifications,
+            VerticalPanel optionsWeapons,
+            SquadPartBaseDTO result) {
+        unitName.setText(result.getId());
+        cost.setText(Integer.toString(result.getUnit().getCost()));
+        min.setText(Integer.toString(result.getMinSize()));
+        max.setText(Integer.toString(result.getMaxSize()));
+        condition.setText(result.getConditions());
+
+        if (result.getModifications().size() > 0) {
+            for (SquadPartBaseDTO s : result.getModifications()) {
+                modifications.add(initUnitContaner(s.getId(), s));
+
+            }
+        }
+        VerticalLayoutContainer weapons=new VerticalLayoutContainer();
+        for(WeaponSelectionDTO wp:result.getWeaponSelection()){
+            VerticalLayoutContainer weapon=new VerticalLayoutContainer();
+            TextField weaponcond = new TextField();
+            ListStore<WeaponDTO> weaponStore;
+            ColumnModel<WeaponDTO> weaponCm;
+            WeaponProperties weaponProps = GWT.create(WeaponProperties.class);
+            ColumnConfig<WeaponDTO, String> weaponColumn = new ColumnConfig<WeaponDTO, String>(weaponProps.weapon(), 100, "weapon");
+            ColumnConfig<WeaponDTO, Integer> costColumnWeapon = new ColumnConfig<WeaponDTO, Integer>(weaponProps.cost(), 100, "cost");
+            List<ColumnConfig<WeaponDTO, ?>> lWeapon = new ArrayList<ColumnConfig<WeaponDTO, ?>>();
+            lWeapon.add(weaponColumn);
+            lWeapon.add(costColumnWeapon);
+            weaponCm = new ColumnModel<WeaponDTO>(lWeapon);
+            weaponStore = new ListStore<WeaponDTO>(weaponProps.key());
+            weaponStore.addAll( wp.getWeapon());
+            Grid<WeaponDTO> weaponGrid=new  Grid<WeaponDTO>(weaponStore,weaponCm);
+            weapon.add(weaponcond);
+            weapon.add(weaponGrid);
+            weapons.add(weapon);
+        }
+        optionsWeapons.add(weapons);
+    }
+  
     private VerticalLayoutContainer initUnitContaner(String unitBaseId, SquadPartBaseDTO squad) {
         final VerticalLayoutContainer unitContainer = new VerticalLayoutContainer();
         final TextField unitName = new TextField();
-        final TextField cost = new TextField();;
-        final TextField min = new TextField();;
-        final TextField max = new TextField();;
+        final TextField cost = new TextField();
+        final TextField min = new TextField();
+        final TextField max = new TextField();
         final TextField condition = new TextField();
         final VerticalLayoutContainer modifications = new VerticalLayoutContainer();
+        final VerticalPanel optionsWeapons = new VerticalPanel();
+        optionsWeapons.setSpacing(10);
         if (squad == null) {
             commonService.getSquadPart(unitBaseId, new AsyncCallback<SquadPartBaseDTO>() {
 
@@ -95,38 +147,19 @@ public class ArmyPage extends HorizontalLayoutContainer {
 
                 @Override
                 public void onSuccess(SquadPartBaseDTO result) {
-                    unitName.setText(result.getId());
-                    cost.setText(Integer.toString(result.getUnit().getCost()));
-                    min.setText(Integer.toString(result.getMinSize()));
-                    max.setText(Integer.toString(result.getMaxSize()));
-                    condition.setText(result.getConditions());
-
-                    if (result.getModifications().size() > 0) {
-                        for (SquadPartBaseDTO s : result.getModifications()) {
-                            modifications.add(initUnitContaner(s.getId(), s));
-
-                        }
-                    }
+                    filldata(unitName, cost, min, max, condition, modifications, optionsWeapons,result);
 
                 }
             });
         } else {
-            unitName.setText(squad.getId());
-            cost.setText(Integer.toString(squad.getUnit().getCost()));
-            min.setText(Integer.toString(squad.getMinSize()));
-            max.setText(Integer.toString(squad.getMaxSize()));
-            condition.setText(squad.getConditions());
-            if (squad.getModifications().size() > 0) {
-                for (SquadPartBaseDTO s : squad.getModifications()) {
-                    modifications.add(initUnitContaner(s.getId(), s));
-                }
-            }
+            filldata(unitName, cost, min, max, condition, modifications,optionsWeapons, squad);
         }
         unitContainer.add(unitName);
         unitContainer.add(cost);
         unitContainer.add(min);
         unitContainer.add(max);
         unitContainer.add(condition);
+        unitContainer.add(optionsWeapons);
         VerticalPanel vp = new VerticalPanel();
         vp.setSpacing(10);
         vp.add(modifications);
