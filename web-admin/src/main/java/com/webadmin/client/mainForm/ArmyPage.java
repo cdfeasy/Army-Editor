@@ -16,7 +16,9 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.sencha.gxt.cell.core.client.SimpleSafeHtmlCell;
+import com.sencha.gxt.cell.core.client.form.ComboBoxCell;
 import com.sencha.gxt.core.client.ValueProvider;
+import com.sencha.gxt.core.client.util.Margins;
 import com.sencha.gxt.data.shared.ListStore;
 import com.sencha.gxt.data.shared.ModelKeyProvider;
 import com.sencha.gxt.data.shared.TreeStore;
@@ -26,9 +28,11 @@ import com.sencha.gxt.widget.core.client.container.FlowLayoutContainer;
 import com.sencha.gxt.widget.core.client.container.HorizontalLayoutContainer;
 import com.sencha.gxt.widget.core.client.container.MarginData;
 import com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer;
+import com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer.VerticalLayoutData;
 import com.sencha.gxt.widget.core.client.event.CheckChangeEvent;
 import com.sencha.gxt.widget.core.client.event.SelectEvent;
 import com.sencha.gxt.widget.core.client.event.SelectEvent.SelectHandler;
+import com.sencha.gxt.widget.core.client.form.ComboBox;
 import com.sencha.gxt.widget.core.client.form.TextField;
 import com.sencha.gxt.widget.core.client.grid.ColumnConfig;
 import com.sencha.gxt.widget.core.client.grid.ColumnModel;
@@ -37,6 +41,7 @@ import com.sencha.gxt.widget.core.client.grid.editing.GridEditing;
 import com.sencha.gxt.widget.core.client.grid.editing.GridRowEditing;
 import com.sencha.gxt.widget.core.client.info.Info;
 import com.sencha.gxt.widget.core.client.tree.Tree;
+import com.webadmin.client.mainForm.properties.WeaponBaseProperties;
 import com.webadmin.client.mainForm.properties.WeaponProperties;
 import com.webadmin.client.services.ArmyService;
 import com.webadmin.client.services.ArmyServiceAsync;
@@ -83,13 +88,35 @@ public class ArmyPage extends HorizontalLayoutContainer {
       }
   }
   
+    public ComboBox<WeaponBaseDTO> getWeaponCombobox() {
+        ComboBox<WeaponBaseDTO> weaponBaseBox;
+        WeaponBaseProperties weaponBaseProps = GWT.create(WeaponBaseProperties.class);
+        final ListStore<WeaponBaseDTO> weaponBaseStore = new ListStore<WeaponBaseDTO>(weaponBaseProps.key());
+        baseService.getWeaponBases(new AsyncCallback<List<WeaponBaseDTO>>() {
+
+            @Override
+            public void onFailure(Throwable throwable) {
+                System.out.println("Запрос упал " + throwable.getMessage());
+            }
+
+            @Override
+            public void onSuccess(List<WeaponBaseDTO> weaponBaseDTOs) {
+                weaponBaseStore.addAll(weaponBaseDTOs);
+            }
+        });
+        weaponBaseBox = new ComboBox<WeaponBaseDTO>(weaponBaseStore, weaponBaseProps.nameLabel());
+        weaponBaseBox.setTypeAhead(true);
+        weaponBaseBox.setTriggerAction(ComboBoxCell.TriggerAction.ALL);
+        return weaponBaseBox;
+    }
+  
     public void filldata(final TextField unitName,
             final TextField cost,
             final TextField min,
             final TextField max,
             final TextField condition,
             final VerticalLayoutContainer modifications,
-            VerticalPanel optionsWeapons,
+            VerticalLayoutContainer optionsWeapons,
             SquadPartBaseDTO result) {
         unitName.setText(result.getId());
         cost.setText(Integer.toString(result.getUnit().getCost()));
@@ -99,12 +126,15 @@ public class ArmyPage extends HorizontalLayoutContainer {
 
         if (result.getModifications().size() > 0) {
             for (SquadPartBaseDTO s : result.getModifications()) {
-                modifications.add(initUnitContaner(s.getId(), s));
+                modifications.add(initUnitContaner(s.getId(), s),new VerticalLayoutData(-1, -1));
 
             }
         }
         VerticalLayoutContainer weapons=new VerticalLayoutContainer();
         for(WeaponSelectionDTO wp:result.getWeaponSelection()){
+            ComboBox<WeaponBaseDTO> weaponCombobox = getWeaponCombobox();
+            TextButton add = new TextButton("add");
+            TextButton remove = new TextButton("remove");
             VerticalLayoutContainer weapon=new VerticalLayoutContainer();
             TextField weaponcond = new TextField();
             ListStore<WeaponDTO> weaponStore;
@@ -119,11 +149,23 @@ public class ArmyPage extends HorizontalLayoutContainer {
             weaponStore = new ListStore<WeaponDTO>(weaponProps.key());
             weaponStore.addAll( wp.getWeapon());
             Grid<WeaponDTO> weaponGrid=new  Grid<WeaponDTO>(weaponStore,weaponCm);
-            weapon.add(weaponcond);
-            weapon.add(weaponGrid);
-            weapons.add(weapon);
+            weapon.add(weaponcond,new VerticalLayoutData(-1, -1));
+            weapon.add(weaponGrid,new VerticalLayoutData(-1, -1));
+            HorizontalPanel panel=new HorizontalPanel();
+          //  panel.setWidth("400px");
+            panel.add(add);
+            panel.add(weaponCombobox);
+            panel.add(remove);
+            
+            
+//            HorizontalLayoutContainer c = new HorizontalLayoutContainer();
+//            c.add(add, new HorizontalLayoutData(100,100));
+//            c.add(weaponCombobox, new HorizontalLayoutData(300,100));
+//            c.add(remove, new HorizontalLayoutData(100,100));
+            weapon.add(panel,new VerticalLayoutData(400, -1));
+            weapons.add(weapon,new VerticalLayoutData(-1, -1));
         }
-        optionsWeapons.add(weapons);
+        optionsWeapons.add(weapons,new VerticalLayoutData(-1, -1));
     }
   
     private VerticalLayoutContainer initUnitContaner(String unitBaseId, SquadPartBaseDTO squad) {
@@ -134,8 +176,7 @@ public class ArmyPage extends HorizontalLayoutContainer {
         final TextField max = new TextField();
         final TextField condition = new TextField();
         final VerticalLayoutContainer modifications = new VerticalLayoutContainer();
-        final VerticalPanel optionsWeapons = new VerticalPanel();
-        optionsWeapons.setSpacing(10);
+        final VerticalLayoutContainer optionsWeapons = new VerticalLayoutContainer();
         if (squad == null) {
             commonService.getSquadPart(unitBaseId, new AsyncCallback<SquadPartBaseDTO>() {
 
@@ -154,16 +195,16 @@ public class ArmyPage extends HorizontalLayoutContainer {
         } else {
             filldata(unitName, cost, min, max, condition, modifications,optionsWeapons, squad);
         }
-        unitContainer.add(unitName);
-        unitContainer.add(cost);
-        unitContainer.add(min);
-        unitContainer.add(max);
-        unitContainer.add(condition);
-        unitContainer.add(optionsWeapons);
-        VerticalPanel vp = new VerticalPanel();
-        vp.setSpacing(10);
-        vp.add(modifications);
-        unitContainer.add(vp);
+        unitContainer.add(unitName,new VerticalLayoutData(-1, -1));
+        unitContainer.add(cost,new VerticalLayoutData(-1, -1));
+        unitContainer.add(min,new VerticalLayoutData(-1, -1));
+        unitContainer.add(max,new VerticalLayoutData(-1, -1));
+        unitContainer.add(condition,new VerticalLayoutData(-1, -1));
+        unitContainer.add(optionsWeapons,new VerticalLayoutData(-1, -1));
+//        VerticalPanel vp = new VerticalPanel();
+//        vp.setSpacing(10);
+//        vp.add(modifications);
+        unitContainer.add(modifications,new VerticalLayoutData(-1, -1, new Margins(30)));
 
         return unitContainer;
     }
@@ -175,6 +216,7 @@ public class ArmyPage extends HorizontalLayoutContainer {
   
   private void init(CodexDTO dto){
     HorizontalLayoutContainer con = new HorizontalLayoutContainer();
+   
     VerticalLayoutContainer treeContainer=new VerticalLayoutContainer();
     infoContainer=new VerticalLayoutContainer();;
    // initInfoContaner();
@@ -246,18 +288,16 @@ public class ArmyPage extends HorizontalLayoutContainer {
             // name.setText(tree.getSelectionModel().getSelectedItem().getClass().toString()+"/"+ tree.getSelectionModel().getSelectedItem().toString());
              Object item=tree.getSelectionModel().getSelectedItem(); 
              if (item instanceof CodexDTO) name.setText( ((CodexDTO)item).getId());
-             if (item instanceof SquadBaseDTO) name.setText( ((SquadBaseDTO)item).getId());
-                if (item instanceof SquadPartBaseDTO) {
-                    name.setText(((SquadPartBaseDTO) item).getId());
+             
+             if (item instanceof SquadBaseDTO) {
+                    name.setText(((SquadBaseDTO) item).getId());
                     infoContainer.clear();
-                    infoContainer.add(name);
-                    VerticalPanel vp = new VerticalPanel();
-                    vp.setSpacing(10);
-                    vp.add(initUnitContaner(((SquadPartBaseDTO)item).getId(),null));
-                    infoContainer.add(vp);
+                    infoContainer.add(name,new VerticalLayoutData(700, 1000));
+                    infoContainer.add(initUnitContaner(((SquadBaseDTO)item).getSquadPartBase().getId(),null),new VerticalLayoutData(700, 1000));
                     
                     
                 }
+             if (item instanceof SquadPartBaseDTO) name.setText( ((SquadPartBaseDTO)item).getId());
       
             }
       }
@@ -268,8 +308,8 @@ public class ArmyPage extends HorizontalLayoutContainer {
     buttonBar.setLayoutData(new MarginData(4));
     treeContainer.add(buttonBar);
     treeContainer.add(tree);
-    con.add(treeContainer);
-    con.add(infoContainer);
+    con.add(treeContainer, new HorizontalLayoutData(-1, -1, new Margins(5)));
+    con.add(infoContainer, new HorizontalLayoutData(-1, -1, new Margins(5)));
     this.add(con);
   }  
 
