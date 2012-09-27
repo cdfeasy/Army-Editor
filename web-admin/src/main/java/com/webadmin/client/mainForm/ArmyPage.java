@@ -41,6 +41,8 @@ import com.sencha.gxt.widget.core.client.grid.editing.GridEditing;
 import com.sencha.gxt.widget.core.client.grid.editing.GridRowEditing;
 import com.sencha.gxt.widget.core.client.info.Info;
 import com.sencha.gxt.widget.core.client.tree.Tree;
+import com.webadmin.client.mainForm.properties.ItemBaseProperties;
+import com.webadmin.client.mainForm.properties.ItemProperties;
 import com.webadmin.client.mainForm.properties.WeaponBaseProperties;
 import com.webadmin.client.mainForm.properties.WeaponProperties;
 import com.webadmin.client.services.ArmyService;
@@ -109,6 +111,28 @@ public class ArmyPage extends HorizontalLayoutContainer {
         weaponBaseBox.setTriggerAction(ComboBoxCell.TriggerAction.ALL);
         return weaponBaseBox;
     }
+    
+     public ComboBox<ItemBaseDTO> getItemCombobox() {
+        ComboBox<ItemBaseDTO> itemBaseBox;
+        ItemBaseProperties itemBaseProps = GWT.create(ItemBaseProperties.class);
+        final ListStore<ItemBaseDTO> itemBaseStore = new ListStore<ItemBaseDTO>(itemBaseProps.key());
+        baseService.getItemBases(new AsyncCallback<List<ItemBaseDTO>>() {
+
+            @Override
+            public void onFailure(Throwable throwable) {
+                System.out.println("Запрос упал " + throwable.getMessage());
+            }
+
+            @Override
+            public void onSuccess(List<ItemBaseDTO> itemBaseDTOs) {
+                itemBaseStore.addAll(itemBaseDTOs);
+            }
+        });
+        itemBaseBox = new ComboBox<ItemBaseDTO>(itemBaseStore, itemBaseProps.nameLabel());
+        itemBaseBox.setTypeAhead(true);
+        itemBaseBox.setTriggerAction(ComboBoxCell.TriggerAction.ALL);
+        return itemBaseBox;
+    }
   
     public void filldata(final TextField unitName,
             final TextField cost,
@@ -152,20 +176,48 @@ public class ArmyPage extends HorizontalLayoutContainer {
             weapon.add(weaponcond,new VerticalLayoutData(-1, -1));
             weapon.add(weaponGrid,new VerticalLayoutData(-1, -1));
             HorizontalPanel panel=new HorizontalPanel();
-          //  panel.setWidth("400px");
             panel.add(add);
             panel.add(weaponCombobox);
             panel.add(remove);
-            
-            
-//            HorizontalLayoutContainer c = new HorizontalLayoutContainer();
-//            c.add(add, new HorizontalLayoutData(100,100));
-//            c.add(weaponCombobox, new HorizontalLayoutData(300,100));
-//            c.add(remove, new HorizontalLayoutData(100,100));
-            weapon.add(panel,new VerticalLayoutData(400, -1));
-            weapons.add(weapon,new VerticalLayoutData(-1, -1));
+
+            weapon.add(panel,new VerticalLayoutData(400, -1,new Margins(5)));
+            weapons.add(weapon,new VerticalLayoutData(-1, -1,new Margins(5)));
         }
-        optionsWeapons.add(weapons,new VerticalLayoutData(-1, -1));
+          VerticalLayoutContainer items=new VerticalLayoutContainer();
+          for(ItemSelectionDTO wp:result.getItemSelection()){
+            ComboBox<ItemBaseDTO>itemCombobox = getItemCombobox();
+            TextButton add = new TextButton("add");
+            TextButton remove = new TextButton("remove");
+            VerticalLayoutContainer item=new VerticalLayoutContainer();
+            TextField itemcond = new TextField();
+            ListStore<ItemDTO> itemStore;
+            ColumnModel<ItemDTO> itemCm;
+            ItemProperties itemProps = GWT.create(ItemProperties.class);
+            ColumnConfig<ItemDTO, String> itemColumn = new ColumnConfig<ItemDTO, String>(itemProps.itemBase(), 100, "itemBase");
+            ColumnConfig<ItemDTO, Integer> costColumnitem= new ColumnConfig<ItemDTO, Integer>(itemProps.cost(), 100, "cost");
+            List<ColumnConfig<ItemDTO, ?>> litem = new ArrayList<ColumnConfig<ItemDTO, ?>>();
+            litem.add(itemColumn);
+            litem.add(costColumnitem);
+            itemCm = new ColumnModel<ItemDTO>(litem);
+            itemStore = new ListStore<ItemDTO>(itemProps.key());
+            itemStore.addAll( wp.getItem());
+            Grid<ItemDTO> itemGrid=new  Grid<ItemDTO>(itemStore,itemCm);
+            item.add(itemcond,new VerticalLayoutData(-1, -1));
+            item.add(itemGrid,new VerticalLayoutData(-1, -1));
+            HorizontalPanel panel=new HorizontalPanel();
+            panel.add(add);
+            panel.add(itemCombobox);
+            panel.add(remove);
+
+            item.add(panel,new VerticalLayoutData(400, -1,new Margins(5)));
+            items.add(item,new VerticalLayoutData(-1, -1,new Margins(5)));
+        }
+         HorizontalPanel panel=new HorizontalPanel();
+         panel.add(weapons);
+         panel.add(items);
+         
+        optionsWeapons.add(panel,new VerticalLayoutData(-1, -1,new Margins(5)));
+        
     }
   
     private VerticalLayoutContainer initUnitContaner(String unitBaseId, SquadPartBaseDTO squad) {
