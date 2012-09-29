@@ -324,17 +324,24 @@ public class BaseService extends RemoteServiceServlet implements CommonService {
         Session ses = HibernateUtil.getSessionFactory().openSession();
         Transaction trans = ses.beginTransaction();
         UnitBase b = u.toUnitBase();
-        List<Item> itemList = new ArrayList<Item>();
-        for(Item i:b.getItems()){
-            itemList.add((Item) ses.merge(i));
+        UnitBase b1 = (UnitBase) ses.get(UnitBase.class, b.getId());
+        List<Item> newItemList = b.getItems();
+        List<Item> oldItemList = b1.getItems();
+        for(Item i:newItemList) {
+            if(!oldItemList.contains(i)) ses.persist(i);
         }
-        b.setItems(itemList);
-        List<Weapon> weaponList = new ArrayList<Weapon>();
-        for(Weapon w:b.getWeapons()) {
-            weaponList.add((Weapon) ses.merge(w));
+        for (Item i:oldItemList) {
+            if(!newItemList.contains(i)) ses.delete(i);
         }
-        b.setWeapons(weaponList);
-        ses.merge(b);
+        List<Weapon> newWeaponList = b.getWeapons();
+        List<Weapon> oldWeaponList = b1.getWeapons();
+        for (Weapon w:newWeaponList) {
+            if(!oldWeaponList.contains(w)) ses.persist(w);
+        }
+        for (Weapon w:oldWeaponList) {
+            if(!newItemList.contains(w)) ses.delete(w);
+        }
+        ses.update(b);
         ses.flush();
         trans.commit();
         ses.close();
@@ -400,6 +407,17 @@ public class BaseService extends RemoteServiceServlet implements CommonService {
         ses.flush();
         trans.commit();
         ses.close();
+    }
+
+    @Override
+    public List<CodexDTO> getCodexByFraction(String id) throws ArmyException {
+        Session ses = HibernateUtil.getSessionFactory().openSession();
+        Transaction trans = ses.beginTransaction();
+        Fraction f = (Fraction) ses.get(Fraction.class, id);
+        FractionDTO fractionDTO = new FractionDTO(f, false);
+        List<CodexDTO> list;
+        list = fractionDTO.getCodexes();
+        return list;
     }
 
     @Override

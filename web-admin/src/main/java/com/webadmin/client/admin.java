@@ -6,12 +6,12 @@ import com.google.gwt.event.logical.shared.SelectionEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
-
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.sencha.gxt.widget.core.client.TabItemConfig;
 import com.sencha.gxt.widget.core.client.TabPanel;
 import com.sencha.gxt.widget.core.client.container.HorizontalLayoutContainer;
+import com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer;
 import com.sencha.gxt.widget.core.client.info.Info;
 import com.webadmin.client.mainForm.ArmyPage;
 import com.webadmin.client.mainForm.views.*;
@@ -41,6 +41,8 @@ public class admin implements EntryPoint {
     HorizontalLayoutContainer unitBaseGridContainer;
     @UiField
     HorizontalLayoutContainer armyContainer;
+    @UiField
+    HorizontalLayoutContainer codexAndFractionsGridContainer;
 
     public Widget asWidget() {
         Widget d=uiBinder.createAndBindUi(this);
@@ -50,6 +52,10 @@ public class admin implements EntryPoint {
         weaponTypeGridContainer.add(new WeaponTypeContainer());
         unitBaseGridContainer.add(new UnitBaseContainer());
         armyContainer.add(new ArmyPage());
+        VerticalLayoutContainer vc = new VerticalLayoutContainer();
+        vc.add(new CodexContainer());
+        vc.add(new FractionContainer());
+        codexAndFractionsGridContainer.add(vc);
         return d;
 	}
 
