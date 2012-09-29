@@ -25,6 +25,9 @@
     <ui:with type="com.sencha.gxt.widget.core.client.TabItemConfig" field="unitBaseContainerConfig">
         <ui:attributes text="Unit Base" />
     </ui:with>
+    <ui:with type="com.sencha.gxt.widget.core.client.TabItemConfig" field="codexAndFractionContainerConfig">
+        <ui:attributes text="Codex and Fractions" />
+    </ui:with>
     <ui:style>
         .sep {
             margin-top: 20px;
@@ -64,6 +67,11 @@
             <tabs:child config="{unitBaseContainerConfig}">
                 <container:HorizontalLayoutContainer ui:field="unitBaseGridContainer">
                     <!--вкладка с UnitBase-->
+                </container:HorizontalLayoutContainer>
+            </tabs:child>
+            <tabs:child config="{codexAndFractionContainerConfig}">
+                <container:HorizontalLayoutContainer ui:field="codexAndFractionsGridContainer">
+                    <!--вкладка с Codex и Fraction-->
                 </container:HorizontalLayoutContainer>
             </tabs:child>
         </tabs:TabPanel>

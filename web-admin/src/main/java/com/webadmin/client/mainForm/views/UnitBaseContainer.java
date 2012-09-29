@@ -515,19 +515,8 @@ public class UnitBaseContainer extends HorizontalLayoutContainer {
                 @Override
                 public void onSelect(SelectEvent event) {
                     WeaponDTO w = weaponGrid.getSelectionModel().getSelectedItem();
-                    List<WeaponDTO> list = new ArrayList<WeaponDTO>();
-                    list.add(w);
-                    commonService.delWeapons(list, new AsyncCallback<Void>() {
-                        @Override
-                        public void onFailure(Throwable throwable) {
-                            System.out.println("Запрос упал " + throwable.getMessage());
-                        }
-
-                        @Override
-                        public void onSuccess(Void aVoid) {
-                            updateWeaponGrid();
-                        }
-                    });
+                    weaponStore.remove(w);
+                    updateWeaponGrid();
                 }
             });
             VerticalLayoutContainer verticalLayoutContainer = new VerticalLayoutContainer();

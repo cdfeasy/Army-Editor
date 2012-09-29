@@ -17,6 +17,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
+import static javax.persistence.CascadeType.*;
+
 /**
  *
  * @author Dmitry
@@ -124,7 +126,7 @@ public class UnitBase implements java.io.Serializable  {
         this.cost = cost;
     }
     //@JsonIgnore
-    @ManyToOne( cascade = {CascadeType.REFRESH} )
+    @ManyToOne( cascade = {REFRESH, MERGE} )
     @JoinColumn(name="Fraction_fk")
     public Fraction getFraction() {
         return fraction;
@@ -141,7 +143,7 @@ public class UnitBase implements java.io.Serializable  {
     public void setId(String id) {
         this.id = id;
     }
-    @ManyToMany(cascade = CascadeType.REFRESH)
+    @ManyToMany(cascade = REFRESH)
     public List<Item> getItems() {
         return items;
     }
@@ -149,7 +151,7 @@ public class UnitBase implements java.io.Serializable  {
     public void setItems(List<Item> items) {
         this.items = items;
     }
-    @ManyToMany(cascade = CascadeType.REFRESH)
+    @ManyToMany(cascade = REFRESH)
     public List<Option> getOptions() {
         return options;
     }
@@ -157,7 +159,7 @@ public class UnitBase implements java.io.Serializable  {
     public void setOptions(List<Option> options) {
         this.options = options;
     }
-     @ManyToOne( cascade = {CascadeType.REFRESH} )
+     @ManyToOne( cascade = {REFRESH} )
      @JoinColumn(name="UnitType_fk")
     public UnitType getUnitType() {
         return unitType;
@@ -166,7 +168,7 @@ public class UnitBase implements java.io.Serializable  {
     public void setUnitType(UnitType unitType) {
         this.unitType = unitType;
     }
-    @ManyToMany(cascade = CascadeType.REFRESH)
+    @ManyToMany(cascade = REFRESH)
     public List<Weapon> getWeapons() {
         return weapons;
     }
