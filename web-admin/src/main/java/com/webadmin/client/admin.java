@@ -54,7 +54,7 @@ public class admin implements EntryPoint {
         armyContainer.add(new ArmyPage());
         VerticalLayoutContainer vc = new VerticalLayoutContainer();
         vc.add(new CodexContainer());
-        vc.add(new FractionContainer());
+      //  vc.add(new FractionContainer());
         codexAndFractionsGridContainer.add(vc);
         return d;
 	}
