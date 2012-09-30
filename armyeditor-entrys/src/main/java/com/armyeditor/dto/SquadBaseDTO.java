@@ -47,7 +47,7 @@ public class SquadBaseDTO implements java.io.Serializable {
         }
         this.name = squadBase.getName();
         this.description = squadBase.getDescription();
-        this.codex = squadBase.getCodex();
+        this.codex = new CodexDTO(squadBase.getCodex());
     }
 
     public SquadBase toSquadBase(){
@@ -59,7 +59,7 @@ public class SquadBaseDTO implements java.io.Serializable {
         }
         squadBase.setName(name);
         squadBase.setDescription(description);
-        squadBase.setCodex(codex);
+        squadBase.setCodex(codex.toCodex());
         return squadBase;
     }
 
