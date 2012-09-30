@@ -27,6 +27,7 @@ public class SquadBase  implements java.io.Serializable {
     private List<Option> options=new ArrayList<Option>();
     private String name;
     private String description;
+    private Codex codex;
 	/**
 	 * 0-hq,1-Elite,2-troops,3-fast,4-heavy,5-fortifications
 	 */
@@ -34,7 +35,19 @@ public class SquadBase  implements java.io.Serializable {
 
     public SquadBase() {
     }
+    @ManyToOne( cascade = {CascadeType.MERGE, CascadeType.REFRESH} )
+    @JoinColumn(name="Codex_fk")
+    public Codex getCodex() {
+        return codex;
+    }
 
+    public void setCodex(Codex codex) {
+        this.codex = codex;
+    }
+
+    
+    
+    
 	public int getFoqType() {
 		return foqType;
 	}
