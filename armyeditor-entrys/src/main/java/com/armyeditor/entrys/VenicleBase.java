@@ -115,7 +115,7 @@ public class VenicleBase implements Serializable {
     }
     //@JsonIgnore
     @ManyToOne( cascade = {CascadeType.REFRESH} )
-    @JoinColumn(name="Fraction_fk")
+    @JoinColumn(name="Codex_fk")
     public Codex getCodex() {
         return codex;
     }

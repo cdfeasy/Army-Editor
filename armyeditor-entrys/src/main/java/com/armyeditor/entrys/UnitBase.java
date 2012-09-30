@@ -127,7 +127,7 @@ public class UnitBase implements java.io.Serializable  {
     }
     //@JsonIgnore
     @ManyToOne( cascade = {REFRESH, MERGE} )
-    @JoinColumn(name="Fraction_fk")
+    @JoinColumn(name="Codex_fk")
     public Codex getCodex() {
         return codex;
     }

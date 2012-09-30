@@ -26,18 +26,22 @@ public class testDb {
     public void init() throws IOException{
          Session ses= HibernateUtil.getSessionFactory().openSession();
          Transaction tr= ses.beginTransaction();
-         Codex c = new Codex();
-         c.setName("orks");
-         c.setId("orks");
-         ses.save(c);
-         c.setDescription("ork 5 red");
-         c.setId("ork 5 red");
-         c.setName("ork 5 red");
-         ses.save(c);
+          Codex codex=new Codex();
+         codex.setDescription("ork 5 red");
+         codex.setId("ork 5 red");
+         codex.setName("ork 5 red");
+         ses.save(codex);
+         
+         Fraction fr = new Fraction();
+         fr.setName("orks");
+         fr.setId("orks");
+         fr.getCodexes().add(codex);
+         ses.save(fr);
+        
          
          final SquadBase squadboys =new SquadBase();
          squadboys.setId("squadboys");
-         c.setSquads(new ArrayList<SquadBase>(){{add(squadboys);}});
+         codex.setSquads(new ArrayList<SquadBase>(){{add(squadboys);}});
          squadboys.setDescription("ork boys");
          squadboys.setName("ork boys");
          
@@ -83,7 +87,7 @@ public class testDb {
          slagga.setId("slagga");
          slagga.setAP("6");
          slagga.setDescription("slagga");
-         slagga.setCodex(c);
+         slagga.setCodex(codex);
          slagga.setName("slagga");
          slagga.setRange("12");
          slagga.setSTR("4");
@@ -93,7 +97,7 @@ public class testDb {
          bigshuta.setId("bigshoota");
          bigshuta.setAP("4");
          bigshuta.setDescription("bigshuta");
-         bigshuta.setCodex(c);
+         bigshuta.setCodex(codex);
          bigshuta.setName("bigshuta");
          bigshuta.setRange("36");
          bigshuta.setSTR("5");
@@ -104,7 +108,7 @@ public class testDb {
          rokkit.setId("rokkit");
          rokkit.setAP("3");
          rokkit.setDescription("rokkit");
-         rokkit.setCodex(c);
+         rokkit.setCodex(codex);
          rokkit.setName("rokkit");
          rokkit.setRange("24");
          rokkit.setSTR("8");
@@ -115,7 +119,7 @@ public class testDb {
          shuta.setId("shoota");
          shuta.setAP("4");
          shuta.setDescription("shuta");
-         shuta.setCodex(c);
+         shuta.setCodex(codex);
          shuta.setName("shuta");
          shuta.setRange("18");
          shuta.setSTR("4");
@@ -127,7 +131,7 @@ public class testDb {
          choppa.setId("choppa");
          choppa.setAP("-");
          choppa.setDescription("choppa");
-         choppa.setCodex(c);
+         choppa.setCodex(codex);
          choppa.setName("choppa");
          choppa.setRange("-");
          choppa.setSTR("-");
@@ -137,7 +141,7 @@ public class testDb {
          claws.setId("claws");
          claws.setAP("-");
          claws.setDescription("power claws");
-         claws.setCodex(c);
+         claws.setCodex(codex);
          claws.setName("power claws");
          claws.setRange("-");
          claws.setSTR("-");
@@ -182,7 +186,7 @@ public class testDb {
          
          final ItemBase grenade=new ItemBase();
          grenade.setId("grenade");
-         grenade.setCodex(c);
+         grenade.setCodex(codex);
          grenade.setDescription("Grenade");
          grenade.setName("grenade");
          grenade.setOptions(new ArrayList(){{add(assaultGrenades);}});
@@ -197,7 +201,7 @@ public class testDb {
          ork.setA(2);
          ork.setBs(2);
          ork.setCost(6);
-         ork.setCodex(c);
+         ork.setCodex(codex);
          ork.setI(2);
          ork.setLd(7);
          ork.setOptions(new ArrayList(){{add(waagh);add(mob);}});
@@ -214,7 +218,7 @@ public class testDb {
          nob.setA(3);
          nob.setBs(2);
          nob.setCost(16);
-         nob.setCodex(c);
+         nob.setCodex(codex);
          nob.setI(2);
          nob.setLd(7);
          nob.setOptions(new ArrayList(){{add(waagh);add(mob);}});
@@ -273,12 +277,13 @@ public class testDb {
          ses.save(nobPart);
          ses.save(boysPart);
          ses.save(squadboys);
+         ses.save(codex);
          tr.commit();
          ses.close();
          
          // ObjectMapper mapper = new ObjectMapper();
          //String json = mapper.writeValueAsString(f) ; 
-         System.out.println(c.marshall());
+         System.out.println(codex.marshall());
          
          
          
@@ -287,7 +292,7 @@ public class testDb {
          
          
     }
-   // @Test
+    @Test
     public void testDb() throws IOException{
         init();
         Session ses= HibernateUtil.getSessionFactory().openSession();
@@ -298,9 +303,9 @@ public class testDb {
         ses.close();  
     }
     
-     @Test
+   //  @Test
     public void testDb1() throws IOException{
-      //  init();
+        init();
         Session ses= HibernateUtil.getSessionFactory().openSession();
         Transaction trans=ses.beginTransaction();
     //      ses.beginTransaction();

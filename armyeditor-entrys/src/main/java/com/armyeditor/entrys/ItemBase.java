@@ -22,7 +22,7 @@ public class ItemBase implements java.io.Serializable  {
      private List<Option> options=new ArrayList<Option>();
    //  @JsonIgnore
     @ManyToOne( cascade = {CascadeType.REFRESH} )
-    @JoinColumn(name="Fraction_fk")
+    @JoinColumn(name="Codex_fk")
     public Codex getCodex() {
         return codex;
     }
