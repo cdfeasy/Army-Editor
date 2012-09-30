@@ -42,7 +42,7 @@ public class SquadronBaseDTO {
         this.maxSize = squadron.getMaxSize();
         this.conditions = squadron.getConditions();
         if(squadron.getCodex()!=null)
-         this.codex = new CodexDTO(squadron.getCodex());
+         this.codex = new CodexDTO(squadron.getCodex(),false);
         for (ItemSelection is : squadron.getItemSelection()) {
             itemSelection.add(new ItemSelectionDTO(is));
         }
