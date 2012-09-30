@@ -257,7 +257,7 @@ public class BaseService extends RemoteServiceServlet implements CommonService {
     public List<UnitBaseDTO> getUnitBase(String id1) throws ArmyException {
         Session ses = HibernateUtil.getSessionFactory().openSession();
         Transaction trans = ses.beginTransaction();
-        Query query = ses.createQuery("select unitbase from UnitBase unitbase where fraction.id=:id");
+        Query query = ses.createQuery("select unitbase from UnitBase unitbase where codex.id=:id");
         query.setParameter("id",id1);
         List<UnitBase> itemlist=query.list();
         List<UnitBaseDTO> unitBaseDTOs = new ArrayList<UnitBaseDTO>();
@@ -293,7 +293,7 @@ public class BaseService extends RemoteServiceServlet implements CommonService {
                 a.getOptions().clear();
                 a.getWeapons().clear();
                 a.getItems().clear();
-                a.setFraction(null);
+                a.setCodex(null);
                 ses.merge(a);
                 ses.delete(a);
             }

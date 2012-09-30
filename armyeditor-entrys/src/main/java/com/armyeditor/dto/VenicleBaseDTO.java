@@ -34,7 +34,7 @@ public class VenicleBaseDTO implements Serializable {
     private UnitTypeDTO unitType;
     private ArrayList<WeaponDTO> weapons=new ArrayList<WeaponDTO>();
     private ArrayList<ItemDTO> items=new ArrayList<ItemDTO>();
-    private FractionDTO fraction;
+    private CodexDTO codex;
 
     public VenicleBaseDTO(){
 
@@ -62,7 +62,7 @@ public class VenicleBaseDTO implements Serializable {
         for (Item i:venicleBase.getItems()){
             items.add(new ItemDTO(i));
         }
-        this.fraction = new FractionDTO(venicleBase.getFraction(),false);
+        this.codex = new CodexDTO(venicleBase.getCodex(),false);
     }
 
     public VenicleBase toVenicleBase(){
@@ -88,7 +88,7 @@ public class VenicleBaseDTO implements Serializable {
         for (ItemDTO i:items){
             venicleBase.getItems().add(i.toItem());
         }
-        venicleBase.setFraction(fraction.toFraction());
+        venicleBase.setCodex(codex.toCodex());
         return venicleBase;
     }
 
@@ -172,12 +172,12 @@ public class VenicleBaseDTO implements Serializable {
         this.cost = cost;
     }
 
-    public FractionDTO getFraction() {
-        return fraction;
+    public CodexDTO getCodex() {
+        return codex;
     }
 
-    public void setFraction(FractionDTO fraction) {
-        this.fraction = fraction;
+    public void setCodex(CodexDTO codex) {
+        this.codex = codex;
     }
       
     public String getId() {

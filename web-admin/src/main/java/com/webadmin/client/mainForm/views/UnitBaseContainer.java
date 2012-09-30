@@ -51,7 +51,7 @@ public class UnitBaseContainer extends HorizontalLayoutContainer {
     ListStore<UnitBaseDTO> store;
     TextButton updateBtn = new TextButton("Update");
     TextButton delSelBtn = new TextButton("Delete Selection");
-    ComboBox<FractionDTO> fractionBox;
+    ComboBox<CodexDTO> codexBox;
     final UnitBaseFields unitBaseFields = new UnitBaseFields();
 
     public UnitBaseContainer(){
@@ -89,25 +89,25 @@ public class UnitBaseContainer extends HorizontalLayoutContainer {
         unitBaseGrid = new Grid<UnitBaseDTO>(store, cm);
         unitBaseGrid.setSelectionModel(sm);
 
-        FractionProperties fractionProperties = GWT.create(FractionProperties.class);
-        final ListStore<FractionDTO> fractionListStore = new ListStore<FractionDTO>(fractionProperties.key());
-        commonService.getFractions(new AsyncCallback<List<FractionDTO>>() {
+        CodexProperties codexProperties = GWT.create(CodexProperties.class);
+        final ListStore<CodexDTO> codexListStore = new ListStore<CodexDTO>(codexProperties.key());
+        commonService.getCodexs(new AsyncCallback<List<CodexDTO>>() {
             @Override
             public void onFailure(Throwable throwable) {
                 System.out.println("Запрос упал " + throwable.getMessage());
             }
 
             @Override
-            public void onSuccess(List<FractionDTO> fractionDTOs) {
-                fractionListStore.addAll(fractionDTOs);
+            public void onSuccess(List<CodexDTO> list) {
+                codexListStore.addAll(list);
             }
         });
-        fractionBox = new ComboBox<FractionDTO>(fractionListStore, fractionProperties.nameLabel());
+        codexBox = new ComboBox<CodexDTO>(codexListStore, codexProperties.nameLabel());
 
         updateBtn = new TextButton("Update", new SelectEvent.SelectHandler() {
             @Override
             public void onSelect(SelectEvent event) {
-                updateStore(fractionBox.getValue().getId());
+                updateStore(codexBox.getValue().getId());
             }
         });
         delSelBtn = new TextButton("Delete Selection", new SelectEvent.SelectHandler() {
@@ -123,21 +123,21 @@ public class UnitBaseContainer extends HorizontalLayoutContainer {
 
                     @Override
                     public void onSuccess(Void aVoid) {
-                        updateStore(fractionBox.getValue().getId());
+                        updateStore(codexBox.getValue().getId());
                     }
                 });
             }
         });
 
-        fractionBox.addSelectionHandler(new SelectionHandler<FractionDTO>() {
+        codexBox.addSelectionHandler(new SelectionHandler<CodexDTO>() {
             @Override
-            public void onSelection(SelectionEvent<FractionDTO> fractionDTOSelectionEvent) {
-                updateStore(fractionDTOSelectionEvent.getSelectedItem().getId());
+            public void onSelection(SelectionEvent<CodexDTO> codexDTOSelectionEvent) {
+                updateStore(codexDTOSelectionEvent.getSelectedItem().getId());
             }
         });
 
         gridContainer = new VerticalLayoutContainer();
-        gridContainer.add(fractionBox);
+        gridContainer.add(codexBox);
         gridContainer.add(unitBaseGrid);
         gridContainer.add(updateBtn);
         gridContainer.add(delSelBtn);
@@ -244,7 +244,7 @@ public class UnitBaseContainer extends HorizontalLayoutContainer {
                 a.setSv(unitBaseFields.getSvFld().getText());
                 a.setCost(Integer.parseInt(unitBaseFields.getCostFld().getText()));
                 a.setUnitType(unitBaseFields.getUnitTypeBox().getValue());
-                a.setFraction(fractionBox.getValue());
+                a.setCodex(codexBox.getValue());
                 ArrayList<OptionDTO> arrayList = new ArrayList<OptionDTO>(unitBaseFields.getOptionGrid().getStore().getAll());
                 a.setOptions(arrayList);
                 unitBaseFields.getWeaponGrid().getStore().commitChanges();
@@ -262,7 +262,7 @@ public class UnitBaseContainer extends HorizontalLayoutContainer {
 
                     @Override
                     public void onSuccess(Void aVoid) {
-                        updateStore(fractionBox.getValue().getId());
+                        updateStore(codexBox.getValue().getId());
                     }
                 });
             }
@@ -283,7 +283,7 @@ public class UnitBaseContainer extends HorizontalLayoutContainer {
                 a.setSv(unitBaseFields.getSvFld().getText());
                 a.setCost(Integer.parseInt(unitBaseFields.getCostFld().getText()));
                 a.setUnitType(unitBaseFields.getUnitTypeBox().getValue());
-                a.setFraction(fractionBox.getValue());
+                a.setCodex(codexBox.getValue());
                 ArrayList<OptionDTO> arrayList = new ArrayList<OptionDTO>(unitBaseFields.getOptionGrid().getStore().getAll());
                 a.setOptions(arrayList);
                 unitBaseFields.getWeaponGrid().getStore().commitChanges();
@@ -301,7 +301,7 @@ public class UnitBaseContainer extends HorizontalLayoutContainer {
 
                     @Override
                     public void onSuccess(Void aVoid) {
-                        updateStore(fractionBox.getValue().getId());
+                        updateStore(codexBox.getValue().getId());
                     }
                 });
             }

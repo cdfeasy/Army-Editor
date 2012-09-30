@@ -3,6 +3,7 @@ package com.webadmin.client.mainForm.properties;
 import com.armyeditor.dto.CodexDTO;
 import com.google.gwt.editor.client.Editor;
 import com.sencha.gxt.core.client.ValueProvider;
+import com.sencha.gxt.data.shared.LabelProvider;
 import com.sencha.gxt.data.shared.ModelKeyProvider;
 import com.sencha.gxt.data.shared.PropertyAccess;
 
@@ -19,4 +20,6 @@ public interface CodexProperties extends PropertyAccess<CodexDTO> {
     ValueProvider<CodexDTO, String> id();
     ValueProvider<CodexDTO, String> name();
     ValueProvider<CodexDTO, String> description();
+    @Editor.Path("name")
+    LabelProvider<CodexDTO> nameLabel();
 }

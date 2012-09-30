@@ -7,7 +7,7 @@
         <property name="hibernate.connection.url">jdbc:postgresql://78.47.52.69:5432/wh40db</property>
         <property name="hibernate.connection.username">wh40</property>
         <property name="hibernate.connection.password">wh40pass</property>
-        <property name="hibernate.hbm2ddl.auto">update</property>
+        <property name="hibernate.hbm2ddl.auto">create</property>
         <property name="hibernate.show_sql">true</property>
         <mapping class="com.armyeditor.entrys.Army"/>
         <mapping class="com.armyeditor.entrys.AttackType"/>

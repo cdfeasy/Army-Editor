@@ -34,7 +34,7 @@ public class UnitBaseDTO implements java.io.Serializable  {
     private UnitTypeDTO unitType;
     private ArrayList<WeaponDTO>  weapons=new ArrayList<WeaponDTO>();
     private ArrayList<ItemDTO>  items=new ArrayList<ItemDTO>();
-    private FractionDTO fraction;
+    private CodexDTO codex;
 
     public UnitBaseDTO() {
     }
@@ -61,7 +61,7 @@ public class UnitBaseDTO implements java.io.Serializable  {
         for (Item i:unit.getItems()){
             items.add(new ItemDTO(i));
         }
-        this.fraction = new FractionDTO(unit.getFraction(),false);
+        this.codex = new CodexDTO(unit.getCodex(),false);
     }
 
     public UnitBase toUnitBase(){
@@ -87,7 +87,7 @@ public class UnitBaseDTO implements java.io.Serializable  {
         for (ItemDTO i:items){
             unitBase.getItems().add(i.toItem());
         }
-        unitBase.setFraction(fraction.toFraction());
+        unitBase.setCodex(codex.toCodex());
         return unitBase;
     }
 
@@ -176,12 +176,12 @@ public class UnitBaseDTO implements java.io.Serializable  {
         this.cost = cost;
     }
 
-    public FractionDTO getFraction() {
-        return fraction;
+    public CodexDTO getCodex() {
+        return codex;
     }
 
-    public void setFraction(FractionDTO fraction) {
-        this.fraction = fraction;
+    public void setCodex(CodexDTO codex) {
+        this.codex = codex;
     }
      
     public String getId() {
@@ -226,7 +226,7 @@ public class UnitBaseDTO implements java.io.Serializable  {
 
     @Override
     public String toString() {
-        return "UnitBase{" + "id=" + id + ", ws=" + ws + ", bs=" + bs + ", s=" + s + ", t=" + t + ", w=" + w + ", i=" + i + ", a=" + a + ", ld=" + ld + ", sv=" + sv + ", cost=" + cost + ", options=" + options + ", unitType=" + unitType + ", weapons=" + weapons + ", items=" + items + ", fraction=" + fraction + '}';
+        return "UnitBase{" + "id=" + id + ", ws=" + ws + ", bs=" + bs + ", s=" + s + ", t=" + t + ", w=" + w + ", i=" + i + ", a=" + a + ", ld=" + ld + ", sv=" + sv + ", cost=" + cost + ", options=" + options + ", unitType=" + unitType + ", weapons=" + weapons + ", items=" + items + ", codex=" + codex + '}';
     }
     
     

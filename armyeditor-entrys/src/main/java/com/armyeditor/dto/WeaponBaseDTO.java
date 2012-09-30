@@ -31,6 +31,7 @@ public class WeaponBaseDTO implements java.io.Serializable  {
     private String STR;
     private String fireCount;
     private ArrayList<OptionDTO> options=new ArrayList<OptionDTO>();
+    private CodexDTO codex;
 
     public WeaponBaseDTO() {
     }
@@ -47,6 +48,8 @@ public class WeaponBaseDTO implements java.io.Serializable  {
         for(Option o:weaponBase.getOptions()){
             options.add(new OptionDTO(o));
         }
+        this.codex = new CodexDTO(weaponBase.getCodex());
+        this.type = new WeaponTypeDTO(weaponBase.getType());
     }
 
     public WeaponBase toWeaponBase(){
@@ -62,17 +65,16 @@ public class WeaponBaseDTO implements java.io.Serializable  {
         for(OptionDTO o:options){
             w.getOptions().add(o.toOption());
         }
+        w.setCodex(codex.toCodex());
         return w;
     }
 
-    private FractionDTO fraction;
-
-    public FractionDTO getFraction() {
-        return fraction;
+    public CodexDTO getCodex() {
+        return codex;
     }
 
-    public void setFraction(FractionDTO fraction) {
-        this.fraction = fraction;
+    public void setCodex(CodexDTO codex) {
+        this.codex = codex;
     }
 
     public String getFireCount() {

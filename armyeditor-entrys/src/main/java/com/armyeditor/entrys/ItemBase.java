@@ -18,17 +18,17 @@ public class ItemBase implements java.io.Serializable  {
     private String  id;
     private String name;
     private String description;
-    private Fraction fraction;
+    private Codex codex;
      private List<Option> options=new ArrayList<Option>();
    //  @JsonIgnore
     @ManyToOne( cascade = {CascadeType.REFRESH} )
     @JoinColumn(name="Fraction_fk")
-    public Fraction getFraction() {
-        return fraction;
+    public Codex getCodex() {
+        return codex;
     }
 
-    public void setFraction(Fraction fraction) {
-        this.fraction = fraction;
+    public void setCodex(Codex codex) {
+        this.codex = codex;
     }
     
     @ManyToMany(cascade = CascadeType.REFRESH)

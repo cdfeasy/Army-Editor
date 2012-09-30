@@ -40,7 +40,7 @@ public class UnitBase implements java.io.Serializable  {
     private UnitType unitType;
     private List<Weapon>  weapons=new ArrayList<Weapon>();
     private List<Item>  items=new ArrayList<Item>();
-    private Fraction fraction;
+    private Codex codex;
 
     public UnitBase() {
     }
@@ -128,12 +128,12 @@ public class UnitBase implements java.io.Serializable  {
     //@JsonIgnore
     @ManyToOne( cascade = {REFRESH, MERGE} )
     @JoinColumn(name="Fraction_fk")
-    public Fraction getFraction() {
-        return fraction;
+    public Codex getCodex() {
+        return codex;
     }
 
-    public void setFraction(Fraction fraction) {
-        this.fraction = fraction;
+    public void setCodex(Codex codex) {
+        this.codex = codex;
     }
     @Id 
     public String getId() {
@@ -179,6 +179,6 @@ public class UnitBase implements java.io.Serializable  {
 
     @Override
     public String toString() {
-        return "UnitBase{" + "id=" + id + ", ws=" + ws + ", bs=" + bs + ", s=" + s + ", t=" + t + ", w=" + w + ", i=" + i + ", a=" + a + ", ld=" + ld + ", sv=" + sv + ", cost=" + cost + ", options=" + options + ", unitType=" + unitType + ", weapons=" + weapons + ", items=" + items + ", fraction=" + fraction + '}';
+        return "UnitBase{" + "id=" + id + ", ws=" + ws + ", bs=" + bs + ", s=" + s + ", t=" + t + ", w=" + w + ", i=" + i + ", a=" + a + ", ld=" + ld + ", sv=" + sv + ", cost=" + cost + ", options=" + options + ", unitType=" + unitType + ", weapons=" + weapons + ", items=" + items + ", codex=" + codex + '}';
     }
 }

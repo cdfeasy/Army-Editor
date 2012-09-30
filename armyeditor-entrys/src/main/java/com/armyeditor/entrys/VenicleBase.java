@@ -32,7 +32,7 @@ public class VenicleBase implements Serializable {
     private UnitType unitType;
     private List<Weapon>  weapons=new ArrayList<Weapon>();
     private List<Item>  items=new ArrayList<Item>();
-    private Fraction fraction;
+    private Codex codex;
 
     public int getA() {
         return A;
@@ -116,12 +116,12 @@ public class VenicleBase implements Serializable {
     //@JsonIgnore
     @ManyToOne( cascade = {CascadeType.REFRESH} )
     @JoinColumn(name="Fraction_fk")
-    public Fraction getFraction() {
-        return fraction;
+    public Codex getCodex() {
+        return codex;
     }
 
-    public void setFraction(Fraction fraction) {
-        this.fraction = fraction;
+    public void setCodex(Codex codex) {
+        this.codex = codex;
     }
      @Id 
     public String getId() {

@@ -28,17 +28,17 @@ public class WeaponBase implements java.io.Serializable  {
     private String STR;
     private String fireCount;
     private List<Option> options=new ArrayList<Option>();
-    
-    private Fraction fraction;
+    private Codex codex;
+
    // @JsonIgnore
     @ManyToOne( cascade = {CascadeType.REFRESH} )
     @JoinColumn(name="Fraction_fk")
-    public Fraction getFraction() {
-        return fraction;
+    public Codex getCodex() {
+        return codex;
     }
 
-    public void setFraction(Fraction fraction) {
-        this.fraction = fraction;
+    public void setCodex(Codex codex) {
+        this.codex = codex;
     }
 
     public WeaponBase() {

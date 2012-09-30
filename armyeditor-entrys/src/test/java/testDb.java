@@ -26,15 +26,12 @@ public class testDb {
     public void init() throws IOException{
          Session ses= HibernateUtil.getSessionFactory().openSession();
          Transaction tr= ses.beginTransaction();
-         Fraction f=new Fraction();
-         f.setName("orks");
-         f.setId("orks");
-         ses.save(f);
-         
-         final Codex c=new Codex();
+         Codex c = new Codex();
+         c.setName("orks");
+         c.setId("orks");
+         ses.save(c);
          c.setDescription("ork 5 red");
          c.setId("ork 5 red");
-         f.setCodexes(new ArrayList<Codex>(){{add(c);}});
          c.setName("ork 5 red");
          ses.save(c);
          
@@ -86,7 +83,7 @@ public class testDb {
          slagga.setId("slagga");
          slagga.setAP("6");
          slagga.setDescription("slagga");
-         slagga.setFraction(f);
+         slagga.setCodex(c);
          slagga.setName("slagga");
          slagga.setRange("12");
          slagga.setSTR("4");
@@ -96,7 +93,7 @@ public class testDb {
          bigshuta.setId("bigshoota");
          bigshuta.setAP("4");
          bigshuta.setDescription("bigshuta");
-         bigshuta.setFraction(f);
+         bigshuta.setCodex(c);
          bigshuta.setName("bigshuta");
          bigshuta.setRange("36");
          bigshuta.setSTR("5");
@@ -107,7 +104,7 @@ public class testDb {
          rokkit.setId("rokkit");
          rokkit.setAP("3");
          rokkit.setDescription("rokkit");
-         rokkit.setFraction(f);
+         rokkit.setCodex(c);
          rokkit.setName("rokkit");
          rokkit.setRange("24");
          rokkit.setSTR("8");
@@ -118,7 +115,7 @@ public class testDb {
          shuta.setId("shoota");
          shuta.setAP("4");
          shuta.setDescription("shuta");
-         shuta.setFraction(f);
+         shuta.setCodex(c);
          shuta.setName("shuta");
          shuta.setRange("18");
          shuta.setSTR("4");
@@ -130,7 +127,7 @@ public class testDb {
          choppa.setId("choppa");
          choppa.setAP("-");
          choppa.setDescription("choppa");
-         choppa.setFraction(f);
+         choppa.setCodex(c);
          choppa.setName("choppa");
          choppa.setRange("-");
          choppa.setSTR("-");
@@ -140,7 +137,7 @@ public class testDb {
          claws.setId("claws");
          claws.setAP("-");
          claws.setDescription("power claws");
-         claws.setFraction(f);
+         claws.setCodex(c);
          claws.setName("power claws");
          claws.setRange("-");
          claws.setSTR("-");
@@ -185,7 +182,7 @@ public class testDb {
          
          final ItemBase grenade=new ItemBase();
          grenade.setId("grenade");
-         grenade.setFraction(f);
+         grenade.setCodex(c);
          grenade.setDescription("Grenade");
          grenade.setName("grenade");
          grenade.setOptions(new ArrayList(){{add(assaultGrenades);}});
@@ -200,7 +197,7 @@ public class testDb {
          ork.setA(2);
          ork.setBs(2);
          ork.setCost(6);
-         ork.setFraction(f);
+         ork.setCodex(c);
          ork.setI(2);
          ork.setLd(7);
          ork.setOptions(new ArrayList(){{add(waagh);add(mob);}});
@@ -217,7 +214,7 @@ public class testDb {
          nob.setA(3);
          nob.setBs(2);
          nob.setCost(16);
-         nob.setFraction(f);
+         nob.setCodex(c);
          nob.setI(2);
          nob.setLd(7);
          nob.setOptions(new ArrayList(){{add(waagh);add(mob);}});

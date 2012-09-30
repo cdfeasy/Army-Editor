@@ -20,14 +20,14 @@ public class ItemBaseDTO implements java.io.Serializable  {
     private String  id;
     private String name;
     private String description;
-    private FractionDTO fraction;
+    private CodexDTO codex;
     private ArrayList<OptionDTO> options=new ArrayList<OptionDTO>();
 
     public ItemBaseDTO(ItemBase itemBase) {
         this.id = itemBase.getId();
         this.name = itemBase.getName();
         this.description = itemBase.getDescription();
-        this.fraction = new FractionDTO(itemBase.getFraction(),false);
+        this.codex = new CodexDTO(itemBase.getCodex(),false);
         for (Option o:itemBase.getOptions()){
             options.add(new OptionDTO(o));
         }
@@ -38,19 +38,19 @@ public class ItemBaseDTO implements java.io.Serializable  {
         itemBase.setId(id);
         itemBase.setName(name);
         itemBase.setDescription(description);
-        itemBase.setFraction(fraction.toFraction());
+        itemBase.setCodex(codex.toCodex());
         for (OptionDTO o:options){
             itemBase.getOptions().add(o.toOption());
         }
         return itemBase;
     }
 
-    public FractionDTO getFraction() {
-        return fraction;
+    public CodexDTO getCodex() {
+        return codex;
     }
 
-    public void setFraction(FractionDTO fraction) {
-        this.fraction = fraction;
+    public void setCodex(CodexDTO codex) {
+        this.codex = codex;
     }
     
     
