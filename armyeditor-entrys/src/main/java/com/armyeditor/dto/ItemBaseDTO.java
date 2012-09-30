@@ -27,6 +27,7 @@ public class ItemBaseDTO implements java.io.Serializable  {
         this.id = itemBase.getId();
         this.name = itemBase.getName();
         this.description = itemBase.getDescription();
+        if(itemBase.getCodex()!=null)
         this.codex = new CodexDTO(itemBase.getCodex(),false);
         for (Option o:itemBase.getOptions()){
             options.add(new OptionDTO(o));
@@ -38,6 +39,7 @@ public class ItemBaseDTO implements java.io.Serializable  {
         itemBase.setId(id);
         itemBase.setName(name);
         itemBase.setDescription(description);
+        if(codex!=null)
         itemBase.setCodex(codex.toCodex());
         for (OptionDTO o:options){
             itemBase.getOptions().add(o.toOption());

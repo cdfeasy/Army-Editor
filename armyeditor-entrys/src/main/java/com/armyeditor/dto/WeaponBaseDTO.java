@@ -48,6 +48,7 @@ public class WeaponBaseDTO implements java.io.Serializable  {
         for(Option o:weaponBase.getOptions()){
             options.add(new OptionDTO(o));
         }
+        if(weaponBase.getCodex()!=null)
         this.codex = new CodexDTO(weaponBase.getCodex());
         this.type = new WeaponTypeDTO(weaponBase.getType());
     }
@@ -65,6 +66,7 @@ public class WeaponBaseDTO implements java.io.Serializable  {
         for(OptionDTO o:options){
             w.getOptions().add(o.toOption());
         }
+         if(codex!=null)
         w.setCodex(codex.toCodex());
         return w;
     }

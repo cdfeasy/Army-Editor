@@ -61,6 +61,7 @@ public class UnitBaseDTO implements java.io.Serializable  {
         for (Item i:unit.getItems()){
             items.add(new ItemDTO(i));
         }
+        if(unit.getCodex()!=null)
         this.codex = new CodexDTO(unit.getCodex(),false);
     }
 
@@ -87,6 +88,7 @@ public class UnitBaseDTO implements java.io.Serializable  {
         for (ItemDTO i:items){
             unitBase.getItems().add(i.toItem());
         }
+        if(codex!=null)
         unitBase.setCodex(codex.toCodex());
         return unitBase;
     }

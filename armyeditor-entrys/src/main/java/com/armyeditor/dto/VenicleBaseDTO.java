@@ -62,6 +62,7 @@ public class VenicleBaseDTO implements Serializable {
         for (Item i:venicleBase.getItems()){
             items.add(new ItemDTO(i));
         }
+        if(venicleBase.getCodex()!=null)
         this.codex = new CodexDTO(venicleBase.getCodex(),false);
     }
 
@@ -88,6 +89,7 @@ public class VenicleBaseDTO implements Serializable {
         for (ItemDTO i:items){
             venicleBase.getItems().add(i.toItem());
         }
+        if(codex!=null)
         venicleBase.setCodex(codex.toCodex());
         return venicleBase;
     }

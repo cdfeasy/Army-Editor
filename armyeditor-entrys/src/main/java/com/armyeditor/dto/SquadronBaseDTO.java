@@ -41,6 +41,7 @@ public class SquadronBaseDTO {
         this.minSize = squadron.getMinSize();
         this.maxSize = squadron.getMaxSize();
         this.conditions = squadron.getConditions();
+        if(squadron.getCodex()!=null)
          this.codex = new CodexDTO(squadron.getCodex());
         for (ItemSelection is : squadron.getItemSelection()) {
             itemSelection.add(new ItemSelectionDTO(is));
@@ -59,6 +60,7 @@ public class SquadronBaseDTO {
         sq.setMinSize(this.getMinSize());
         sq.setMaxSize(this.getMaxSize());
         sq.setConditions(this.getConditions());
+        if(this.getCodex()!=null)
         sq.setCodex(this.getCodex().toCodex());
         for (ItemSelectionDTO is : this.getItemSelection()) {
             sq.getItemSelection().add(is.toItemSelection());
