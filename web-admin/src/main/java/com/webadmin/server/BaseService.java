@@ -167,13 +167,19 @@ public class BaseService extends RemoteServiceServlet implements CommonService {
     }
 
     @Override
-    public void addUnitType(UnitTypeDTO u)throws ArmyException  {
-        Session ses = HibernateUtil.getSessionFactory().openSession();
-        Transaction trans = ses.beginTransaction();
-        UnitType b = u.toUnitType();
-        ses.save(b);
-        trans.commit();
-        ses.close();
+    public void addUnitType(UnitTypeDTO u) throws ArmyException {
+        try {
+            Session ses = HibernateUtil.getSessionFactory().openSession();
+            Transaction trans = ses.beginTransaction();
+            UnitType b = u.toUnitType();
+            ses.save(b);
+            trans.commit();
+            ses.close();
+        } catch (Throwable th) {
+
+            th.printStackTrace();
+            throw new ArmyException(th);
+        }
     }
 
     @Override
@@ -563,15 +569,21 @@ public class BaseService extends RemoteServiceServlet implements CommonService {
 
     @Override
     public List<CodexDTO> getCodexs() throws ArmyException {
-        Session ses = HibernateUtil.getSessionFactory().openSession();
-        Query query = ses.createQuery("select codex from Codex codex");
-        List<Codex> itemlist = query.list();
-        List<CodexDTO> codexDTOList = new ArrayList<CodexDTO>();
-        for (Codex w:itemlist){
-            codexDTOList.add(new CodexDTO(w));
+        try {
+            Session ses = HibernateUtil.getSessionFactory().openSession();
+            Query query = ses.createQuery("select codex from Codex codex");
+            List<Codex> itemlist = query.list();
+            List<CodexDTO> codexDTOList = new ArrayList<CodexDTO>();
+            for (Codex w : itemlist) {
+                codexDTOList.add(new CodexDTO(w));
+            }
+            ses.close();
+            return codexDTOList;
+        } catch (Throwable th) {
+
+            th.printStackTrace();
+            throw new ArmyException(th);
         }
-        ses.close();
-        return codexDTOList;
     }
 
     @Override

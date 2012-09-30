@@ -38,7 +38,8 @@ public class ArmyServiceImpl extends RemoteServiceServlet implements ArmyService
             ses.close();
             return сodexDTOList.get(0);
         } catch (Throwable th) {
-            throw new ArmyException(th);
+            
+            th.printStackTrace();throw new ArmyException(th);
         }
     }
 
@@ -51,7 +52,7 @@ public class ArmyServiceImpl extends RemoteServiceServlet implements ArmyService
             ses.close();
             return ss;
         } catch (Throwable th) {
-            throw new ArmyException(th);
+            th.printStackTrace();throw new ArmyException(th);
         }
     }
 }
