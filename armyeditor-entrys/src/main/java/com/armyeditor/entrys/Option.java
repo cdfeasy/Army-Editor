@@ -5,7 +5,11 @@
 
 package com.armyeditor.entrys;
 
+import com.armyeditor.dto.CodexDTO;
+import javax.persistence.CascadeType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 /**
  *
@@ -16,10 +20,21 @@ public class Option implements java.io.Serializable  {
     private String name;
     private String description;
     private String action;
+    private Codex codex;
 
     public Option() {
     }
+    @ManyToOne( cascade = {CascadeType.MERGE, CascadeType.REFRESH} )
+    @JoinColumn(name="Codex_fk")
+    public Codex getCodex() {
+        return codex;
+    }
 
+    public void setCodex(Codex codex) {
+        this.codex = codex;
+    }
+
+    
     public String getDescription() {
         return description;
     }

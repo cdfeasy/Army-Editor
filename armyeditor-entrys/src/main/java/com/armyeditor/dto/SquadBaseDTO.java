@@ -30,6 +30,7 @@ public class SquadBaseDTO implements java.io.Serializable {
     private ArrayList<OptionDTO> options=new ArrayList<OptionDTO>();
     private String name;
     private String description;
+    private CodexDTO codex;
 	/**
 	 * 0-hq,1-Elite,2-troops,3-fast,4-heavy,5-fortifications
 	 */
@@ -46,6 +47,7 @@ public class SquadBaseDTO implements java.io.Serializable {
         }
         this.name = squadBase.getName();
         this.description = squadBase.getDescription();
+        this.codex = squadBase.getCodex();
     }
 
     public SquadBase toSquadBase(){
@@ -57,8 +59,18 @@ public class SquadBaseDTO implements java.io.Serializable {
         }
         squadBase.setName(name);
         squadBase.setDescription(description);
+        squadBase.setCodex(codex);
         return squadBase;
     }
+
+    public CodexDTO getCodex() {
+        return codex;
+    }
+
+    public void setCodex(CodexDTO codex) {
+        this.codex = codex;
+    }
+    
 
 	public int getFoqType() {
 		return foqType;
