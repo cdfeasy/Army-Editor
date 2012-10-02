@@ -13,6 +13,7 @@ import javax.persistence.ManyToOne;
  *
  * @author dmitry
  */
+@javax.persistence.Entity
 public class Venicle implements java.io.Serializable{
    private Long id;
     private VenicleBase unit;

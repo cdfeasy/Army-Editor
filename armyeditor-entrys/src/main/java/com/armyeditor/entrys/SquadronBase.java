@@ -8,6 +8,7 @@ import com.armyeditor.dto.ItemSelectionDTO;
 import com.armyeditor.dto.VenicleBaseDTO;
 import com.armyeditor.dto.WeaponSelectionDTO;
 import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.*;
 
 /**
@@ -22,8 +23,8 @@ public class SquadronBase {
     private VenicleBase venicle;
     private int minSize;
     private int maxSize;
-    private ArrayList<ItemSelection> itemSelection=new ArrayList<ItemSelection>();
-    private ArrayList<WeaponSelection> weaponSelection=new ArrayList<WeaponSelection>();
+    private List<ItemSelection> itemSelection=new ArrayList<ItemSelection>();
+    private List<WeaponSelection> weaponSelection=new ArrayList<WeaponSelection>();
     private String conditions;
     private Codex codex;
 	/**
@@ -66,7 +67,7 @@ public class SquadronBase {
     public void setFoqType(int foqType) {
         this.foqType = foqType;
     }
-
+    @Id
     public String getId() {
         return id;
     }
@@ -75,11 +76,11 @@ public class SquadronBase {
         this.id = id;
     }
     @ManyToMany(cascade = CascadeType.REFRESH)
-    public ArrayList<ItemSelection> getItemSelection() {
+    public List<ItemSelection> getItemSelection() {
         return itemSelection;
     }
     
-    public void setItemSelection(ArrayList<ItemSelection> itemSelection) {
+    public void setItemSelection(List<ItemSelection> itemSelection) {
         this.itemSelection = itemSelection;
     }
 
@@ -117,11 +118,11 @@ public class SquadronBase {
         this.venicle = venicle;
     }
     @ManyToMany(cascade = CascadeType.REFRESH)
-    public ArrayList<WeaponSelection> getWeaponSelection() {
+    public List<WeaponSelection> getWeaponSelection() {
         return weaponSelection;
     }
 
-    public void setWeaponSelection(ArrayList<WeaponSelection> weaponSelection) {
+    public void setWeaponSelection(List<WeaponSelection> weaponSelection) {
         this.weaponSelection = weaponSelection;
     }
     
