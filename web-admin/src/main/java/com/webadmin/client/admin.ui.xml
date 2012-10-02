@@ -28,6 +28,9 @@
     <ui:with type="com.sencha.gxt.widget.core.client.TabItemConfig" field="codexAndFractionContainerConfig">
         <ui:attributes text="Codex and Fractions" />
     </ui:with>
+    <ui:with type="com.sencha.gxt.widget.core.client.TabItemConfig" field="venicleBaseContainerConfig">
+        <ui:attributes text="Venicle Base" />
+    </ui:with>
     <ui:style>
         .sep {
             margin-top: 20px;
@@ -72,6 +75,11 @@
             <tabs:child config="{codexAndFractionContainerConfig}">
                 <container:HorizontalLayoutContainer ui:field="codexAndFractionsGridContainer">
                     <!--вкладка с Codex и Fraction-->
+                </container:HorizontalLayoutContainer>
+            </tabs:child>
+            <tabs:child config="{venicleBaseContainerConfig}">
+                <container:HorizontalLayoutContainer ui:field="venicleBaseGridContainer">
+                    <!--вкладка с venicleBase-->
                 </container:HorizontalLayoutContainer>
             </tabs:child>
         </tabs:TabPanel>

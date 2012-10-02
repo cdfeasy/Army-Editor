@@ -15,6 +15,7 @@ import javax.persistence.*;
  *
  * @author dmitry
  */
+@javax.persistence.Entity
 public class VenicleBase implements Serializable {
     private String  id;
     @Description(textRus="WS")
@@ -132,15 +133,15 @@ public class VenicleBase implements Serializable {
         this.id = id;
     }
 
+    @ManyToMany(cascade = CascadeType.REFRESH)
     public List<Item> getItems() {
         return items;
     }
 
-    @ManyToOne( cascade = {CascadeType.REFRESH} )
-    @JoinColumn(name="Unit_fk")
     public void setItems(List<Item> items) {
         this.items = items;
     }
+
     @ManyToMany(cascade = CascadeType.REFRESH)
     public List<Option> getOptions() {
         return options;

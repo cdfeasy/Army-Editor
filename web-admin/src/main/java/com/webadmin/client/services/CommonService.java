@@ -71,4 +71,10 @@ public interface CommonService extends RemoteService {
     void addFraction(FractionDTO f) throws ArmyException;
     void changeFraction(FractionDTO f) throws ArmyException;
     List<CodexDTO> getCodexByFraction(String id) throws ArmyException;
+
+    List<VenicleBaseDTO> getVenicleBase(String id) throws ArmyException;
+    void delVenicleBase(List<VenicleBaseDTO> list) throws ArmyException;
+    void addVenicleBase(VenicleBaseDTO v) throws ArmyException;
+    void changeVenicleBase(VenicleBaseDTO v) throws ArmyException;
+    VenicleBaseDTO getVenicleById(String id) throws ArmyException;
 }

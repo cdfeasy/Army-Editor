@@ -427,6 +427,92 @@ public class BaseService extends RemoteServiceServlet implements CommonService {
     }
 
     @Override
+    public List<VenicleBaseDTO> getVenicleBase(String id) throws ArmyException {
+        Session ses= HibernateUtil.getSessionFactory().openSession();
+        Query query = ses.createQuery("select veniclebase from VenicleBase veniclebase where veniclebase.codex.id=id1");
+        query.setParameter("id1", id);
+        List<VenicleBase> itemlist=query.list();
+        List<VenicleBaseDTO> unitTypeDTOList = new ArrayList<VenicleBaseDTO>();
+        for (VenicleBase u:itemlist){
+            unitTypeDTOList.add(new VenicleBaseDTO(u));
+        }
+        ses.close();
+        return unitTypeDTOList;
+    }
+
+    @Override
+    public void delVenicleBase(List<VenicleBaseDTO> list) throws ArmyException {
+        try {
+            Session ses = HibernateUtil.getSessionFactory().openSession();
+            Transaction trans = ses.beginTransaction();
+            Query query = ses.createQuery("select squadronbase from SquadronBase squadronbase where squadronbase.venicle.id=:unitid");
+            for (VenicleBaseDTO w : list) {
+                query.setParameter("unitid", w.getId());
+                if (!query.list().isEmpty()) {
+                    ses.close();
+                    throw new ArmyException("cannot delete unit base,SquadPartBase already exist");
+                }
+            }
+            trans.commit();
+            trans = ses.beginTransaction();
+            List<VenicleBase> itemlist = new ArrayList<VenicleBase>();
+            for (VenicleBaseDTO w : list) {
+                itemlist.add(w.toVenicleBase());
+            }
+
+            for (VenicleBase a : itemlist) {
+                a.getOptions().clear();
+                a.getWeapons().clear();
+                a.getItems().clear();
+                a.setCodex(null);
+                ses.merge(a);
+                ses.delete(a);
+            }
+            ses.flush();
+            trans.commit();
+            ses.close();
+        } catch (ArmyException ex) {
+            ex.printStackTrace();
+            throw ex;
+        } catch (Throwable tx) {
+            tx.printStackTrace();
+            throw new ArmyException(tx);
+        }
+    }
+
+    @Override
+    public void addVenicleBase(VenicleBaseDTO v) throws ArmyException {
+        Session ses = HibernateUtil.getSessionFactory().openSession();
+        Transaction trans = ses.beginTransaction();
+        VenicleBase b = v.toVenicleBase();
+        ses.save(b);
+        trans.commit();
+        ses.close();
+    }
+
+    @Override
+    public void changeVenicleBase(VenicleBaseDTO v) throws ArmyException {
+        Session ses = HibernateUtil.getSessionFactory().openSession();
+        Transaction trans = ses.beginTransaction();
+        VenicleBase b = v.toVenicleBase();
+        ses.merge(b);
+        ses.flush();
+        trans.commit();
+        ses.close();
+    }
+
+    @Override
+    public VenicleBaseDTO getVenicleById(String id) throws ArmyException {
+        Session ses = HibernateUtil.getSessionFactory().openSession();
+        Transaction trans = ses.beginTransaction();
+        VenicleBase venicleBase = (VenicleBase)ses.get(VenicleBase.class, id);
+        VenicleBaseDTO venicleBaseDTO = new VenicleBaseDTO(venicleBase);
+        trans.commit();
+        ses.close();
+        return venicleBaseDTO;
+    }
+
+    @Override
     public List<OptionDTO> getOptions() throws ArmyException {
         Session ses = HibernateUtil.getSessionFactory().openSession();
         Query query = ses.createQuery("select option from Option option");

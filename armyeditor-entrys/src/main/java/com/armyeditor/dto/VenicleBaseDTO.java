@@ -19,13 +19,13 @@ import java.util.ArrayList;
  */
 public class VenicleBaseDTO implements Serializable {
     private String id;
-    @Description(textRus="WS")
-    private int WS;
-    private int BS;
-    private int S;
-    private int W;
-    private int I;
-    private int A;
+    @Description(textRus="ws")
+    private int ws;
+    private int bs;
+    private int s;
+    private int w;
+    private int i;
+    private int a;
     private int front;
     private int side;
     private int rear;
@@ -42,12 +42,12 @@ public class VenicleBaseDTO implements Serializable {
 
     public VenicleBaseDTO(VenicleBase venicleBase){
         this.id = venicleBase.getId();
-        this.WS = venicleBase.getWS();
-        this.BS = venicleBase.getBS();
-        this.S = venicleBase.getS();
-        this.W = venicleBase.getW();
-        this.I = venicleBase.getI();
-        this.A = venicleBase.getA();
+        this.ws = venicleBase.getWS();
+        this.bs = venicleBase.getBS();
+        this.s = venicleBase.getS();
+        this.w = venicleBase.getW();
+        this.i = venicleBase.getI();
+        this.a = venicleBase.getA();
         this.front = venicleBase.getFront();
         this.side = venicleBase.getSide();
         this.rear = venicleBase.getRear();
@@ -69,12 +69,12 @@ public class VenicleBaseDTO implements Serializable {
     public VenicleBase toVenicleBase(){
         VenicleBase venicleBase = new VenicleBase();
         venicleBase.setId(id);
-        venicleBase.setWS(WS);
-        venicleBase.setBS(BS);
-        venicleBase.setS(S);
-        venicleBase.setW(W);
-        venicleBase.setI(I);
-        venicleBase.setA(A);
+        venicleBase.setWS(ws);
+        venicleBase.setBS(bs);
+        venicleBase.setS(s);
+        venicleBase.setW(w);
+        venicleBase.setI(i);
+        venicleBase.setA(a);
         venicleBase.setFront(front);
         venicleBase.setSide(side);
         venicleBase.setRear(rear);
@@ -95,19 +95,19 @@ public class VenicleBaseDTO implements Serializable {
     }
 
     public int getA() {
-        return A;
+        return a;
     }
 
     public void setA(int A) {
-        this.A = A;
+        this.a = A;
     }
 
-    public int getBS() {
-        return BS;
+    public int getBs() {
+        return bs;
     }
 
-    public void setBS(int BS) {
-        this.BS = BS;
+    public void setBs(int bs) {
+        this.bs = bs;
     }
 
     public int getFront() {
@@ -119,11 +119,11 @@ public class VenicleBaseDTO implements Serializable {
     }
 
     public int getI() {
-        return I;
+        return i;
     }
 
     public void setI(int I) {
-        this.I = I;
+        this.i = I;
     }
 
     public int getRear() {
@@ -135,11 +135,11 @@ public class VenicleBaseDTO implements Serializable {
     }
 
     public int getS() {
-        return S;
+        return s;
     }
 
     public void setS(int S) {
-        this.S = S;
+        this.s = S;
     }
 
     public int getSide() {
@@ -151,19 +151,19 @@ public class VenicleBaseDTO implements Serializable {
     }
 
     public int getW() {
-        return W;
+        return w;
     }
 
     public void setW(int W) {
-        this.W = W;
+        this.w = W;
     }
 
-    public int getWS() {
-        return WS;
+    public int getWs() {
+        return ws;
     }
 
-    public void setWS(int WS) {
-        this.WS = WS;
+    public void setWs(int ws) {
+        this.ws = ws;
     }
 
     public int getCost() {

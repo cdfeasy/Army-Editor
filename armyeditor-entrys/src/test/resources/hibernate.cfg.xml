@@ -36,6 +36,9 @@
         <mapping class="com.armyeditor.entrys.WeaponType"/>
         <mapping class="com.armyeditor.entrys.WeaponSelection"/>
         <mapping class="com.armyeditor.entrys.ItemSelection"/>
+        <mapping class="com.armyeditor.entrys.VenicleBase"/>
+        <mapping class="com.armyeditor.entrys.Venicle"/>
+        <mapping class="com.armyeditor.entrys.SquadronBase"/>
         
     </session-factory>
 </hibernate-configuration>

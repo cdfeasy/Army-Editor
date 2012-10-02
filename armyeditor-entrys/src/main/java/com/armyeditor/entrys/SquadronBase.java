@@ -8,15 +8,13 @@ import com.armyeditor.dto.ItemSelectionDTO;
 import com.armyeditor.dto.VenicleBaseDTO;
 import com.armyeditor.dto.WeaponSelectionDTO;
 import java.util.ArrayList;
-import javax.persistence.CascadeType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
 /**
  *
  * @author dmitry
  */
+@Entity
 public class SquadronBase {
     private String  id;
     private String name;
