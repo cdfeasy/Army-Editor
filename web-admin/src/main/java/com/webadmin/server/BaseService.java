@@ -423,13 +423,15 @@ public class BaseService extends RemoteServiceServlet implements CommonService {
         FractionDTO fractionDTO = new FractionDTO(f, false);
         List<CodexDTO> list;
         list = fractionDTO.getCodexes();
+        trans.commit();
+        ses.close();
         return list;
     }
 
     @Override
     public List<VenicleBaseDTO> getVenicleBase(String id) throws ArmyException {
         Session ses= HibernateUtil.getSessionFactory().openSession();
-        Query query = ses.createQuery("select veniclebase from VenicleBase veniclebase where veniclebase.codex.id=id1");
+        Query query = ses.createQuery("select veniclebase from VenicleBase veniclebase where veniclebase.codex.id=:id1");
         query.setParameter("id1", id);
         List<VenicleBase> itemlist=query.list();
         List<VenicleBaseDTO> unitTypeDTOList = new ArrayList<VenicleBaseDTO>();

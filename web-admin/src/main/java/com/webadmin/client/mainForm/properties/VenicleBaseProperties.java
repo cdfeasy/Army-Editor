@@ -24,7 +24,7 @@ public interface VenicleBaseProperties extends PropertyAccess<VenicleBaseDTO> {
     ValueProvider<VenicleBaseDTO, Integer> i();
     ValueProvider<VenicleBaseDTO, Integer> a();
     ValueProvider<VenicleBaseDTO, Integer> front();
-    ValueProvider<VenicleBaseDTO, Integer> size();
+    ValueProvider<VenicleBaseDTO, Integer> side();
     ValueProvider<VenicleBaseDTO, Integer> rear();
     ValueProvider<VenicleBaseDTO, Integer> cost();
 }
