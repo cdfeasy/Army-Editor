@@ -101,6 +101,8 @@ public class VenicleBaseContainer extends HorizontalLayoutContainer {
             }
         });
         codexBox = new ComboBox<CodexDTO>(codexListStore, codexProperties.nameLabel());
+        codexBox.setTypeAhead(true);
+        codexBox.setTriggerAction(ComboBoxCell.TriggerAction.ALL);
 
         updateBtn = new TextButton("Update", new SelectEvent.SelectHandler() {
             @Override
@@ -384,7 +386,7 @@ public class VenicleBaseContainer extends HorizontalLayoutContainer {
             });
             unitTypeBox = new ComboBox<UnitTypeDTO>(unitTypeStore, props.nameLabel());
             unitTypeBox.setTypeAhead(true);
-            vc.add(new FieldLabel(unitTypeBox, "Unit Base"));
+            vc.add(new FieldLabel(unitTypeBox, "Unit Type"));
             vc.add(saveBtn);
             vc.add(saveNewBtn);
 

@@ -103,6 +103,8 @@ public class UnitBaseContainer extends HorizontalLayoutContainer {
             }
         });
         codexBox = new ComboBox<CodexDTO>(codexListStore, codexProperties.nameLabel());
+        codexBox.setTypeAhead(true);
+        codexBox.setTriggerAction(ComboBoxCell.TriggerAction.ALL);
 
         updateBtn = new TextButton("Update", new SelectEvent.SelectHandler() {
             @Override

@@ -434,12 +434,12 @@ public class BaseService extends RemoteServiceServlet implements CommonService {
         Query query = ses.createQuery("select veniclebase from VenicleBase veniclebase where veniclebase.codex.id=:id1");
         query.setParameter("id1", id);
         List<VenicleBase> itemlist=query.list();
-        List<VenicleBaseDTO> unitTypeDTOList = new ArrayList<VenicleBaseDTO>();
+        List<VenicleBaseDTO> venicleBaseDTOs = new ArrayList<VenicleBaseDTO>();
         for (VenicleBase u:itemlist){
-            unitTypeDTOList.add(new VenicleBaseDTO(u));
+            venicleBaseDTOs.add(new VenicleBaseDTO(u));
         }
         ses.close();
-        return unitTypeDTOList;
+        return venicleBaseDTOs;
     }
 
     @Override
@@ -484,12 +484,17 @@ public class BaseService extends RemoteServiceServlet implements CommonService {
 
     @Override
     public void addVenicleBase(VenicleBaseDTO v) throws ArmyException {
-        Session ses = HibernateUtil.getSessionFactory().openSession();
-        Transaction trans = ses.beginTransaction();
-        VenicleBase b = v.toVenicleBase();
-        ses.save(b);
-        trans.commit();
-        ses.close();
+        try {
+            Session ses = HibernateUtil.getSessionFactory().openSession();
+            Transaction trans = ses.beginTransaction();
+            VenicleBase b = v.toVenicleBase();
+            ses.save(b);
+            trans.commit();
+            ses.close();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
     }
 
     @Override
