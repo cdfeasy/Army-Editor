@@ -69,7 +69,8 @@ public class SquadPartBaseDTO implements java.io.Serializable  {
         for (SquadPartBaseDTO s:modifications){
             squadPartBase.getModifications().add(s.toSquadPartBase());
         }
-        squadPartBase.setParent(parent.toSquadPartBase());
+		if(!parent.getId().equals(squadPartBase.getId()))
+            squadPartBase.setParent(parent.toSquadPartBase());
         squadPartBase.setConditions(conditions);
         return squadPartBase;
     }
