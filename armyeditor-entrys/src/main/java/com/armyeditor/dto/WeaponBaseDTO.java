@@ -67,7 +67,7 @@ public class WeaponBaseDTO implements java.io.Serializable  {
             w.getOptions().add(o.toOption());
         }
          if(codex!=null)
-        w.setCodex(codex.toCodex());
+        w.setCodex(codex.toCodex(true));
         return w;
     }
 

@@ -61,7 +61,7 @@ public class SquadronBaseDTO {
         sq.setMaxSize(this.getMaxSize());
         sq.setConditions(this.getConditions());
         if(this.getCodex()!=null)
-        sq.setCodex(this.getCodex().toCodex());
+        sq.setCodex(this.getCodex().toCodex(true));
         for (ItemSelectionDTO is : this.getItemSelection()) {
             sq.getItemSelection().add(is.toItemSelection());
         }

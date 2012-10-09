@@ -89,7 +89,7 @@ public class UnitBaseDTO implements java.io.Serializable  {
             unitBase.getItems().add(i.toItem());
         }
         if(codex!=null)
-        unitBase.setCodex(codex.toCodex());
+        unitBase.setCodex(codex.toCodex(true));
         return unitBase;
     }
 

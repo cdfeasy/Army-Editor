@@ -40,7 +40,7 @@ public class ItemBaseDTO implements java.io.Serializable  {
         itemBase.setName(name);
         itemBase.setDescription(description);
         if(codex!=null)
-        itemBase.setCodex(codex.toCodex());
+             itemBase.setCodex(codex.toCodex(true));
         for (OptionDTO o:options){
             itemBase.getOptions().add(o.toOption());
         }

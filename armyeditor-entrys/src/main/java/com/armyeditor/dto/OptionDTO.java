@@ -38,7 +38,7 @@ public class OptionDTO implements java.io.Serializable  {
 		option.setDescription(description);
         option.setAction(action);
         if(codex!=null)
-          option.setCodex(codex.toCodex());
+          option.setCodex(codex.toCodex(true));
 		return option;
 	}
 

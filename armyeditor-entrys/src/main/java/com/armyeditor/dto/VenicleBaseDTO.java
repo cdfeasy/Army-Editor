@@ -90,7 +90,7 @@ public class VenicleBaseDTO implements Serializable {
             venicleBase.getItems().add(i.toItem());
         }
         if(codex!=null)
-        venicleBase.setCodex(codex.toCodex());
+        venicleBase.setCodex(codex.toCodex(true));
         return venicleBase;
     }
 

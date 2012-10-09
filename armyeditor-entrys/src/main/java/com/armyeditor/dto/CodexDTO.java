@@ -63,6 +63,18 @@ public class CodexDTO implements java.io.Serializable  {
         }
         return codex;
     }
+    
+     public Codex toCodex(boolean withoutSquads){
+        Codex codex = new Codex();
+        codex.setId(id);
+        codex.setName(name);
+        codex.setDescription(description);
+        if(!withoutSquads)
+            for (SquadBaseDTO s:squads){
+                codex.getSquads().add(s.toSquadBase());
+            }
+        return codex;
+    }
 
     public String getDescription() {
         return description;

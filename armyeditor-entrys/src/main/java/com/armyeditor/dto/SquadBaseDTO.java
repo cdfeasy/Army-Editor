@@ -61,7 +61,7 @@ public class SquadBaseDTO implements java.io.Serializable {
         squadBase.setName(name);
         squadBase.setDescription(description);
         if(codex!=null)
-         squadBase.setCodex(codex.toCodex());
+         squadBase.setCodex(codex.toCodex(true));
         return squadBase;
     }
 
