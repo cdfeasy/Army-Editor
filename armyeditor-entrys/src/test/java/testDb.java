@@ -85,66 +85,66 @@ public class testDb {
          
          final WeaponBase slagga=new WeaponBase();
          slagga.setId("slagga");
-         slagga.setAP("6");
+         slagga.setAp("6");
          slagga.setDescription("slagga");
          slagga.setCodex(codex);
          slagga.setName("slagga");
          slagga.setRange("12");
-         slagga.setSTR("4");
+         slagga.setStr("4");
          slagga.setType(assault);
          
          final WeaponBase bigshuta=new WeaponBase();
          bigshuta.setId("bigshoota");
-         bigshuta.setAP("4");
+         bigshuta.setAp("4");
          bigshuta.setDescription("bigshuta");
          bigshuta.setCodex(codex);
          bigshuta.setName("bigshuta");
          bigshuta.setRange("36");
-         bigshuta.setSTR("5");
+         bigshuta.setStr("5");
          bigshuta.setFireCount("3");
          bigshuta.setType(assault);
 		 
 		 final WeaponBase rokkit=new WeaponBase();
          rokkit.setId("rokkit");
-         rokkit.setAP("3");
+         rokkit.setAp("3");
          rokkit.setDescription("rokkit");
          rokkit.setCodex(codex);
          rokkit.setName("rokkit");
          rokkit.setRange("24");
-         rokkit.setSTR("8");
+         rokkit.setStr("8");
          rokkit.setFireCount("1");
          rokkit.setType(assault);
          
          final WeaponBase shuta=new WeaponBase();
          shuta.setId("shoota");
-         shuta.setAP("4");
+         shuta.setAp("4");
          shuta.setDescription("shuta");
          shuta.setCodex(codex);
          shuta.setName("shuta");
          shuta.setRange("18");
-         shuta.setSTR("4");
+         shuta.setStr("4");
          shuta.setFireCount("2");
          shuta.setType(assault);
          
            
          final WeaponBase choppa=new WeaponBase();
          choppa.setId("choppa");
-         choppa.setAP("-");
+         choppa.setAp("-");
          choppa.setDescription("choppa");
          choppa.setCodex(codex);
          choppa.setName("choppa");
          choppa.setRange("-");
-         choppa.setSTR("-");
+         choppa.setStr("-");
          choppa.setType(melee);
          
          final WeaponBase claws=new WeaponBase();
          claws.setId("claws");
-         claws.setAP("-");
+         claws.setAp("-");
          claws.setDescription("power claws");
          claws.setCodex(codex);
          claws.setName("power claws");
          claws.setRange("-");
-         claws.setSTR("-");
+         claws.setStr("-");
          claws.setType(powerclaws);
          ses.save(slagga);
          ses.save(choppa);

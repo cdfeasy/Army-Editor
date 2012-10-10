@@ -565,6 +565,7 @@ public class VenicleBaseContainer extends HorizontalLayoutContainer {
             verticalLayoutContainer = new VerticalLayoutContainer();
             verticalLayoutContainer.add(itemBaseBox);
             verticalLayoutContainer.add(addItemBtn);
+
             con.add(verticalLayoutContainer, new HorizontalLayoutContainer.HorizontalLayoutData(.5, 1, new Margins(5, 5, 5, 0)));
             cp.add(con);
             cp.addStyleName("margin-10");

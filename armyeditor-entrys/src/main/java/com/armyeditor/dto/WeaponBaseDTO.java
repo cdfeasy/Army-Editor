@@ -10,12 +10,6 @@ import com.armyeditor.entrys.Option;
 import com.armyeditor.entrys.WeaponBase;
 
 import java.util.ArrayList;
-import java.util. ArrayList;
-import javax.persistence.CascadeType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 
 /**
  *
@@ -27,8 +21,8 @@ public class WeaponBaseDTO implements java.io.Serializable  {
     private String name;
     private String description;
     private String range;
-    private String AP;
-    private String STR;
+    private String ap;
+    private String str;
     private String fireCount;
     private ArrayList<OptionDTO> options=new ArrayList<OptionDTO>();
     private CodexDTO codex;
@@ -42,8 +36,8 @@ public class WeaponBaseDTO implements java.io.Serializable  {
         this.name = weaponBase.getName();
         this.description = weaponBase.getDescription();
         this.range = weaponBase.getRange();
-        this.AP = weaponBase.getAP();
-        this.STR = weaponBase.getSTR();
+        this.ap = weaponBase.getAp();
+        this.str = weaponBase.getStr();
         this.fireCount = weaponBase.getFireCount();
         for(Option o:weaponBase.getOptions()){
             options.add(new OptionDTO(o));
@@ -60,8 +54,8 @@ public class WeaponBaseDTO implements java.io.Serializable  {
         w.setName(name);
         w.setDescription(description);
         w.setRange(range);
-        w.setAP(AP);
-        w.setSTR(STR);
+        w.setAp(ap);
+        w.setStr(str);
         w.setFireCount(fireCount);
         for(OptionDTO o:options){
             w.getOptions().add(o.toOption());
@@ -88,20 +82,20 @@ public class WeaponBaseDTO implements java.io.Serializable  {
     }
 
     
-    public String getAP() {
-        return AP;
+    public String getAp() {
+        return ap;
     }
 
-    public void setAP(String AP) {
-        this.AP = AP;
+    public void setAp(String ap) {
+        this.ap = ap;
     }
 
-    public String getSTR() {
-        return STR;
+    public String getStr() {
+        return str;
     }
 
-    public void setSTR(String STR) {
-        this.STR = STR;
+    public void setStr(String str) {
+        this.str = str;
     }
 
     public String getDescription() {
@@ -154,7 +148,7 @@ public class WeaponBaseDTO implements java.io.Serializable  {
 
 	@Override
 	public String toString() {
-		return "WeaponBase{" + "id=" + id + ", type=" + type + ", name=" + name + ", description=" + description + ", range=" + range + ", AP=" + AP + ", STR=" + STR + ", fireCount=" + fireCount + ", options=" + options + '}';
+		return "WeaponBase{" + "id=" + id + ", type=" + type + ", name=" + name + ", description=" + description + ", range=" + range + ", ap=" + ap + ", str=" + str + ", fireCount=" + fireCount + ", options=" + options + '}';
 	}
 	
 	

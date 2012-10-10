@@ -19,6 +19,11 @@ public interface WeaponBaseProperties extends PropertyAccess<WeaponBaseDTO> {
     ModelKeyProvider<WeaponBaseDTO> key();
     ValueProvider<WeaponBaseDTO, String> id();
     ValueProvider<WeaponBaseDTO, String> name();
+    ValueProvider<WeaponBaseDTO, String> description();
+    ValueProvider<WeaponBaseDTO, String> range();
+    ValueProvider<WeaponBaseDTO, String> ap();
+    ValueProvider<WeaponBaseDTO, String> str();
+    ValueProvider<WeaponBaseDTO, String> fireCount();
     @Editor.Path("name")
     LabelProvider<WeaponBaseDTO> nameLabel();
 }

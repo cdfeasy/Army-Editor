@@ -31,6 +31,9 @@
     <ui:with type="com.sencha.gxt.widget.core.client.TabItemConfig" field="venicleBaseContainerConfig">
         <ui:attributes text="Venicle Base" />
     </ui:with>
+    <ui:with type="com.sencha.gxt.widget.core.client.TabItemConfig" field="weaponBaseContainerConfig">
+        <ui:attributes text="Weapon Base" />
+    </ui:with>
     <ui:style>
         .sep {
             margin-top: 20px;
@@ -80,6 +83,11 @@
             <tabs:child config="{venicleBaseContainerConfig}">
                 <container:HorizontalLayoutContainer ui:field="venicleBaseGridContainer">
                     <!--вкладка с venicleBase-->
+                </container:HorizontalLayoutContainer>
+            </tabs:child>
+            <tabs:child config="{weaponBaseContainerConfig}">
+                <container:HorizontalLayoutContainer ui:field="weaponBaseGridContainer">
+                    <!--вкладка с weaponBase-->
                 </container:HorizontalLayoutContainer>
             </tabs:child>
         </tabs:TabPanel>

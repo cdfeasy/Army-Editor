@@ -45,6 +45,8 @@ public class admin implements EntryPoint {
     HorizontalLayoutContainer codexAndFractionsGridContainer;
     @UiField
     HorizontalLayoutContainer venicleBaseGridContainer;
+    @UiField
+    HorizontalLayoutContainer weaponBaseGridContainer;
 
     public Widget asWidget() {
         Widget d=uiBinder.createAndBindUi(this);
@@ -59,6 +61,7 @@ public class admin implements EntryPoint {
         vc.add(new FractionContainer());
         codexAndFractionsGridContainer.add(vc);
         venicleBaseGridContainer.add(new VenicleBaseContainer());
+        weaponBaseGridContainer.add(new WeaponBaseContainer());
         return d;
 	}
 

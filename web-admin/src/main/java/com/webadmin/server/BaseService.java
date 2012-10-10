@@ -648,6 +648,67 @@ public class BaseService extends RemoteServiceServlet implements CommonService {
     }
 
     @Override
+    public void delWeaponBase(List<WeaponBaseDTO> list) throws ArmyException {
+        Session ses = HibernateUtil.getSessionFactory().openSession();
+        Transaction trans=ses.beginTransaction();
+        List<WeaponBase> itemlist = new ArrayList<WeaponBase>();
+        for (WeaponBaseDTO w:list){
+            itemlist.add(w.toWeaponBase());
+        }
+        for(WeaponBase a:itemlist){
+            a = (WeaponBase) ses.merge(a);
+            ses.delete(a);
+        }
+        ses.flush();
+        trans.commit();
+        ses.close();
+    }
+
+    @Override
+    public void addWeaponBase(WeaponBaseDTO w) throws ArmyException {
+        Session ses = HibernateUtil.getSessionFactory().openSession();
+        Transaction trans = ses.beginTransaction();
+        WeaponBase b = w.toWeaponBase();
+        ses.save(b);
+        trans.commit();
+        ses.close();
+    }
+
+    @Override
+    public void changeWeaponBase(WeaponBaseDTO w) throws ArmyException {
+        Session ses = HibernateUtil.getSessionFactory().openSession();
+        Transaction trans = ses.beginTransaction();
+        WeaponBase b = w.toWeaponBase();
+        ses.merge(b);
+        ses.flush();
+        trans.commit();
+        ses.close();
+    }
+
+    @Override
+    public List<WeaponBaseDTO> getWeaponBaseById(String id) throws ArmyException {
+        Session ses = HibernateUtil.getSessionFactory().openSession();
+        Query query = ses.createQuery("select weaponbase from WeaponBase weaponbase where weaponbase.codex.id=:id");
+        query.setParameter("id", id);
+        List<WeaponBase> itemlist = query.list();
+        List<WeaponBaseDTO> weaponBaseDTOs = new ArrayList<WeaponBaseDTO>();
+        for (WeaponBase w: itemlist) {
+            weaponBaseDTOs.add(new WeaponBaseDTO(w));
+        }
+        ses.close();
+        return weaponBaseDTOs;
+    }
+
+    @Override
+    public List<OptionDTO> getOptionsByWeaponBase(String id) throws ArmyException {
+        Session ses = HibernateUtil.getSessionFactory().openSession();
+        WeaponBase weaponBase = (WeaponBase) ses.get(WeaponBase.class,id);
+        WeaponBaseDTO dto = new WeaponBaseDTO(weaponBase);
+        List<OptionDTO> list = dto.getOptions();
+        return list;
+    }
+
+    @Override
     public List<ItemBaseDTO> getItemBases() throws ArmyException {
         Session ses = HibernateUtil.getSessionFactory().openSession();
         Query query = ses.createQuery("select itembase from ItemBase itembase");
@@ -658,6 +719,58 @@ public class BaseService extends RemoteServiceServlet implements CommonService {
         }
         ses.close();
         return itemBaseDTOList;
+    }
+
+    @Override
+    public void delItemBase(List<ItemBaseDTO> list) throws ArmyException {
+        Session ses = HibernateUtil.getSessionFactory().openSession();
+        Transaction trans=ses.beginTransaction();
+        List<ItemBase> itemlist = new ArrayList<ItemBase>();
+        for (ItemBaseDTO w:list){
+            itemlist.add(w.toItemBase());
+        }
+        for(ItemBase a:itemlist){
+            a = (ItemBase) ses.merge(a);
+            ses.delete(a);
+        }
+        ses.flush();
+        trans.commit();
+        ses.close();
+    }
+
+    @Override
+    public void addItemBase(ItemBaseDTO i) throws ArmyException {
+        Session ses = HibernateUtil.getSessionFactory().openSession();
+        Transaction trans = ses.beginTransaction();
+        ItemBase b = i.toItemBase();
+        ses.save(b);
+        trans.commit();
+        ses.close();
+    }
+
+    @Override
+    public void changeItemBase(ItemBaseDTO i) throws ArmyException {
+        Session ses = HibernateUtil.getSessionFactory().openSession();
+        Transaction trans = ses.beginTransaction();
+        ItemBase b = i.toItemBase();
+        ses.merge(b);
+        ses.flush();
+        trans.commit();
+        ses.close();
+    }
+
+    @Override
+    public List<ItemBaseDTO> getItemBaseById(String id) throws ArmyException {
+        Session ses = HibernateUtil.getSessionFactory().openSession();
+        Query query = ses.createQuery("select itembase from ItemBase itembase where itembase.codex.id=:id");
+        query.setParameter("id", id);
+        List<ItemBase> itemlist = query.list();
+        List<ItemBaseDTO> itemBaseDTOs = new ArrayList<ItemBaseDTO>();
+        for (ItemBase w: itemlist) {
+            itemBaseDTOs.add(new ItemBaseDTO(w));
+        }
+        ses.close();
+        return itemBaseDTOs;
     }
 
     @Override

@@ -24,8 +24,8 @@ public class WeaponBase implements java.io.Serializable  {
     private String name;
     private String description;
     private String range;
-    private String AP;
-    private String STR;
+    private String ap;
+    private String str;
     private String fireCount;
     private List<Option> options=new ArrayList<Option>();
     private Codex codex;
@@ -53,20 +53,20 @@ public class WeaponBase implements java.io.Serializable  {
     }
 
     
-    public String getAP() {
-        return AP;
+    public String getAp() {
+        return ap;
     }
 
-    public void setAP(String AP) {
-        this.AP = AP;
+    public void setAp(String ap) {
+        this.ap = ap;
     }
 
-    public String getSTR() {
-        return STR;
+    public String getStr() {
+        return str;
     }
 
-    public void setSTR(String STR) {
-        this.STR = STR;
+    public void setStr(String str) {
+        this.str = str;
     }
 
     public String getDescription() {
@@ -120,7 +120,7 @@ public class WeaponBase implements java.io.Serializable  {
 
 	@Override
 	public String toString() {
-		return "WeaponBase{" + "id=" + id + ", type=" + type + ", name=" + name + ", description=" + description + ", range=" + range + ", AP=" + AP + ", STR=" + STR + ", fireCount=" + fireCount + ", options=" + options + '}';
+		return "WeaponBase{" + "id=" + id + ", type=" + type + ", name=" + name + ", description=" + description + ", range=" + range + ", ap=" + ap + ", str=" + str + ", fireCount=" + fireCount + ", options=" + options + '}';
 	}
 	
 	
