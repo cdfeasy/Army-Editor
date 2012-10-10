@@ -5,6 +5,7 @@ import com.armyeditor.dto.FractionDTO;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.Label;
 import com.sencha.gxt.core.client.IdentityValueProvider;
 import com.sencha.gxt.core.client.Style;
 import com.sencha.gxt.core.client.util.Margins;
@@ -70,6 +71,8 @@ public class FractionContainer extends HorizontalPanel {
         updateStore();
         fractionGrid.setSelectionModel(sm);
         gridContainer = new VerticalLayoutContainer();
+        Label label = new Label("Fractions");
+        gridContainer.add(label);
         gridContainer.add(fractionGrid);
         gridContainer.add(updateBtn);
         gridContainer.add(delSelBtn);

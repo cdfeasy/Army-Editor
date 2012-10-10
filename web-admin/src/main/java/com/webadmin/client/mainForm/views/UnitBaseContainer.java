@@ -109,7 +109,9 @@ public class UnitBaseContainer extends HorizontalLayoutContainer {
         updateBtn = new TextButton("Update", new SelectEvent.SelectHandler() {
             @Override
             public void onSelect(SelectEvent event) {
-                updateStore(codexBox.getValue().getId());
+                if (codexBox.getValue().getId()!=null) {
+                    updateStore(codexBox.getValue().getId());
+                }
             }
         });
         delSelBtn = new TextButton("Delete Selection", new SelectEvent.SelectHandler() {
@@ -139,7 +141,7 @@ public class UnitBaseContainer extends HorizontalLayoutContainer {
         });
 
         gridContainer = new VerticalLayoutContainer();
-        gridContainer.add(codexBox);
+        gridContainer.add(new FieldLabel(codexBox, "Select codex"));
         gridContainer.add(unitBaseGrid);
         gridContainer.add(updateBtn);
         gridContainer.add(delSelBtn);
