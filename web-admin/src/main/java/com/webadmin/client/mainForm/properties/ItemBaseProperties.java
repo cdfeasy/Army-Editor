@@ -20,6 +20,7 @@ public interface ItemBaseProperties extends PropertyAccess<ItemBaseDTO> {
     ModelKeyProvider<ItemBaseDTO> key();
     ValueProvider<ItemBaseDTO, String> id();
     ValueProvider<ItemBaseDTO, String> name();
+    ValueProvider<ItemBaseDTO, String> description();
     @Editor.Path("name")
     LabelProvider<ItemBaseDTO> nameLabel();
 }

@@ -34,6 +34,9 @@
     <ui:with type="com.sencha.gxt.widget.core.client.TabItemConfig" field="weaponBaseContainerConfig">
         <ui:attributes text="Weapon Base" />
     </ui:with>
+    <ui:with type="com.sencha.gxt.widget.core.client.TabItemConfig" field="itemBaseContainerConfig">
+        <ui:attributes text="Item Base" />
+    </ui:with>
     <ui:style>
         .sep {
             margin-top: 20px;
@@ -88,6 +91,11 @@
             <tabs:child config="{weaponBaseContainerConfig}">
                 <container:HorizontalLayoutContainer ui:field="weaponBaseGridContainer">
                     <!--вкладка с weaponBase-->
+                </container:HorizontalLayoutContainer>
+            </tabs:child>
+            <tabs:child config="{itemBaseContainerConfig}">
+                <container:HorizontalLayoutContainer ui:field="itemBaseGridContainer">
+                    <!--вкладка с itemBase-->
                 </container:HorizontalLayoutContainer>
             </tabs:child>
         </tabs:TabPanel>

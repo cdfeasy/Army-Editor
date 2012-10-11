@@ -571,6 +571,8 @@ public class UnitBaseContainer extends HorizontalLayoutContainer {
             verticalLayoutContainer = new VerticalLayoutContainer();
             verticalLayoutContainer.add(itemBaseBox);
             verticalLayoutContainer.add(addItemBtn);
+            verticalLayoutContainer.add(delItemBtn);
+
             con.add(verticalLayoutContainer, new HorizontalLayoutData(.5, 1, new Margins(5, 5, 5, 0)));
             cp.add(con);
             cp.addStyleName("margin-10");
