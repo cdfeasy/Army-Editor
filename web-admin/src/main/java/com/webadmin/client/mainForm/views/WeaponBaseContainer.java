@@ -39,6 +39,7 @@ import com.webadmin.client.services.CommonService;
 import com.webadmin.client.services.CommonServiceAsync;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -206,60 +207,85 @@ public class WeaponBaseContainer extends HorizontalLayoutContainer {
         weaponBaseFields.getSaveBtn().addSelectHandler(new SelectEvent.SelectHandler() {
             @Override
             public void onSelect(SelectEvent event) {
-                WeaponBaseDTO a = new WeaponBaseDTO();
-                a.setId(weaponBaseFields.getIdFld().getText());
-                a.setName(weaponBaseFields.getNameFld().getText());
-                a.setDescription(weaponBaseFields.getDescriptionFld().getText());
-                a.setAp(weaponBaseFields.getApFld().getText());
-                a.setStr(weaponBaseFields.getStrFld().getText());
-                a.setRange(weaponBaseFields.getStrFld().getText());
-                a.setFireCount(weaponBaseFields.getFireCountFld().getText());
-                a.setType(weaponBaseFields.getWeaponTypeBox().getValue());
-                ArrayList<OptionDTO> arrayList = new ArrayList<OptionDTO>(weaponBaseFields.getOptionGrid().getStore().getAll());
-                a.setOptions(arrayList);
-                commonService.changeWeaponBase(a, new AsyncCallback<Void>() {
-                    @Override
-                    public void onFailure(Throwable throwable) {
-                        System.out.println("Запрос упал " + throwable.getMessage());
-                    }
+                if (codexBox.getValue()!=null) {
+                    if (!checkForRepeat(weaponBaseFields.getOptionGrid().getStore().getAll())) {
+                        WeaponBaseDTO a = new WeaponBaseDTO();
+                        a.setId(weaponBaseFields.getIdFld().getText());
+                        a.setName(weaponBaseFields.getNameFld().getText());
+                        a.setDescription(weaponBaseFields.getDescriptionFld().getText());
+                        a.setAp(weaponBaseFields.getApFld().getText());
+                        a.setStr(weaponBaseFields.getStrFld().getText());
+                        a.setRange(weaponBaseFields.getStrFld().getText());
+                        a.setFireCount(weaponBaseFields.getFireCountFld().getText());
+                        a.setType(weaponBaseFields.getWeaponTypeBox().getValue());
+                        a.setCodex(codexBox.getValue());
+                        ArrayList<OptionDTO> arrayList = new ArrayList<OptionDTO>(weaponBaseFields.getOptionGrid().getStore().getAll());
+                        a.setOptions(arrayList);
+                        commonService.changeWeaponBase(a, new AsyncCallback<Void>() {
+                            @Override
+                            public void onFailure(Throwable throwable) {
+                                System.out.println("Запрос упал " + throwable.getMessage());
+                            }
 
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        updateStore(codexBox.getValue().getId());
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                updateStore(codexBox.getValue().getId());
+                            }
+                        });
                     }
-                });
+                    else Info.display("Ошибка", "Повторяющиеся поля");
+                }
+                else Info.display("","Не выбран кодекс");
             }
         });
 
         weaponBaseFields.getSaveNewBtn().addSelectHandler(new SelectEvent.SelectHandler() {
             @Override
             public void onSelect(SelectEvent event) {
-                WeaponBaseDTO a = new WeaponBaseDTO();
-                a.setId(weaponBaseFields.getIdFld().getText());
-                a.setName(weaponBaseFields.getNameFld().getText());
-                a.setDescription(weaponBaseFields.getDescriptionFld().getText());
-                a.setAp(weaponBaseFields.getApFld().getText());
-                a.setStr(weaponBaseFields.getStrFld().getText());
-                a.setRange(weaponBaseFields.getStrFld().getText());
-                a.setFireCount(weaponBaseFields.getFireCountFld().getText());
-                a.setType(weaponBaseFields.getWeaponTypeBox().getValue());
-                ArrayList<OptionDTO> arrayList = new ArrayList<OptionDTO>(weaponBaseFields.getOptionGrid().getStore().getAll());
-                a.setOptions(arrayList);
-                commonService.addWeaponBase(a, new AsyncCallback<Void>() {
-                    @Override
-                    public void onFailure(Throwable throwable) {
-                        System.out.println("Запрос упал " + throwable.getMessage());
-                    }
+                if (codexBox.getValue()!=null) {
+                    if (!checkForRepeat(weaponBaseFields.getOptionGrid().getStore().getAll())) {
+                        WeaponBaseDTO a = new WeaponBaseDTO();
+                        a.setId(weaponBaseFields.getIdFld().getText());
+                        a.setName(weaponBaseFields.getNameFld().getText());
+                        a.setDescription(weaponBaseFields.getDescriptionFld().getText());
+                        a.setAp(weaponBaseFields.getApFld().getText());
+                        a.setStr(weaponBaseFields.getStrFld().getText());
+                        a.setRange(weaponBaseFields.getStrFld().getText());
+                        a.setFireCount(weaponBaseFields.getFireCountFld().getText());
+                        a.setType(weaponBaseFields.getWeaponTypeBox().getValue());
+                        a.setCodex(codexBox.getValue());
+                        ArrayList<OptionDTO> arrayList = new ArrayList<OptionDTO>(weaponBaseFields.getOptionGrid().getStore().getAll());
+                        a.setOptions(arrayList);
+                        commonService.addWeaponBase(a, new AsyncCallback<Void>() {
+                            @Override
+                            public void onFailure(Throwable throwable) {
+                                System.out.println("Запрос упал " + throwable.getMessage());
+                            }
 
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        updateStore(codexBox.getValue().getId());
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                updateStore(codexBox.getValue().getId());
+                            }
+                        });
                     }
-                });
+                    else Info.display("Ошибка", "Повторяющиеся поля");
+                }
+                else Info.display("","Не выбран кодекс");
             }
         });
     }
 
+    static boolean checkForRepeat(List list) {
+        HashSet set = new HashSet();
+        boolean flag = false;
+        for (Object o:list) {
+            if (!set.add(o)) {
+                flag = true;
+                break;
+            }
+        }
+        return flag;
+    }
 
     class WeaponBaseFields extends BorderLayoutContainer {
         TextField idFld;

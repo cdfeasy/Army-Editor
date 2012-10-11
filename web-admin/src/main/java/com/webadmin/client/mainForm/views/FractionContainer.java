@@ -27,12 +27,14 @@ import com.sencha.gxt.widget.core.client.grid.CheckBoxSelectionModel;
 import com.sencha.gxt.widget.core.client.grid.ColumnConfig;
 import com.sencha.gxt.widget.core.client.grid.ColumnModel;
 import com.sencha.gxt.widget.core.client.grid.Grid;
+import com.sencha.gxt.widget.core.client.info.Info;
 import com.webadmin.client.mainForm.properties.CodexProperties;
 import com.webadmin.client.mainForm.properties.FractionProperties;
 import com.webadmin.client.services.CommonService;
 import com.webadmin.client.services.CommonServiceAsync;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -162,48 +164,66 @@ public class FractionContainer extends HorizontalPanel {
         fractionFields.getSaveBtn().addSelectHandler(new SelectEvent.SelectHandler() {
             @Override
             public void onSelect(SelectEvent event) {
-                FractionDTO f = new FractionDTO();
-                f.setId(fractionFields.getIdFld().getText());
-                f.setName(fractionFields.getNameFld().getText());
-                f.setDescription(fractionFields.getDescripFld().getText());
-                ArrayList<CodexDTO> list = new ArrayList<CodexDTO>(fractionFields.getCodexGrid().getStore().getAll());
-                f.setCodexes(list);
-                commonService.addFraction(f, new AsyncCallback<Void>() {
-                    @Override
-                    public void onFailure(Throwable throwable) {
-                        System.out.println("Запрос упал " + throwable.getMessage());
-                    }
+                if(!checkForRepeat(fractionFields.getCodexGrid().getStore().getAll())) {
+                    FractionDTO f = new FractionDTO();
+                    f.setId(fractionFields.getIdFld().getText());
+                    f.setName(fractionFields.getNameFld().getText());
+                    f.setDescription(fractionFields.getDescripFld().getText());
+                    ArrayList<CodexDTO> list = new ArrayList<CodexDTO>(fractionFields.getCodexGrid().getStore().getAll());
+                    f.setCodexes(list);
+                    commonService.changeFraction(f, new AsyncCallback<Void>() {
+                        @Override
+                        public void onFailure(Throwable throwable) {
+                            System.out.println("Запрос упал " + throwable.getMessage());
+                        }
 
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        updateStore();
-                    }
-                });
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            updateStore();
+                        }
+                    });
+                }
+                else Info.display("Ошибка", "Повторяющиеся поля");
             }
         });
 
         fractionFields.getSaveNewBtn().addSelectHandler(new SelectEvent.SelectHandler() {
             @Override
             public void onSelect(SelectEvent event) {
-                FractionDTO f = new FractionDTO();
-                f.setId(fractionFields.getIdFld().getText());
-                f.setName(fractionFields.getNameFld().getText());
-                f.setDescription(fractionFields.getDescripFld().getText());
-                ArrayList<CodexDTO> list = new ArrayList<CodexDTO>(fractionFields.getCodexGrid().getStore().getAll());
-                f.setCodexes(list);
-                commonService.changeFraction(f, new AsyncCallback<Void>() {
-                    @Override
-                    public void onFailure(Throwable throwable) {
-                        System.out.println("Запрос упал " + throwable.getMessage());
-                    }
+                if(!checkForRepeat(fractionFields.getCodexGrid().getStore().getAll())) {
+                    FractionDTO f = new FractionDTO();
+                    f.setId(fractionFields.getIdFld().getText());
+                    f.setName(fractionFields.getNameFld().getText());
+                    f.setDescription(fractionFields.getDescripFld().getText());
+                    ArrayList<CodexDTO> list = new ArrayList<CodexDTO>(fractionFields.getCodexGrid().getStore().getAll());
+                    f.setCodexes(list);
+                    commonService.addFraction(f, new AsyncCallback<Void>() {
+                        @Override
+                        public void onFailure(Throwable throwable) {
+                            System.out.println("Запрос упал " + throwable.getMessage());
+                        }
 
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        updateStore();
-                    }
-                });
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            updateStore();
+                        }
+                    });
+                }
+                else Info.display("Ошибка", "Повторяющиеся поля");
             }
         });
+    }
+
+    static boolean checkForRepeat(List list) {
+        HashSet set = new HashSet();
+        boolean flag = false;
+        for (Object o:list) {
+            if (!set.add(o)) {
+                flag = true;
+                break;
+            }
+        }
+        return flag;
     }
 
     public class FractionFields extends BorderLayoutContainer {

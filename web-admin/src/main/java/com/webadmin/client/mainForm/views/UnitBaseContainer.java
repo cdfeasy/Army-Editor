@@ -34,6 +34,7 @@ import com.webadmin.client.services.CommonService;
 import com.webadmin.client.services.CommonServiceAsync;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -235,81 +236,99 @@ public class UnitBaseContainer extends HorizontalLayoutContainer {
         unitBaseFields.getSaveBtn().addSelectHandler(new SelectEvent.SelectHandler() {
             @Override
             public void onSelect(SelectEvent event) {
-                UnitBaseDTO a = new UnitBaseDTO();
-                a.setId(unitBaseFields.getIdFld().getText());
-                a.setWs(Integer.parseInt(unitBaseFields.getWsFld().getText()));
-                a.setBs(Integer.parseInt(unitBaseFields.getBsFld().getText()));
-                a.setS(Integer.parseInt(unitBaseFields.getsFld().getText()));
-                a.setT(Integer.parseInt(unitBaseFields.gettFld().getText()));
-                a.setW(Integer.parseInt(unitBaseFields.getwFld().getText()));
-                a.setI(Integer.parseInt(unitBaseFields.getiFld().getText()));
-                a.setA(Integer.parseInt(unitBaseFields.getaFld().getText()));
-                a.setLd(Integer.parseInt(unitBaseFields.getLdFld().getText()));
-                a.setSv(unitBaseFields.getSvFld().getText());
-                a.setCost(Integer.parseInt(unitBaseFields.getCostFld().getText()));
-                a.setUnitType(unitBaseFields.getUnitTypeBox().getValue());
-                a.setCodex(codexBox.getValue());
                 ArrayList<OptionDTO> arrayList = new ArrayList<OptionDTO>(unitBaseFields.getOptionGrid().getStore().getAll());
-                a.setOptions(arrayList);
-                unitBaseFields.getWeaponGrid().getStore().commitChanges();
                 ArrayList<WeaponDTO> weaponList = new ArrayList<WeaponDTO>(unitBaseFields.getWeaponGrid().getStore().getAll());
-                a.setWeapons(weaponList);
-                unitBaseFields.getItemGrid().getStore().commitChanges();
                 ArrayList<ItemDTO> itemList  = new ArrayList<ItemDTO>(unitBaseFields.getItemGrid().getStore().getAll());
-                a.setItems(itemList);
+                if (!checkForRepeat(arrayList)&&!checkForRepeat(weaponList)&&!checkForRepeat(itemList)) {
+                    UnitBaseDTO a = new UnitBaseDTO();
+                    a.setId(unitBaseFields.getIdFld().getText());
+                    a.setWs(Integer.parseInt(unitBaseFields.getWsFld().getText()));
+                    a.setBs(Integer.parseInt(unitBaseFields.getBsFld().getText()));
+                    a.setS(Integer.parseInt(unitBaseFields.getsFld().getText()));
+                    a.setT(Integer.parseInt(unitBaseFields.gettFld().getText()));
+                    a.setW(Integer.parseInt(unitBaseFields.getwFld().getText()));
+                    a.setI(Integer.parseInt(unitBaseFields.getiFld().getText()));
+                    a.setA(Integer.parseInt(unitBaseFields.getaFld().getText()));
+                    a.setLd(Integer.parseInt(unitBaseFields.getLdFld().getText()));
+                    a.setSv(unitBaseFields.getSvFld().getText());
+                    a.setCost(Integer.parseInt(unitBaseFields.getCostFld().getText()));
+                    a.setUnitType(unitBaseFields.getUnitTypeBox().getValue());
+                    a.setCodex(codexBox.getValue());
+                    a.setOptions(arrayList);
+                    unitBaseFields.getWeaponGrid().getStore().commitChanges();
+                    a.setWeapons(weaponList);
+                    unitBaseFields.getItemGrid().getStore().commitChanges();
+                    a.setItems(itemList);
 
-                commonService.changeUnitBase(a, new AsyncCallback<Void>() {
-                    @Override
-                    public void onFailure(Throwable throwable) {
-                        System.out.println("Запрос упал " + throwable.getMessage());
-                    }
+                    commonService.changeUnitBase(a, new AsyncCallback<Void>() {
+                        @Override
+                        public void onFailure(Throwable throwable) {
+                            System.out.println("Запрос упал " + throwable.getMessage());
+                        }
 
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        updateStore(codexBox.getValue().getId());
-                    }
-                });
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            updateStore(codexBox.getValue().getId());
+                        }
+                    });
+                }
+                else Info.display("Ошибка", "Повторяющиеся поля");
             }
         });
         unitBaseFields.getSaveNewBtn().addSelectHandler(new SelectEvent.SelectHandler() {
             @Override
             public void onSelect(SelectEvent event) {
-                UnitBaseDTO a = new UnitBaseDTO();
-                a.setId(unitBaseFields.getIdFld().getText());
-                a.setWs(Integer.parseInt(unitBaseFields.getWsFld().getText()));
-                a.setBs(Integer.parseInt(unitBaseFields.getBsFld().getText()));
-                a.setS(Integer.parseInt(unitBaseFields.getsFld().getText()));
-                a.setT(Integer.parseInt(unitBaseFields.gettFld().getText()));
-                a.setW(Integer.parseInt(unitBaseFields.getwFld().getText()));
-                a.setI(Integer.parseInt(unitBaseFields.getiFld().getText()));
-                a.setA(Integer.parseInt(unitBaseFields.getaFld().getText()));
-                a.setLd(Integer.parseInt(unitBaseFields.getLdFld().getText()));
-                a.setSv(unitBaseFields.getSvFld().getText());
-                a.setCost(Integer.parseInt(unitBaseFields.getCostFld().getText()));
-                a.setUnitType(unitBaseFields.getUnitTypeBox().getValue());
-                a.setCodex(codexBox.getValue());
                 ArrayList<OptionDTO> arrayList = new ArrayList<OptionDTO>(unitBaseFields.getOptionGrid().getStore().getAll());
-                a.setOptions(arrayList);
-                unitBaseFields.getWeaponGrid().getStore().commitChanges();
                 ArrayList<WeaponDTO> weaponList = new ArrayList<WeaponDTO>(unitBaseFields.getWeaponGrid().getStore().getAll());
-                a.setWeapons(weaponList);
-                unitBaseFields.getItemGrid().getStore().commitChanges();
                 ArrayList<ItemDTO> itemList  = new ArrayList<ItemDTO>(unitBaseFields.getItemGrid().getStore().getAll());
-                a.setItems(itemList);
+                if (!checkForRepeat(arrayList)&&!checkForRepeat(weaponList)&&!checkForRepeat(itemList)) {
+                    UnitBaseDTO a = new UnitBaseDTO();
+                    a.setId(unitBaseFields.getIdFld().getText());
+                    a.setWs(Integer.parseInt(unitBaseFields.getWsFld().getText()));
+                    a.setBs(Integer.parseInt(unitBaseFields.getBsFld().getText()));
+                    a.setS(Integer.parseInt(unitBaseFields.getsFld().getText()));
+                    a.setT(Integer.parseInt(unitBaseFields.gettFld().getText()));
+                    a.setW(Integer.parseInt(unitBaseFields.getwFld().getText()));
+                    a.setI(Integer.parseInt(unitBaseFields.getiFld().getText()));
+                    a.setA(Integer.parseInt(unitBaseFields.getaFld().getText()));
+                    a.setLd(Integer.parseInt(unitBaseFields.getLdFld().getText()));
+                    a.setSv(unitBaseFields.getSvFld().getText());
+                    a.setCost(Integer.parseInt(unitBaseFields.getCostFld().getText()));
+                    a.setUnitType(unitBaseFields.getUnitTypeBox().getValue());
+                    a.setCodex(codexBox.getValue());
+                    a.setOptions(arrayList);
+                    unitBaseFields.getWeaponGrid().getStore().commitChanges();
+                    a.setWeapons(weaponList);
+                    unitBaseFields.getItemGrid().getStore().commitChanges();
+                    a.setItems(itemList);
 
-                commonService.addUnitBase(a, new AsyncCallback<Void>() {
-                    @Override
-                    public void onFailure(Throwable throwable) {
-                        System.out.println("Запрос упал " + throwable.getMessage());
-                    }
+                    commonService.addUnitBase(a, new AsyncCallback<Void>() {
+                        @Override
+                        public void onFailure(Throwable throwable) {
+                            System.out.println("Запрос упал " + throwable.getMessage());
+                        }
 
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        updateStore(codexBox.getValue().getId());
-                    }
-                });
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            updateStore(codexBox.getValue().getId());
+                        }
+                    });
+                }
+                else Info.display("Ошибка", "Повторяющиеся поля");
             }
         });
+    }
+
+    static boolean checkForRepeat(List list) {
+        HashSet set = new HashSet();
+        boolean flag = false;
+        for (Object o:list) {
+            if (!set.add(o)) {
+                flag = true;
+                break;
+            }
+        }
+        return flag;
     }
 
 

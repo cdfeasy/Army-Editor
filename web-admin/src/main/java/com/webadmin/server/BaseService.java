@@ -467,7 +467,7 @@ public class BaseService extends RemoteServiceServlet implements CommonService {
                 a.getWeapons().clear();
                 a.getItems().clear();
                 a.setCodex(null);
-                ses.merge(a);
+                a = (VenicleBase) ses.merge(a);
                 ses.delete(a);
             }
             ses.flush();

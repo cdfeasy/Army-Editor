@@ -37,6 +37,7 @@ import com.webadmin.client.services.CommonService;
 import com.webadmin.client.services.CommonServiceAsync;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -192,48 +193,74 @@ public class ItemBaseContainer extends HorizontalLayoutContainer {
         itemBaseFields.getSaveBtn().addSelectHandler(new SelectEvent.SelectHandler() {
             @Override
             public void onSelect(SelectEvent event) {
-                ItemBaseDTO a = new ItemBaseDTO();
-                a.setId(itemBaseFields.getIdFld().getText());
-                a.setName(itemBaseFields.getNameFld().getText());
-                a.setDescription(itemBaseFields.getDescriptionFld().getText());
-                ArrayList<OptionDTO> arrayList = new ArrayList<OptionDTO>(itemBaseFields.getOptionGrid().getStore().getAll());
-                a.setOptions(arrayList);
-                commonService.changeItemBase(a, new AsyncCallback<Void>() {
-                    @Override
-                    public void onFailure(Throwable throwable) {
-                        System.out.println("Запрос упал " + throwable.getMessage());
-                    }
+                if(codexBox.getValue()!=null) {
+                    if (!checkForRepeat(itemBaseFields.getOptionGrid().getStore().getAll())) {
+                        ItemBaseDTO a = new ItemBaseDTO();
+                        a.setId(itemBaseFields.getIdFld().getText());
+                        a.setName(itemBaseFields.getNameFld().getText());
+                        a.setDescription(itemBaseFields.getDescriptionFld().getText());
+                        a.setCodex(codexBox.getValue());
+                        ArrayList<OptionDTO> arrayList = new ArrayList<OptionDTO>(itemBaseFields.getOptionGrid().getStore().getAll());
+                        a.setOptions(arrayList);
+                        commonService.changeItemBase(a, new AsyncCallback<Void>() {
+                            @Override
+                            public void onFailure(Throwable throwable) {
+                                System.out.println("Запрос упал " + throwable.getMessage());
+                            }
 
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        updateStore(codexBox.getValue().getId());
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                updateStore(codexBox.getValue().getId());
+                            }
+                        });
                     }
-                });
+                    else Info.display("Ошибка", "Повторяющиеся поля");
+                }
+                else Info.display("","Не выбран кодекс");
             }
         });
 
         itemBaseFields.getSaveNewBtn().addSelectHandler(new SelectEvent.SelectHandler() {
             @Override
             public void onSelect(SelectEvent event) {
-                ItemBaseDTO a = new ItemBaseDTO();
-                a.setId(itemBaseFields.getIdFld().getText());
-                a.setName(itemBaseFields.getNameFld().getText());
-                a.setDescription(itemBaseFields.getDescriptionFld().getText());
-                ArrayList<OptionDTO> arrayList = new ArrayList<OptionDTO>(itemBaseFields.getOptionGrid().getStore().getAll());
-                a.setOptions(arrayList);
-                commonService.addItemBase(a, new AsyncCallback<Void>() {
-                    @Override
-                    public void onFailure(Throwable throwable) {
-                        System.out.println("Запрос упал " + throwable.getMessage());
-                    }
+                if(codexBox.getValue()!=null) {
+                    if (!checkForRepeat(itemBaseFields.getOptionGrid().getStore().getAll())) {
+                        ItemBaseDTO a = new ItemBaseDTO();
+                        a.setId(itemBaseFields.getIdFld().getText());
+                        a.setName(itemBaseFields.getNameFld().getText());
+                        a.setDescription(itemBaseFields.getDescriptionFld().getText());
+                        a.setCodex(codexBox.getValue());
+                        ArrayList<OptionDTO> arrayList = new ArrayList<OptionDTO>(itemBaseFields.getOptionGrid().getStore().getAll());
+                        a.setOptions(arrayList);
+                        commonService.addItemBase(a, new AsyncCallback<Void>() {
+                            @Override
+                            public void onFailure(Throwable throwable) {
+                                System.out.println("Запрос упал " + throwable.getMessage());
+                            }
 
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        updateStore(codexBox.getValue().getId());
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                updateStore(codexBox.getValue().getId());
+                            }
+                        });
                     }
-                });
+                    else Info.display("Ошибка", "Повторяющиеся поля");
+                }
+                else Info.display("","Не выбран кодекс");
             }
         });
+    }
+
+    static boolean checkForRepeat(List list) {
+        HashSet set = new HashSet();
+        boolean flag = false;
+        for (Object o:list) {
+            if (!set.add(o)) {
+                flag = true;
+                break;
+            }
+        }
+        return flag;
     }
 
     class ItemBaseFields extends BorderLayoutContainer {

@@ -32,6 +32,7 @@ import com.webadmin.client.services.CommonService;
 import com.webadmin.client.services.CommonServiceAsync;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -129,43 +130,49 @@ public class UnitTypeContainer extends HorizontalLayoutContainer {
         unitTypeFields.getSaveBtn().addSelectHandler(new SelectEvent.SelectHandler() {
             @Override
             public void onSelect(SelectEvent event) {
-                UnitTypeDTO a = new UnitTypeDTO();
-                a.setId(unitTypeFields.getIdFld().getText());
-                a.setName(unitTypeFields.getNameFld().getText());
-                ArrayList<OptionDTO> arrayList = new ArrayList<OptionDTO>(unitTypeFields.getOptionGrid().getStore().getAll());
-                a.setOptions(arrayList);
-                commonService.changeUnitType(a, new AsyncCallback<Void>() {
-                    @Override
-                    public void onFailure(Throwable throwable) {
-                        System.out.println("Запрос упал " + throwable.getMessage());
-                    }
+                if (!checkForRepeat(unitTypeFields.getOptionGrid().getStore().getAll())) {
+                    UnitTypeDTO a = new UnitTypeDTO();
+                    a.setId(unitTypeFields.getIdFld().getText());
+                    a.setName(unitTypeFields.getNameFld().getText());
+                    ArrayList<OptionDTO> arrayList = new ArrayList<OptionDTO>(unitTypeFields.getOptionGrid().getStore().getAll());
+                    a.setOptions(arrayList);
+                    commonService.changeUnitType(a, new AsyncCallback<Void>() {
+                        @Override
+                        public void onFailure(Throwable throwable) {
+                            System.out.println("Запрос упал " + throwable.getMessage());
+                        }
 
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        updateStore();
-                    }
-                });
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            updateStore();
+                        }
+                    });
+                }
+                else Info.display("Ошибка", "Повторяющиеся поля");
             }
         });
         unitTypeFields.getSaveNewBtn().addSelectHandler(new SelectEvent.SelectHandler() {
             @Override
             public void onSelect(SelectEvent event) {
-                UnitTypeDTO a = new UnitTypeDTO();
-                a.setId(unitTypeFields.getIdFld().getText());
-                a.setName(unitTypeFields.getNameFld().getText());
-                ArrayList<OptionDTO> arrayList = new ArrayList<OptionDTO>(unitTypeFields.getOptionGrid().getStore().getAll());
-                a.setOptions(arrayList);
-                commonService.addUnitType(a, new AsyncCallback<Void>() {
-                    @Override
-                    public void onFailure(Throwable throwable) {
-                        System.out.println("Запрос упал " + throwable.getMessage());
-                    }
+                if (!checkForRepeat(unitTypeFields.getOptionGrid().getStore().getAll())) {
+                    UnitTypeDTO a = new UnitTypeDTO();
+                    a.setId(unitTypeFields.getIdFld().getText());
+                    a.setName(unitTypeFields.getNameFld().getText());
+                    ArrayList<OptionDTO> arrayList = new ArrayList<OptionDTO>(unitTypeFields.getOptionGrid().getStore().getAll());
+                    a.setOptions(arrayList);
+                    commonService.addUnitType(a, new AsyncCallback<Void>() {
+                        @Override
+                        public void onFailure(Throwable throwable) {
+                            System.out.println("Запрос упал " + throwable.getMessage());
+                        }
 
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        updateStore();
-                    }
-                });
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            updateStore();
+                        }
+                    });
+                }
+                else Info.display("Ошибка", "Повторяющиеся поля");
             }
         });
 
@@ -196,6 +203,18 @@ public class UnitTypeContainer extends HorizontalLayoutContainer {
             }
         });
 
+    }
+
+    static boolean checkForRepeat(List list) {
+        HashSet set = new HashSet();
+        boolean flag = false;
+        for (Object o:list) {
+            if (!set.add(o)) {
+                flag = true;
+                break;
+            }
+        }
+        return flag;
     }
 
     public class UnitTypeFields extends BorderLayoutContainer {

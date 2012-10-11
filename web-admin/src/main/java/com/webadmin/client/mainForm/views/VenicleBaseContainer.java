@@ -33,6 +33,7 @@ import com.webadmin.client.services.CommonService;
 import com.webadmin.client.services.CommonServiceAsync;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -116,7 +117,7 @@ public class VenicleBaseContainer extends HorizontalLayoutContainer {
             @Override
             public void onSelect(SelectEvent event) {
                 List selectList = venicleBaseGrid.getSelectionModel().getSelectedItems();
-                commonService.delUnitBases(selectList, new AsyncCallback<Void>() {
+                commonService.delVenicleBase(selectList, new AsyncCallback<Void>() {
                     @Override
                     public void onFailure(Throwable throwable) {
                         System.out.println("Запрос упал " + throwable.getMessage());
@@ -229,83 +230,106 @@ public class VenicleBaseContainer extends HorizontalLayoutContainer {
         venicleBaseFields.getSaveBtn().addSelectHandler(new SelectEvent.SelectHandler() {
             @Override
             public void onSelect(SelectEvent event) {
-                VenicleBaseDTO a = new VenicleBaseDTO();
-                a.setId(venicleBaseFields.getIdFld().getText());
-                a.setWs(Integer.parseInt(venicleBaseFields.getWsFld().getText()));
-                a.setBs(Integer.parseInt(venicleBaseFields.getBsFld().getText()));
-                a.setS(Integer.parseInt(venicleBaseFields.getsFld().getText()));
-                a.setFront(Integer.parseInt(venicleBaseFields.getFrontFld().getText()));
-                a.setW(Integer.parseInt(venicleBaseFields.getwFld().getText()));
-                a.setI(Integer.parseInt(venicleBaseFields.getiFld().getText()));
-                a.setA(Integer.parseInt(venicleBaseFields.getaFld().getText()));
-                a.setSide(Integer.parseInt(venicleBaseFields.getSideFld().getText()));
-                a.setRear(Integer.parseInt(venicleBaseFields.getRearFld().getText()));
-                a.setCost(Integer.parseInt(venicleBaseFields.getCostFld().getText()));
-                a.setUnitType(venicleBaseFields.getUnitTypeBox().getValue());
-                a.setCodex(codexBox.getValue());
                 ArrayList<OptionDTO> arrayList = new ArrayList<OptionDTO>(venicleBaseFields.getOptionGrid().getStore().getAll());
-                a.setOptions(arrayList);
-                venicleBaseFields.getWeaponGrid().getStore().commitChanges();
                 ArrayList<WeaponDTO> weaponList = new ArrayList<WeaponDTO>(venicleBaseFields.getWeaponGrid().getStore().getAll());
-                a.setWeapons(weaponList);
-                venicleBaseFields.getItemGrid().getStore().commitChanges();
                 ArrayList<ItemDTO> itemList  = new ArrayList<ItemDTO>(venicleBaseFields.getItemGrid().getStore().getAll());
-                a.setItems(itemList);
+                if (!checkForRepeat(arrayList)&&!checkForRepeat(weaponList)&&!checkForRepeat(itemList)) {
+                    VenicleBaseDTO a = new VenicleBaseDTO();
+                    a.setId(venicleBaseFields.getIdFld().getText());
+                    a.setWs(Integer.parseInt(venicleBaseFields.getWsFld().getText()));
+                    a.setBs(Integer.parseInt(venicleBaseFields.getBsFld().getText()));
+                    a.setS(Integer.parseInt(venicleBaseFields.getsFld().getText()));
+                    a.setFront(Integer.parseInt(venicleBaseFields.getFrontFld().getText()));
+                    a.setW(Integer.parseInt(venicleBaseFields.getwFld().getText()));
+                    a.setI(Integer.parseInt(venicleBaseFields.getiFld().getText()));
+                    a.setA(Integer.parseInt(venicleBaseFields.getaFld().getText()));
+                    a.setSide(Integer.parseInt(venicleBaseFields.getSideFld().getText()));
+                    a.setRear(Integer.parseInt(venicleBaseFields.getRearFld().getText()));
+                    a.setCost(Integer.parseInt(venicleBaseFields.getCostFld().getText()));
+                    a.setUnitType(venicleBaseFields.getUnitTypeBox().getValue());
+                    a.setCodex(codexBox.getValue());
 
-                commonService.changeVenicleBase(a, new AsyncCallback<Void>() {
-                    @Override
-                    public void onFailure(Throwable throwable) {
-                        System.out.println("Запрос упал " + throwable.getMessage());
-                    }
+                    a.setOptions(arrayList);
+                    venicleBaseFields.getWeaponGrid().getStore().commitChanges();
 
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        updateStore(codexBox.getValue().getId());
-                    }
-                });
+                    a.setWeapons(weaponList);
+                    venicleBaseFields.getItemGrid().getStore().commitChanges();
+
+                    a.setItems(itemList);
+
+                    commonService.changeVenicleBase(a, new AsyncCallback<Void>() {
+                        @Override
+                        public void onFailure(Throwable throwable) {
+                            System.out.println("Запрос упал " + throwable.getMessage());
+                        }
+
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            updateStore(codexBox.getValue().getId());
+                        }
+                    });
+                }
+                else Info.display("Ошибка", "Повторяющиеся поля");
             }
         });
         venicleBaseFields.getSaveNewBtn().addSelectHandler(new SelectEvent.SelectHandler() {
             @Override
             public void onSelect(SelectEvent event) {
-                VenicleBaseDTO a = new VenicleBaseDTO();
-                a.setId(venicleBaseFields.getIdFld().getText());
-                a.setWs(Integer.parseInt(venicleBaseFields.getWsFld().getText()));
-                a.setBs(Integer.parseInt(venicleBaseFields.getBsFld().getText()));
-                a.setS(Integer.parseInt(venicleBaseFields.getsFld().getText()));
-                a.setFront(Integer.parseInt(venicleBaseFields.getFrontFld().getText()));
-                a.setW(Integer.parseInt(venicleBaseFields.getwFld().getText()));
-                a.setI(Integer.parseInt(venicleBaseFields.getiFld().getText()));
-                a.setA(Integer.parseInt(venicleBaseFields.getaFld().getText()));
-                a.setSide(Integer.parseInt(venicleBaseFields.getSideFld().getText()));
-                a.setRear(Integer.parseInt(venicleBaseFields.getRearFld().getText()));
-                a.setCost(Integer.parseInt(venicleBaseFields.getCostFld().getText()));
-                a.setUnitType(venicleBaseFields.getUnitTypeBox().getValue());
-                a.setCodex(codexBox.getValue());
                 ArrayList<OptionDTO> arrayList = new ArrayList<OptionDTO>(venicleBaseFields.getOptionGrid().getStore().getAll());
-                a.setOptions(arrayList);
-                venicleBaseFields.getWeaponGrid().getStore().commitChanges();
                 ArrayList<WeaponDTO> weaponList = new ArrayList<WeaponDTO>(venicleBaseFields.getWeaponGrid().getStore().getAll());
-                a.setWeapons(weaponList);
-                venicleBaseFields.getItemGrid().getStore().commitChanges();
                 ArrayList<ItemDTO> itemList  = new ArrayList<ItemDTO>(venicleBaseFields.getItemGrid().getStore().getAll());
-                a.setItems(itemList);
+                if (!checkForRepeat(arrayList)&&!checkForRepeat(weaponList)&&!checkForRepeat(itemList)) {
+                    VenicleBaseDTO a = new VenicleBaseDTO();
+                    a.setId(venicleBaseFields.getIdFld().getText());
+                    a.setWs(Integer.parseInt(venicleBaseFields.getWsFld().getText()));
+                    a.setBs(Integer.parseInt(venicleBaseFields.getBsFld().getText()));
+                    a.setS(Integer.parseInt(venicleBaseFields.getsFld().getText()));
+                    a.setFront(Integer.parseInt(venicleBaseFields.getFrontFld().getText()));
+                    a.setW(Integer.parseInt(venicleBaseFields.getwFld().getText()));
+                    a.setI(Integer.parseInt(venicleBaseFields.getiFld().getText()));
+                    a.setA(Integer.parseInt(venicleBaseFields.getaFld().getText()));
+                    a.setSide(Integer.parseInt(venicleBaseFields.getSideFld().getText()));
+                    a.setRear(Integer.parseInt(venicleBaseFields.getRearFld().getText()));
+                    a.setCost(Integer.parseInt(venicleBaseFields.getCostFld().getText()));
+                    a.setUnitType(venicleBaseFields.getUnitTypeBox().getValue());
+                    a.setCodex(codexBox.getValue());
 
-                commonService.addVenicleBase(a, new AsyncCallback<Void>() {
-                    @Override
-                    public void onFailure(Throwable throwable) {
-                        System.out.println("Запрос упал " + throwable.getMessage());
-                    }
+                    a.setOptions(arrayList);
+                    venicleBaseFields.getWeaponGrid().getStore().commitChanges();
 
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        updateStore(codexBox.getValue().getId());
-                    }
-                });
+                    a.setWeapons(weaponList);
+                    venicleBaseFields.getItemGrid().getStore().commitChanges();
+
+                    a.setItems(itemList);
+
+                    commonService.addVenicleBase(a, new AsyncCallback<Void>() {
+                        @Override
+                        public void onFailure(Throwable throwable) {
+                            System.out.println("Запрос упал " + throwable.getMessage());
+                        }
+
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            updateStore(codexBox.getValue().getId());
+                        }
+                    });
+                }
+                else Info.display("Ошибка", "Повторяющиеся поля");
             }
         });
     }
 
+    static boolean checkForRepeat(List list) {
+        HashSet set = new HashSet();
+        boolean flag = false;
+        for (Object o:list) {
+            if (!set.add(o)) {
+                flag = true;
+                break;
+            }
+        }
+        return flag;
+    }
 
      class VenicleBaseFields extends BorderLayoutContainer {
         TextField idFld;
