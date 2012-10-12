@@ -167,7 +167,7 @@ public class ItemBaseContainer extends HorizontalLayoutContainer {
                 itemBaseFields.getNameFld().setText(a.getName());
                 itemBaseFields.getDescriptionFld().setText(a.getDescription());
                 itemBaseFields.optionGrid.mask();
-                commonService.getOptionsByWeaponBase(a.getId(), new AsyncCallback<List<OptionDTO>>() {
+                commonService.getOptionsByItemBase(a.getId(), new AsyncCallback<List<OptionDTO>>() {
                     @Override
                     public void onFailure(Throwable throwable) {
                         System.out.println("Запрос упал " + throwable.getMessage());

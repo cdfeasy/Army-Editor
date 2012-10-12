@@ -52,16 +52,16 @@ public class admin implements EntryPoint {
 
     public Widget asWidget() {
         Widget d=uiBinder.createAndBindUi(this);
-        attackTyteGridContainer.add(new AttackTypeContainer());
-        specialRuleGridContainer.add(new SpecialRuleContainer());
-        unitTypeGridContainer.add(new UnitTypeContainer());
-        weaponTypeGridContainer.add(new WeaponTypeContainer());
-        unitBaseGridContainer.add(new UnitBaseContainer());
-        armyContainer.add(new ArmyPage());
-        VerticalLayoutContainer vc = new VerticalLayoutContainer();
-        vc.add(new CodexContainer());
-        vc.add(new FractionContainer());
-        codexAndFractionsGridContainer.add(vc);
+//        attackTyteGridContainer.add(new AttackTypeContainer());
+//        specialRuleGridContainer.add(new SpecialRuleContainer());
+//        unitTypeGridContainer.add(new UnitTypeContainer());
+//        weaponTypeGridContainer.add(new WeaponTypeContainer());
+//        unitBaseGridContainer.add(new UnitBaseContainer());
+//        armyContainer.add(new ArmyPage());
+//        VerticalLayoutContainer vc = new VerticalLayoutContainer();
+//        vc.add(new CodexContainer());
+//        vc.add(new FractionContainer());
+//        codexAndFractionsGridContainer.add(vc);
         venicleBaseGridContainer.add(new VenicleBaseContainer());
         weaponBaseGridContainer.add(new WeaponBaseContainer());
         itemBaseGridContainer.add(new ItemBaseContainer());

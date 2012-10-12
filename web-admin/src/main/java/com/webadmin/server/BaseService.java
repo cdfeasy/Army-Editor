@@ -774,6 +774,15 @@ public class BaseService extends RemoteServiceServlet implements CommonService {
     }
 
     @Override
+    public List<OptionDTO> getOptionsByItemBase(String id) throws ArmyException {
+        Session ses = HibernateUtil.getSessionFactory().openSession();
+        ItemBase itemBase = (ItemBase) ses.get(ItemBase.class,id);
+        ItemBaseDTO dto = new ItemBaseDTO(itemBase);
+        List<OptionDTO> list = dto.getOptions();
+        return list;
+    }
+
+    @Override
     public List<CodexDTO> getCodexs() throws ArmyException {
         try {
             Session ses = HibernateUtil.getSessionFactory().openSession();
