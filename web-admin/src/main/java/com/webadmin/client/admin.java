@@ -56,7 +56,7 @@ public class admin implements EntryPoint {
 //        specialRuleGridContainer.add(new SpecialRuleContainer());
 //        unitTypeGridContainer.add(new UnitTypeContainer());
 //        weaponTypeGridContainer.add(new WeaponTypeContainer());
-//        unitBaseGridContainer.add(new UnitBaseContainer());
+        unitBaseGridContainer.add(new UnitBaseContainer());
 //        armyContainer.add(new ArmyPage());
 //        VerticalLayoutContainer vc = new VerticalLayoutContainer();
 //        vc.add(new CodexContainer());

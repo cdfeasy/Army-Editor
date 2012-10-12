@@ -345,7 +345,15 @@ public class BaseService extends RemoteServiceServlet implements CommonService {
             if(!oldWeaponList.contains(w)) ses.persist(w);
         }
         for (Weapon w:oldWeaponList) {
-            if(!newItemList.contains(w)) ses.delete(w);
+            if(!newWeaponList.contains(w)) ses.delete(w);
+        }
+        List<Option> newOptionList = b.getOptions();
+        List<Option> oldOptionList = b1.getOptions();
+        for (Option w:newOptionList) {
+            if(!oldOptionList.contains(w)) ses.persist(w);
+        }
+        for (Option w:oldOptionList) {
+            if(!newOptionList.contains(w)) ses.delete(w);
         }
         ses.update(b);
         ses.flush();
