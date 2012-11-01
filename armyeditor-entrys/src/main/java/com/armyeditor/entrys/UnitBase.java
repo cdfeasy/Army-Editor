@@ -5,19 +5,19 @@
 
 package com.armyeditor.entrys;
 
-import com.armyeditor.HibernateUtil;
 import com.armyeditor.entrys.classes.Description;
-import org.hibernate.Session;
-//import com.fasterxml.jackson.annotation.JsonIgnore;
-import java.util.ArrayList;
-import java.util.List;
-import javax.persistence.CascadeType;
+
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import java.util.ArrayList;
+import java.util.List;
 
-import static javax.persistence.CascadeType.*;
+import static javax.persistence.CascadeType.MERGE;
+import static javax.persistence.CascadeType.REFRESH;
+
+//import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  *

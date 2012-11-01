@@ -23,12 +23,16 @@ import java.util.List;
 public class BaseService extends RemoteServiceServlet implements CommonService {
     @Override
     public List<UnitDTO> getUnits() throws ArmyException {
-        Session ses= HibernateUtil.getSessionFactory().openSession();
-        Query query = ses.createQuery("select unit from Unit unit");
-        List<Unit> itemlist=query.list();
+        Session ses = HibernateUtil.getSessionFactory().openSession();
         List<UnitDTO> unitDTOList = new ArrayList<UnitDTO>();
-        for (Unit u:itemlist){
-            unitDTOList.add(new UnitDTO(u));
+        try {
+            Query query = ses.createQuery("select unit from Unit unit");
+            List<Unit> itemlist = query.list();
+            for (Unit u : itemlist) {
+                unitDTOList.add(new UnitDTO(u));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         ses.close();
         return unitDTOList;
@@ -36,97 +40,127 @@ public class BaseService extends RemoteServiceServlet implements CommonService {
 
     @Override
     public List<AttackTypeDTO> getAttackTypes() throws ArmyException {
-        Session ses= HibernateUtil.getSessionFactory().openSession();
-        Query query = ses.createQuery("select attacktype from AttackType attacktype").setMaxResults(10);
-        List<AttackType> itemlist=query.list();
+        Session ses = HibernateUtil.getSessionFactory().openSession();
         List<AttackTypeDTO> attackTypeDTOList = new ArrayList<AttackTypeDTO>();
-        for (AttackType a:itemlist){
-            attackTypeDTOList.add(new AttackTypeDTO(a));
+        try {
+            Query query = ses.createQuery("select attacktype from AttackType attacktype").setMaxResults(10);
+            List<AttackType> itemlist = query.list();
+
+            for (AttackType a : itemlist) {
+                attackTypeDTOList.add(new AttackTypeDTO(a));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         ses.close();
         return attackTypeDTOList;
     }
 
     @Override
-    public void delAttackTypes(List<AttackTypeDTO> list)throws ArmyException {
-        Session ses= HibernateUtil.getSessionFactory().openSession();
-        Transaction trans=ses.beginTransaction();
-        List<AttackType> itemlist = new ArrayList<AttackType>();
-        for (AttackTypeDTO a:list){
-            itemlist.add(a.toAttackType());
+    public void delAttackTypes(List<AttackTypeDTO> list) throws ArmyException {
+        Session ses = HibernateUtil.getSessionFactory().openSession();
+        Transaction trans = ses.beginTransaction();
+        try {
+            List<AttackType> itemlist = new ArrayList<AttackType>();
+            for (AttackTypeDTO a : list) {
+                itemlist.add(a.toAttackType());
+            }
+            for (AttackType a : itemlist) {
+                a = (AttackType) ses.merge(a);
+                ses.delete(a);
+            }
+            ses.flush();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        for(AttackType a:itemlist){
-            a= (AttackType) ses.merge(a);
-            ses.delete(a);
-        }
-        ses.flush();
         trans.commit();
         ses.close();
     }
 
     @Override
-    public void addAttackType(AttackTypeDTO a)throws ArmyException  {
+    public void addAttackType(AttackTypeDTO a) throws ArmyException {
         Session ses = HibernateUtil.getSessionFactory().openSession();
         Transaction trans = ses.beginTransaction();
-        AttackType b = a.toAttackType();
-        ses.save(b);
+        try {
+            AttackType b = a.toAttackType();
+            ses.save(b);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         trans.commit();
         ses.close();
     }
 
     @Override
-    public void changeAttackType(AttackTypeDTO a)throws ArmyException  {
+    public void changeAttackType(AttackTypeDTO a) throws ArmyException {
         Session ses = HibernateUtil.getSessionFactory().openSession();
         Transaction trans = ses.beginTransaction();
-        AttackType b = a.toAttackType();
-        ses.merge(b);
-        ses.flush();
+        try {
+            AttackType b = a.toAttackType();
+            ses.merge(b);
+            ses.flush();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         trans.commit();
         ses.close();
     }
 
     @Override
     public List<SpecialRuleDTO> getSpecialRule() throws ArmyException {
-        Session ses= HibernateUtil.getSessionFactory().openSession();
-        Query query = ses.createQuery("select specialrule from SpecialRule specialrule").setMaxResults(10);
-        List<SpecialRule> itemlist=query.list();
+        Session ses = HibernateUtil.getSessionFactory().openSession();
         List<SpecialRuleDTO> specialRuleDTOList = new ArrayList<SpecialRuleDTO>();
-        for (SpecialRule s:itemlist){
-            specialRuleDTOList.add(new SpecialRuleDTO(s));
+        try {
+            Query query = ses.createQuery("select specialrule from SpecialRule specialrule").setMaxResults(10);
+            List<SpecialRule> itemlist = query.list();
+
+            for (SpecialRule s : itemlist) {
+                specialRuleDTOList.add(new SpecialRuleDTO(s));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         ses.close();
         return specialRuleDTOList;
     }
 
     @Override
-    public void delSpecialRules(List<SpecialRuleDTO> list)throws ArmyException  {
-        Session ses= HibernateUtil.getSessionFactory().openSession();
-        Transaction trans=ses.beginTransaction();
-        List<SpecialRule> itemlist = new ArrayList<SpecialRule>();
-        for (SpecialRuleDTO s:list){
-            itemlist.add(s.toSpecialRule());
-        }
-        for(SpecialRule a:itemlist){
-            a = (SpecialRule) ses.merge(a);
-            ses.delete(a);
-        }
-        ses.flush();
-        trans.commit();
-        ses.close();
-    }
-
-    @Override
-    public void addSpecialRule(SpecialRuleDTO s)throws ArmyException  {
+    public void delSpecialRules(List<SpecialRuleDTO> list) throws ArmyException {
         Session ses = HibernateUtil.getSessionFactory().openSession();
         Transaction trans = ses.beginTransaction();
-        SpecialRule b = s.toSpecialRule();
-        ses.save(b);
+        try {
+            List<SpecialRule> itemlist = new ArrayList<SpecialRule>();
+            for (SpecialRuleDTO s : list) {
+                itemlist.add(s.toSpecialRule());
+            }
+            for (SpecialRule a : itemlist) {
+                a = (SpecialRule) ses.merge(a);
+                ses.delete(a);
+            }
+            ses.flush();
+        } catch (Throwable e) {
+            e.printStackTrace();
+        }
         trans.commit();
         ses.close();
     }
 
     @Override
-    public void changeSpecialRule(SpecialRuleDTO s)throws ArmyException  {
+    public void addSpecialRule(SpecialRuleDTO s) throws ArmyException {
+        Session ses = HibernateUtil.getSessionFactory().openSession();
+        Transaction trans = ses.beginTransaction();
+        try {
+            SpecialRule b = s.toSpecialRule();
+            ses.save(b);
+        } catch (Throwable e) {
+            e.printStackTrace();
+        }
+        trans.commit();
+        ses.close();
+    }
+
+    @Override
+    public void changeSpecialRule(SpecialRuleDTO s) throws ArmyException {
         Session ses = HibernateUtil.getSessionFactory().openSession();
         Transaction trans = ses.beginTransaction();
         SpecialRule b = s.toSpecialRule();
@@ -138,30 +172,38 @@ public class BaseService extends RemoteServiceServlet implements CommonService {
 
     @Override
     public List<UnitTypeDTO> getUnitType() throws ArmyException {
-        Session ses= HibernateUtil.getSessionFactory().openSession();
-        Query query = ses.createQuery("select unittype from UnitType unittype");
-        List<UnitType> itemlist=query.list();
+        Session ses = HibernateUtil.getSessionFactory().openSession();
         List<UnitTypeDTO> unitTypeDTOList = new ArrayList<UnitTypeDTO>();
-        for (UnitType u:itemlist){
-            unitTypeDTOList.add(new UnitTypeDTO(u));
+        try {
+            Query query = ses.createQuery("select unittype from UnitType unittype");
+            List<UnitType> itemlist = query.list();
+            for (UnitType u : itemlist) {
+                unitTypeDTOList.add(new UnitTypeDTO(u));
+            }
+        } catch (Throwable e) {
+            e.printStackTrace();
         }
         ses.close();
         return unitTypeDTOList;
     }
 
     @Override
-    public void delUnitTypes(List<UnitTypeDTO> list)throws ArmyException  {
-        Session ses= HibernateUtil.getSessionFactory().openSession();
-        Transaction trans=ses.beginTransaction();
-        List<UnitType> itemlist = new ArrayList<UnitType>();
-        for (UnitTypeDTO u:list){
-            itemlist.add(u.toUnitType());
+    public void delUnitTypes(List<UnitTypeDTO> list) throws ArmyException {
+        Session ses = HibernateUtil.getSessionFactory().openSession();
+        Transaction trans = ses.beginTransaction();
+        try {
+            List<UnitType> itemlist = new ArrayList<UnitType>();
+            for (UnitTypeDTO u : list) {
+                itemlist.add(u.toUnitType());
+            }
+            for (UnitType a : itemlist) {
+                a = (UnitType) ses.merge(a);
+                ses.delete(a);
+            }
+            ses.flush();
+        } catch (Throwable e) {
+            e.printStackTrace();
         }
-        for(UnitType a:itemlist){
-            a = (UnitType) ses.merge(a);
-            ses.delete(a);
-        }
-        ses.flush();
         trans.commit();
         ses.close();
     }
@@ -186,9 +228,13 @@ public class BaseService extends RemoteServiceServlet implements CommonService {
     public void changeUnitType(UnitTypeDTO u) throws ArmyException {
         Session ses = HibernateUtil.getSessionFactory().openSession();
         Transaction trans = ses.beginTransaction();
-        UnitType b = u.toUnitType();
-        ses.merge(b);
-        ses.flush();
+        try {
+            UnitType b = u.toUnitType();
+            ses.merge(b);
+            ses.flush();
+        } catch (Throwable e) {
+            e.printStackTrace();
+        }
         trans.commit();
         ses.close();
     }
@@ -197,11 +243,15 @@ public class BaseService extends RemoteServiceServlet implements CommonService {
     public List<OptionDTO> getOptionsByUnit(String id) throws ArmyException {
         Session ses = HibernateUtil.getSessionFactory().openSession();
         Transaction trans = ses.beginTransaction();
-        UnitType unitType = (UnitType)ses.get(UnitType.class, id);
-        List<Option> list = unitType.getOptions();
         List<OptionDTO> itemlist = new ArrayList<OptionDTO>();
-        for (Option o:list){
-            itemlist.add(new OptionDTO(o));
+        try {
+            UnitType unitType = (UnitType) ses.get(UnitType.class, id);
+            List<Option> list = unitType.getOptions();
+            for (Option o : list) {
+                itemlist.add(new OptionDTO(o));
+            }
+        } catch (Throwable e) {
+            e.printStackTrace();
         }
         trans.commit();
         ses.close();
@@ -210,12 +260,16 @@ public class BaseService extends RemoteServiceServlet implements CommonService {
 
     @Override
     public List<WeaponTypeDTO> getWeaponType() throws ArmyException {
-        Session ses= HibernateUtil.getSessionFactory().openSession();
-        Query query = ses.createQuery("select weapontype from WeaponType weapontype");
-        List<WeaponType> itemlist=query.list();
+        Session ses = HibernateUtil.getSessionFactory().openSession();
         List<WeaponTypeDTO> weaponTypeDTOList = new ArrayList<WeaponTypeDTO>();
-        for (WeaponType w:itemlist){
-            weaponTypeDTOList.add(new WeaponTypeDTO(w));
+        try {
+            Query query = ses.createQuery("select weapontype from WeaponType weapontype");
+            List<WeaponType> itemlist = query.list();
+            for (WeaponType w : itemlist) {
+                weaponTypeDTOList.add(new WeaponTypeDTO(w));
+            }
+        } catch (Throwable e) {
+            e.printStackTrace();
         }
         ses.close();
         return weaponTypeDTOList;
@@ -223,27 +277,35 @@ public class BaseService extends RemoteServiceServlet implements CommonService {
 
     @Override
     public void delWeaponTypes(List<WeaponTypeDTO> list) throws ArmyException {
-        Session ses= HibernateUtil.getSessionFactory().openSession();
-        Transaction trans=ses.beginTransaction();
-        List<WeaponType> itemlist = new ArrayList<WeaponType>();
-        for (WeaponTypeDTO w:list){
-            itemlist.add(w.toWeaponType());
+        Session ses = HibernateUtil.getSessionFactory().openSession();
+        Transaction trans = ses.beginTransaction();
+        try {
+            List<WeaponType> itemlist = new ArrayList<WeaponType>();
+            for (WeaponTypeDTO w : list) {
+                itemlist.add(w.toWeaponType());
+            }
+            for (WeaponType a : itemlist) {
+                a = (WeaponType) ses.merge(a);
+                ses.delete(a);
+            }
+            ses.flush();
+        } catch (Throwable e) {
+            e.printStackTrace();
         }
-        for(WeaponType a:itemlist){
-            a = (WeaponType) ses.merge(a);
-            ses.delete(a);
-        }
-        ses.flush();
         trans.commit();
         ses.close();
     }
 
     @Override
-    public void addWeaponType(WeaponTypeDTO w)throws ArmyException  {
+    public void addWeaponType(WeaponTypeDTO w) throws ArmyException {
         Session ses = HibernateUtil.getSessionFactory().openSession();
         Transaction trans = ses.beginTransaction();
-        WeaponType b = w.toWeaponType();
-        ses.save(b);
+        try {
+            WeaponType b = w.toWeaponType();
+            ses.save(b);
+        } catch (Throwable e) {
+            e.printStackTrace();
+        }
         trans.commit();
         ses.close();
     }
@@ -252,9 +314,13 @@ public class BaseService extends RemoteServiceServlet implements CommonService {
     public void changeWeaponType(WeaponTypeDTO w) throws ArmyException {
         Session ses = HibernateUtil.getSessionFactory().openSession();
         Transaction trans = ses.beginTransaction();
-        WeaponType b = w.toWeaponType();
-        ses.merge(b);
-        ses.flush();
+        try {
+            WeaponType b = w.toWeaponType();
+            ses.merge(b);
+            ses.flush();
+        } catch (Throwable e) {
+            e.printStackTrace();
+        }
         trans.commit();
         ses.close();
     }
@@ -263,12 +329,16 @@ public class BaseService extends RemoteServiceServlet implements CommonService {
     public List<UnitBaseDTO> getUnitBase(String id1) throws ArmyException {
         Session ses = HibernateUtil.getSessionFactory().openSession();
         Transaction trans = ses.beginTransaction();
-        Query query = ses.createQuery("select unitbase from UnitBase unitbase where codex.id=:id");
-        query.setParameter("id",id1);
-        List<UnitBase> itemlist=query.list();
         List<UnitBaseDTO> unitBaseDTOs = new ArrayList<UnitBaseDTO>();
-        for (UnitBase w:itemlist){
-            unitBaseDTOs.add(new UnitBaseDTO(w));
+        try {
+            Query query = ses.createQuery("select unitbase from UnitBase unitbase where codex.id=:id");
+            query.setParameter("id", id1);
+            List<UnitBase> itemlist = query.list();
+            for (UnitBase w : itemlist) {
+                unitBaseDTOs.add(new UnitBaseDTO(w));
+            }
+        } catch (Throwable e) {
+            e.printStackTrace();
         }
         trans.commit();
         ses.close();
@@ -319,8 +389,12 @@ public class BaseService extends RemoteServiceServlet implements CommonService {
     public void addUnitBase(UnitBaseDTO u) throws ArmyException {
         Session ses = HibernateUtil.getSessionFactory().openSession();
         Transaction trans = ses.beginTransaction();
-        UnitBase b = u.toUnitBase();
-        ses.save(b);
+        try {
+            UnitBase b = u.toUnitBase();
+            ses.save(b);
+        } catch (Throwable e) {
+            e.printStackTrace();
+        }
         trans.commit();
         ses.close();
     }
@@ -329,34 +403,38 @@ public class BaseService extends RemoteServiceServlet implements CommonService {
     public void changeUnitBase(UnitBaseDTO u) throws ArmyException {
         Session ses = HibernateUtil.getSessionFactory().openSession();
         Transaction trans = ses.beginTransaction();
-        UnitBase b = u.toUnitBase();
-        UnitBase b1 = (UnitBase) ses.get(UnitBase.class, b.getId());
-        List<Item> newItemList = b.getItems();
-        List<Item> oldItemList = b1.getItems();
-        for(Item i:newItemList) {
-            if(!oldItemList.contains(i)) ses.persist(i);
+        try {
+            UnitBase b = u.toUnitBase();
+            UnitBase b1 = (UnitBase) ses.get(UnitBase.class, b.getId());
+            List<Item> newItemList = b.getItems();
+            List<Item> oldItemList = b1.getItems();
+            for (Item i : newItemList) {
+                if (!oldItemList.contains(i)) ses.persist(i);
+            }
+            for (Item i : oldItemList) {
+                if (!newItemList.contains(i)) ses.delete(i);
+            }
+            List<Weapon> newWeaponList = b.getWeapons();
+            List<Weapon> oldWeaponList = b1.getWeapons();
+            for (Weapon w : newWeaponList) {
+                if (!oldWeaponList.contains(w)) ses.persist(w);
+            }
+            for (Weapon w : oldWeaponList) {
+                if (!newWeaponList.contains(w)) ses.delete(w);
+            }
+            List<Option> newOptionList = b.getOptions();
+            List<Option> oldOptionList = b1.getOptions();
+            for (Option w : newOptionList) {
+                if (!oldOptionList.contains(w)) ses.persist(w);
+            }
+            for (Option w : oldOptionList) {
+                if (!newOptionList.contains(w)) ses.delete(w);
+            }
+            ses.update(b);
+            ses.flush();
+        } catch (Throwable e) {
+            e.printStackTrace();
         }
-        for (Item i:oldItemList) {
-            if(!newItemList.contains(i)) ses.delete(i);
-        }
-        List<Weapon> newWeaponList = b.getWeapons();
-        List<Weapon> oldWeaponList = b1.getWeapons();
-        for (Weapon w:newWeaponList) {
-            if(!oldWeaponList.contains(w)) ses.persist(w);
-        }
-        for (Weapon w:oldWeaponList) {
-            if(!newWeaponList.contains(w)) ses.delete(w);
-        }
-        List<Option> newOptionList = b.getOptions();
-        List<Option> oldOptionList = b1.getOptions();
-        for (Option w:newOptionList) {
-            if(!oldOptionList.contains(w)) ses.persist(w);
-        }
-        for (Option w:oldOptionList) {
-            if(!newOptionList.contains(w)) ses.delete(w);
-        }
-        ses.update(b);
-        ses.flush();
         trans.commit();
         ses.close();
     }
@@ -365,8 +443,13 @@ public class BaseService extends RemoteServiceServlet implements CommonService {
     public UnitBaseDTO getUnitById(String id) throws ArmyException {
         Session ses = HibernateUtil.getSessionFactory().openSession();
         Transaction trans = ses.beginTransaction();
-        UnitBase unitBase = (UnitBase)ses.get(UnitBase.class, id);
-        UnitBaseDTO unitBaseDTO = new UnitBaseDTO(unitBase);
+        UnitBaseDTO unitBaseDTO = new UnitBaseDTO();
+        try {
+            UnitBase unitBase = (UnitBase) ses.get(UnitBase.class, id);
+            unitBaseDTO = new UnitBaseDTO(unitBase);
+        } catch (Throwable e) {
+            e.printStackTrace();
+        }
         trans.commit();
         ses.close();
         return unitBaseDTO;
@@ -374,12 +457,16 @@ public class BaseService extends RemoteServiceServlet implements CommonService {
 
     @Override
     public List<FractionDTO> getFractions() throws ArmyException {
-        Session ses= HibernateUtil.getSessionFactory().openSession();
-        Query query = ses.createQuery("select fraction from Fraction fraction");
-        List<Fraction> itemlist=query.list();
+        Session ses = HibernateUtil.getSessionFactory().openSession();
         List<FractionDTO> fractionDTOList = new ArrayList<FractionDTO>();
-        for (Fraction w:itemlist){
-            fractionDTOList.add(new FractionDTO(w,false));
+        try {
+            Query query = ses.createQuery("select fraction from Fraction fraction");
+            List<Fraction> itemlist = query.list();
+            for (Fraction w : itemlist) {
+                fractionDTOList.add(new FractionDTO(w, false));
+            }
+        } catch (Throwable e) {
+            e.printStackTrace();
         }
         ses.close();
         return fractionDTOList;
@@ -387,17 +474,21 @@ public class BaseService extends RemoteServiceServlet implements CommonService {
 
     @Override
     public void delFractions(List<FractionDTO> list) throws ArmyException {
-        Session ses= HibernateUtil.getSessionFactory().openSession();
-        Transaction trans=ses.beginTransaction();
-        List<Fraction> itemlist = new ArrayList<Fraction>();
-        for (FractionDTO w:list){
-            itemlist.add(w.toFraction());
+        Session ses = HibernateUtil.getSessionFactory().openSession();
+        Transaction trans = ses.beginTransaction();
+        try {
+            List<Fraction> itemlist = new ArrayList<Fraction>();
+            for (FractionDTO w : list) {
+                itemlist.add(w.toFraction());
+            }
+            for (Fraction a : itemlist) {
+                a = (Fraction) ses.merge(a);
+                ses.delete(a);
+            }
+            ses.flush();
+        } catch (Throwable e) {
+            e.printStackTrace();
         }
-        for(Fraction a:itemlist){
-            a = (Fraction) ses.merge(a);
-            ses.delete(a);
-        }
-        ses.flush();
         trans.commit();
         ses.close();
     }
@@ -406,31 +497,45 @@ public class BaseService extends RemoteServiceServlet implements CommonService {
     public void addFraction(FractionDTO f) throws ArmyException {
         Session ses = HibernateUtil.getSessionFactory().openSession();
         Transaction trans = ses.beginTransaction();
-        Fraction b = f.toFraction();
-        ses.save(b);
+        try {
+            Fraction b = f.toFraction();
+            ses.save(b);
+        } catch (Throwable e) {
+            e.printStackTrace();
+        }
         trans.commit();
         ses.close();
     }
 
     @Override
     public void changeFraction(FractionDTO f) throws ArmyException {
-        Session ses = HibernateUtil.getSessionFactory().openSession();
-        Transaction trans = ses.beginTransaction();
-        Fraction b = f.toFraction();
-        ses.merge(b);
-        ses.flush();
-        trans.commit();
-        ses.close();
+        try {
+            Session ses = HibernateUtil.getSessionFactory().openSession();
+            Transaction trans = ses.beginTransaction();
+            Fraction b = f.toFraction();
+            ses.merge(b);
+            ses.flush();
+            trans.commit();
+            ses.close();
+        } catch (Throwable e) {
+            e.printStackTrace();
+            throw new ArmyException(e);
+        }
+
     }
 
     @Override
     public List<CodexDTO> getCodexByFraction(String id) throws ArmyException {
         Session ses = HibernateUtil.getSessionFactory().openSession();
         Transaction trans = ses.beginTransaction();
-        Fraction f = (Fraction) ses.get(Fraction.class, id);
-        FractionDTO fractionDTO = new FractionDTO(f, false);
-        List<CodexDTO> list;
-        list = fractionDTO.getCodexes();
+        List<CodexDTO> list = new ArrayList<CodexDTO>();
+        try {
+            Fraction f = (Fraction) ses.get(Fraction.class, id);
+            FractionDTO fractionDTO = new FractionDTO(f, false);
+            list = fractionDTO.getCodexes();
+        } catch (Throwable e) {
+            e.printStackTrace();
+        }
         trans.commit();
         ses.close();
         return list;
@@ -438,13 +543,17 @@ public class BaseService extends RemoteServiceServlet implements CommonService {
 
     @Override
     public List<VenicleBaseDTO> getVenicleBase(String id) throws ArmyException {
-        Session ses= HibernateUtil.getSessionFactory().openSession();
-        Query query = ses.createQuery("select veniclebase from VenicleBase veniclebase where veniclebase.codex.id=:id1");
-        query.setParameter("id1", id);
-        List<VenicleBase> itemlist=query.list();
+        Session ses = HibernateUtil.getSessionFactory().openSession();
         List<VenicleBaseDTO> venicleBaseDTOs = new ArrayList<VenicleBaseDTO>();
-        for (VenicleBase u:itemlist){
-            venicleBaseDTOs.add(new VenicleBaseDTO(u));
+        try {
+            Query query = ses.createQuery("select veniclebase from VenicleBase veniclebase where veniclebase.codex.id=:id1");
+            query.setParameter("id1", id);
+            List<VenicleBase> itemlist = query.list();
+            for (VenicleBase u : itemlist) {
+                venicleBaseDTOs.add(new VenicleBaseDTO(u));
+            }
+        } catch (Throwable e) {
+            e.printStackTrace();
         }
         ses.close();
         return venicleBaseDTOs;
@@ -509,9 +618,13 @@ public class BaseService extends RemoteServiceServlet implements CommonService {
     public void changeVenicleBase(VenicleBaseDTO v) throws ArmyException {
         Session ses = HibernateUtil.getSessionFactory().openSession();
         Transaction trans = ses.beginTransaction();
-        VenicleBase b = v.toVenicleBase();
-        ses.merge(b);
-        ses.flush();
+        try {
+            VenicleBase b = v.toVenicleBase();
+            ses.merge(b);
+            ses.flush();
+        } catch (Throwable e) {
+            e.printStackTrace();
+        }
         trans.commit();
         ses.close();
     }
@@ -520,8 +633,13 @@ public class BaseService extends RemoteServiceServlet implements CommonService {
     public VenicleBaseDTO getVenicleById(String id) throws ArmyException {
         Session ses = HibernateUtil.getSessionFactory().openSession();
         Transaction trans = ses.beginTransaction();
-        VenicleBase venicleBase = (VenicleBase)ses.get(VenicleBase.class, id);
-        VenicleBaseDTO venicleBaseDTO = new VenicleBaseDTO(venicleBase);
+        VenicleBaseDTO venicleBaseDTO = new VenicleBaseDTO();
+        try {
+            VenicleBase venicleBase = (VenicleBase) ses.get(VenicleBase.class, id);
+            venicleBaseDTO = new VenicleBaseDTO(venicleBase);
+        } catch (Throwable e) {
+            e.printStackTrace();
+        }
         trans.commit();
         ses.close();
         return venicleBaseDTO;
@@ -530,11 +648,15 @@ public class BaseService extends RemoteServiceServlet implements CommonService {
     @Override
     public List<OptionDTO> getOptions() throws ArmyException {
         Session ses = HibernateUtil.getSessionFactory().openSession();
-        Query query = ses.createQuery("select option from Option option");
-        List<Option> itemlist=query.list();
         List<OptionDTO> optionDTOList = new ArrayList<OptionDTO>();
-        for (Option w:itemlist){
-            optionDTOList.add(new OptionDTO(w));
+        try {
+            Query query = ses.createQuery("select option from Option option");
+            List<Option> itemlist = query.list();
+            for (Option w : itemlist) {
+                optionDTOList.add(new OptionDTO(w));
+            }
+        } catch (Throwable e) {
+            e.printStackTrace();
         }
         ses.close();
         return optionDTOList;
@@ -543,11 +665,15 @@ public class BaseService extends RemoteServiceServlet implements CommonService {
     @Override
     public List<WeaponDTO> getWeapons() throws ArmyException {
         Session ses = HibernateUtil.getSessionFactory().openSession();
-        Query query = ses.createQuery("select weapon from Weapon weapon");
-        List<Weapon> itemlist = query.list();
         List<WeaponDTO> weaponDTOList = new ArrayList<WeaponDTO>();
-        for (Weapon w:itemlist){
-            weaponDTOList.add(new WeaponDTO(w));
+        try {
+            Query query = ses.createQuery("select weapon from Weapon weapon");
+            List<Weapon> itemlist = query.list();
+            for (Weapon w : itemlist) {
+                weaponDTOList.add(new WeaponDTO(w));
+            }
+        } catch (Throwable e) {
+            e.printStackTrace();
         }
         ses.close();
         return weaponDTOList;
@@ -555,17 +681,21 @@ public class BaseService extends RemoteServiceServlet implements CommonService {
 
     @Override
     public void delWeapons(List<WeaponDTO> list) throws ArmyException {
-        Session ses= HibernateUtil.getSessionFactory().openSession();
-        Transaction trans=ses.beginTransaction();
-        List<Weapon> itemlist = new ArrayList<Weapon>();
-        for (WeaponDTO w:list){
-            itemlist.add(w.toWeapon());
+        Session ses = HibernateUtil.getSessionFactory().openSession();
+        Transaction trans = ses.beginTransaction();
+        try {
+            List<Weapon> itemlist = new ArrayList<Weapon>();
+            for (WeaponDTO w : list) {
+                itemlist.add(w.toWeapon());
+            }
+            for (Weapon a : itemlist) {
+                a = (Weapon) ses.merge(a);
+                ses.delete(a);
+            }
+            ses.flush();
+        } catch (Throwable e) {
+            e.printStackTrace();
         }
-        for(Weapon a:itemlist){
-            a = (Weapon) ses.merge(a);
-            ses.delete(a);
-        }
-        ses.flush();
         trans.commit();
         ses.close();
     }
@@ -574,8 +704,12 @@ public class BaseService extends RemoteServiceServlet implements CommonService {
     public void addWeapon(WeaponDTO w) throws ArmyException {
         Session ses = HibernateUtil.getSessionFactory().openSession();
         Transaction trans = ses.beginTransaction();
-        Weapon b = w.toWeapon();
-        ses.save(b);
+        try {
+            Weapon b = w.toWeapon();
+            ses.save(b);
+        } catch (Throwable e) {
+            e.printStackTrace();
+        }
         trans.commit();
         ses.close();
     }
@@ -584,9 +718,13 @@ public class BaseService extends RemoteServiceServlet implements CommonService {
     public void changeWeapon(WeaponDTO w) throws ArmyException {
         Session ses = HibernateUtil.getSessionFactory().openSession();
         Transaction trans = ses.beginTransaction();
-        Weapon b = w.toWeapon();
-        ses.merge(b);
-        ses.flush();
+        try {
+            Weapon b = w.toWeapon();
+            ses.merge(b);
+            ses.flush();
+        } catch (Throwable e) {
+            e.printStackTrace();
+        }
         trans.commit();
         ses.close();
     }
@@ -594,11 +732,15 @@ public class BaseService extends RemoteServiceServlet implements CommonService {
     @Override
     public List<ItemDTO> getItems() throws ArmyException {
         Session ses = HibernateUtil.getSessionFactory().openSession();
-        Query query = ses.createQuery("select item from Item item");
-        List<Item> itemlist = query.list();
         List<ItemDTO> itemDTOList = new ArrayList<ItemDTO>();
-        for (Item w:itemlist){
-            itemDTOList.add(new ItemDTO(w));
+        try {
+            Query query = ses.createQuery("select item from Item item");
+            List<Item> itemlist = query.list();
+            for (Item w : itemlist) {
+                itemDTOList.add(new ItemDTO(w));
+            }
+        } catch (Throwable e) {
+            e.printStackTrace();
         }
         ses.close();
         return itemDTOList;
@@ -607,16 +749,20 @@ public class BaseService extends RemoteServiceServlet implements CommonService {
     @Override
     public void delItems(List<ItemDTO> list) throws ArmyException {
         Session ses = HibernateUtil.getSessionFactory().openSession();
-        Transaction trans=ses.beginTransaction();
-        List<Item> itemlist = new ArrayList<Item>();
-        for (ItemDTO w:list){
-            itemlist.add(w.toItem());
+        Transaction trans = ses.beginTransaction();
+        try {
+            List<Item> itemlist = new ArrayList<Item>();
+            for (ItemDTO w : list) {
+                itemlist.add(w.toItem());
+            }
+            for (Item a : itemlist) {
+                a = (Item) ses.merge(a);
+                ses.delete(a);
+            }
+            ses.flush();
+        } catch (Throwable e) {
+            e.printStackTrace();
         }
-        for(Item a:itemlist){
-            a = (Item) ses.merge(a);
-            ses.delete(a);
-        }
-        ses.flush();
         trans.commit();
         ses.close();
     }
@@ -625,8 +771,12 @@ public class BaseService extends RemoteServiceServlet implements CommonService {
     public void addItem(ItemDTO i) throws ArmyException {
         Session ses = HibernateUtil.getSessionFactory().openSession();
         Transaction trans = ses.beginTransaction();
-        Item b = i.toItem();
-        ses.save(b);
+        try {
+            Item b = i.toItem();
+            ses.save(b);
+        } catch (Throwable e) {
+            e.printStackTrace();
+        }
         trans.commit();
         ses.close();
     }
@@ -635,9 +785,13 @@ public class BaseService extends RemoteServiceServlet implements CommonService {
     public void changeItem(ItemDTO i) throws ArmyException {
         Session ses = HibernateUtil.getSessionFactory().openSession();
         Transaction trans = ses.beginTransaction();
-        Item b = i.toItem();
-        ses.merge(b);
-        ses.flush();
+        try {
+            Item b = i.toItem();
+            ses.merge(b);
+            ses.flush();
+        } catch (Throwable e) {
+            e.printStackTrace();
+        }
         trans.commit();
         ses.close();
     }
@@ -645,11 +799,15 @@ public class BaseService extends RemoteServiceServlet implements CommonService {
     @Override
     public List<WeaponBaseDTO> getWeaponBases() throws ArmyException {
         Session ses = HibernateUtil.getSessionFactory().openSession();
-        Query query = ses.createQuery("select weaponbase from WeaponBase weaponbase");
-        List<WeaponBase> itemlist = query.list();
         List<WeaponBaseDTO> weaponBaseDTOList = new ArrayList<WeaponBaseDTO>();
-        for (WeaponBase w:itemlist){
-            weaponBaseDTOList.add(new WeaponBaseDTO(w));
+        try {
+            Query query = ses.createQuery("select weaponbase from WeaponBase weaponbase");
+            List<WeaponBase> itemlist = query.list();
+            for (WeaponBase w : itemlist) {
+                weaponBaseDTOList.add(new WeaponBaseDTO(w));
+            }
+        } catch (Throwable e) {
+            e.printStackTrace();
         }
         ses.close();
         return weaponBaseDTOList;
@@ -658,16 +816,20 @@ public class BaseService extends RemoteServiceServlet implements CommonService {
     @Override
     public void delWeaponBase(List<WeaponBaseDTO> list) throws ArmyException {
         Session ses = HibernateUtil.getSessionFactory().openSession();
-        Transaction trans=ses.beginTransaction();
-        List<WeaponBase> itemlist = new ArrayList<WeaponBase>();
-        for (WeaponBaseDTO w:list){
-            itemlist.add(w.toWeaponBase());
+        Transaction trans = ses.beginTransaction();
+        try {
+            List<WeaponBase> itemlist = new ArrayList<WeaponBase>();
+            for (WeaponBaseDTO w : list) {
+                itemlist.add(w.toWeaponBase());
+            }
+            for (WeaponBase a : itemlist) {
+                a = (WeaponBase) ses.merge(a);
+                ses.delete(a);
+            }
+            ses.flush();
+        } catch (Throwable e) {
+            e.printStackTrace();
         }
-        for(WeaponBase a:itemlist){
-            a = (WeaponBase) ses.merge(a);
-            ses.delete(a);
-        }
-        ses.flush();
         trans.commit();
         ses.close();
     }
@@ -676,8 +838,12 @@ public class BaseService extends RemoteServiceServlet implements CommonService {
     public void addWeaponBase(WeaponBaseDTO w) throws ArmyException {
         Session ses = HibernateUtil.getSessionFactory().openSession();
         Transaction trans = ses.beginTransaction();
-        WeaponBase b = w.toWeaponBase();
-        ses.save(b);
+        try {
+            WeaponBase b = w.toWeaponBase();
+            ses.save(b);
+        } catch (Throwable e) {
+            e.printStackTrace();
+        }
         trans.commit();
         ses.close();
     }
@@ -686,9 +852,13 @@ public class BaseService extends RemoteServiceServlet implements CommonService {
     public void changeWeaponBase(WeaponBaseDTO w) throws ArmyException {
         Session ses = HibernateUtil.getSessionFactory().openSession();
         Transaction trans = ses.beginTransaction();
-        WeaponBase b = w.toWeaponBase();
-        ses.merge(b);
-        ses.flush();
+        try {
+            WeaponBase b = w.toWeaponBase();
+            ses.merge(b);
+            ses.flush();
+        } catch (Throwable e) {
+            e.printStackTrace();
+        }
         trans.commit();
         ses.close();
     }
@@ -696,12 +866,16 @@ public class BaseService extends RemoteServiceServlet implements CommonService {
     @Override
     public List<WeaponBaseDTO> getWeaponBaseById(String id) throws ArmyException {
         Session ses = HibernateUtil.getSessionFactory().openSession();
-        Query query = ses.createQuery("select weaponbase from WeaponBase weaponbase where weaponbase.codex.id=:id");
-        query.setParameter("id", id);
-        List<WeaponBase> itemlist = query.list();
         List<WeaponBaseDTO> weaponBaseDTOs = new ArrayList<WeaponBaseDTO>();
-        for (WeaponBase w: itemlist) {
-            weaponBaseDTOs.add(new WeaponBaseDTO(w));
+        try {
+            Query query = ses.createQuery("select weaponbase from WeaponBase weaponbase where weaponbase.codex.id=:id");
+            query.setParameter("id", id);
+            List<WeaponBase> itemlist = query.list();
+            for (WeaponBase w : itemlist) {
+                weaponBaseDTOs.add(new WeaponBaseDTO(w));
+            }
+        } catch (Throwable e) {
+            e.printStackTrace();
         }
         ses.close();
         return weaponBaseDTOs;
@@ -710,20 +884,29 @@ public class BaseService extends RemoteServiceServlet implements CommonService {
     @Override
     public List<OptionDTO> getOptionsByWeaponBase(String id) throws ArmyException {
         Session ses = HibernateUtil.getSessionFactory().openSession();
-        WeaponBase weaponBase = (WeaponBase) ses.get(WeaponBase.class,id);
-        WeaponBaseDTO dto = new WeaponBaseDTO(weaponBase);
-        List<OptionDTO> list = dto.getOptions();
+        List<OptionDTO> list = new ArrayList<OptionDTO>();
+        try {
+            WeaponBase weaponBase = (WeaponBase) ses.get(WeaponBase.class, id);
+            WeaponBaseDTO dto = new WeaponBaseDTO(weaponBase);
+            list = dto.getOptions();
+        } catch (Throwable e) {
+            e.printStackTrace();
+        }
         return list;
     }
 
     @Override
     public List<ItemBaseDTO> getItemBases() throws ArmyException {
         Session ses = HibernateUtil.getSessionFactory().openSession();
-        Query query = ses.createQuery("select itembase from ItemBase itembase");
-        List<ItemBase> itemlist = query.list();
         List<ItemBaseDTO> itemBaseDTOList = new ArrayList<ItemBaseDTO>();
-        for (ItemBase w:itemlist){
-            itemBaseDTOList.add(new ItemBaseDTO(w));
+        try {
+            Query query = ses.createQuery("select itembase from ItemBase itembase");
+            List<ItemBase> itemlist = query.list();
+            for (ItemBase w : itemlist) {
+                itemBaseDTOList.add(new ItemBaseDTO(w));
+            }
+        } catch (Throwable e) {
+            e.printStackTrace();
         }
         ses.close();
         return itemBaseDTOList;
@@ -732,16 +915,20 @@ public class BaseService extends RemoteServiceServlet implements CommonService {
     @Override
     public void delItemBase(List<ItemBaseDTO> list) throws ArmyException {
         Session ses = HibernateUtil.getSessionFactory().openSession();
-        Transaction trans=ses.beginTransaction();
-        List<ItemBase> itemlist = new ArrayList<ItemBase>();
-        for (ItemBaseDTO w:list){
-            itemlist.add(w.toItemBase());
+        Transaction trans = ses.beginTransaction();
+        try {
+            List<ItemBase> itemlist = new ArrayList<ItemBase>();
+            for (ItemBaseDTO w : list) {
+                itemlist.add(w.toItemBase());
+            }
+            for (ItemBase a : itemlist) {
+                a = (ItemBase) ses.merge(a);
+                ses.delete(a);
+            }
+            ses.flush();
+        } catch (Throwable e) {
+            e.printStackTrace();
         }
-        for(ItemBase a:itemlist){
-            a = (ItemBase) ses.merge(a);
-            ses.delete(a);
-        }
-        ses.flush();
         trans.commit();
         ses.close();
     }
@@ -750,8 +937,12 @@ public class BaseService extends RemoteServiceServlet implements CommonService {
     public void addItemBase(ItemBaseDTO i) throws ArmyException {
         Session ses = HibernateUtil.getSessionFactory().openSession();
         Transaction trans = ses.beginTransaction();
-        ItemBase b = i.toItemBase();
-        ses.save(b);
+        try {
+            ItemBase b = i.toItemBase();
+            ses.save(b);
+        } catch (Throwable e) {
+            e.printStackTrace();
+        }
         trans.commit();
         ses.close();
     }
@@ -760,9 +951,13 @@ public class BaseService extends RemoteServiceServlet implements CommonService {
     public void changeItemBase(ItemBaseDTO i) throws ArmyException {
         Session ses = HibernateUtil.getSessionFactory().openSession();
         Transaction trans = ses.beginTransaction();
-        ItemBase b = i.toItemBase();
-        ses.merge(b);
-        ses.flush();
+        try {
+            ItemBase b = i.toItemBase();
+            ses.merge(b);
+            ses.flush();
+        } catch (Throwable e) {
+            e.printStackTrace();
+        }
         trans.commit();
         ses.close();
     }
@@ -770,12 +965,16 @@ public class BaseService extends RemoteServiceServlet implements CommonService {
     @Override
     public List<ItemBaseDTO> getItemBaseById(String id) throws ArmyException {
         Session ses = HibernateUtil.getSessionFactory().openSession();
-        Query query = ses.createQuery("select itembase from ItemBase itembase where itembase.codex.id=:id");
-        query.setParameter("id", id);
-        List<ItemBase> itemlist = query.list();
         List<ItemBaseDTO> itemBaseDTOs = new ArrayList<ItemBaseDTO>();
-        for (ItemBase w: itemlist) {
-            itemBaseDTOs.add(new ItemBaseDTO(w));
+        try {
+            Query query = ses.createQuery("select itembase from ItemBase itembase where itembase.codex.id=:id");
+            query.setParameter("id", id);
+            List<ItemBase> itemlist = query.list();
+            for (ItemBase w : itemlist) {
+                itemBaseDTOs.add(new ItemBaseDTO(w));
+            }
+        } catch (Throwable e) {
+            e.printStackTrace();
         }
         ses.close();
         return itemBaseDTOs;
@@ -784,9 +983,15 @@ public class BaseService extends RemoteServiceServlet implements CommonService {
     @Override
     public List<OptionDTO> getOptionsByItemBase(String id) throws ArmyException {
         Session ses = HibernateUtil.getSessionFactory().openSession();
-        ItemBase itemBase = (ItemBase) ses.get(ItemBase.class,id);
-        ItemBaseDTO dto = new ItemBaseDTO(itemBase);
-        List<OptionDTO> list = dto.getOptions();
+        List<OptionDTO> list = new ArrayList<OptionDTO>();
+        try {
+            ItemBase itemBase = (ItemBase) ses.get(ItemBase.class, id);
+            ItemBaseDTO dto = new ItemBaseDTO(itemBase);
+            list = dto.getOptions();
+        } catch (Throwable e) {
+            e.printStackTrace();
+        }
+        ses.close();
         return list;
     }
 
@@ -812,16 +1017,20 @@ public class BaseService extends RemoteServiceServlet implements CommonService {
     @Override
     public void delCodexs(List<CodexDTO> list) throws ArmyException {
         Session ses = HibernateUtil.getSessionFactory().openSession();
-        Transaction trans=ses.beginTransaction();
-        List<Codex> itemlist = new ArrayList<Codex>();
-        for (CodexDTO w:list){
-            itemlist.add(w.toCodex());
+        Transaction trans = ses.beginTransaction();
+        try {
+            List<Codex> itemlist = new ArrayList<Codex>();
+            for (CodexDTO w : list) {
+                itemlist.add(w.toCodex());
+            }
+            for (Codex a : itemlist) {
+                a = (Codex) ses.merge(a);
+                ses.delete(a);
+            }
+            ses.flush();
+        } catch (Throwable e) {
+            e.printStackTrace();
         }
-        for(Codex a:itemlist){
-            a = (Codex) ses.merge(a);
-            ses.delete(a);
-        }
-        ses.flush();
         trans.commit();
         ses.close();
     }
@@ -830,8 +1039,12 @@ public class BaseService extends RemoteServiceServlet implements CommonService {
     public void addCodex(CodexDTO c) throws ArmyException {
         Session ses = HibernateUtil.getSessionFactory().openSession();
         Transaction trans = ses.beginTransaction();
-        Codex b = c.toCodex();
-        ses.save(b);
+        try {
+            Codex b = c.toCodex();
+            ses.save(b);
+        } catch (Throwable e) {
+            e.printStackTrace();
+        }
         trans.commit();
         ses.close();
     }
@@ -840,9 +1053,13 @@ public class BaseService extends RemoteServiceServlet implements CommonService {
     public void changeCodex(CodexDTO c) throws ArmyException {
         Session ses = HibernateUtil.getSessionFactory().openSession();
         Transaction trans = ses.beginTransaction();
-        Codex b = c.toCodex();
-        ses.merge(b);
-        ses.flush();
+        try {
+            Codex b = c.toCodex();
+            ses.merge(b);
+            ses.flush();
+        } catch (Throwable e) {
+            e.printStackTrace();
+        }
         trans.commit();
         ses.close();
     }

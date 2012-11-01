@@ -6,11 +6,11 @@
 package com.armyeditor.dto;
 
 //import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import com.armyeditor.entrys.ItemBase;
 import com.armyeditor.entrys.Option;
 
-import java.util. ArrayList;
-import javax.persistence.*;
+import java.util.ArrayList;
 
 /**
  *

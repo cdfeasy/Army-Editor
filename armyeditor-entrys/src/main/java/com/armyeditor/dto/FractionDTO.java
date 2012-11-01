@@ -9,12 +9,6 @@ import com.armyeditor.entrys.Codex;
 import com.armyeditor.entrys.Fraction;
 
 import java.util.ArrayList;
-import java.util. ArrayList;
-import javax.persistence.CascadeType;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
 
 /**
  *
@@ -46,7 +40,7 @@ public class FractionDTO implements java.io.Serializable  {
         fraction.setName(name);
         fraction.setDescription(description);
         for (CodexDTO c:codexes){
-            fraction.getCodexes().add(c.toCodex());
+            fraction.getCodexes().add(c.toCodex(true)); //<--- убираем рекурсивность
         }
         return fraction;
     }

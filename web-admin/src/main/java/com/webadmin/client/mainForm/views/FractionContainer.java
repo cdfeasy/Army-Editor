@@ -169,7 +169,7 @@ public class FractionContainer extends HorizontalPanel {
                     f.setId(fractionFields.getIdFld().getText());
                     f.setName(fractionFields.getNameFld().getText());
                     f.setDescription(fractionFields.getDescripFld().getText());
-                    ArrayList<CodexDTO> list = new ArrayList<CodexDTO>(fractionFields.getCodexGrid().getStore().getAll());
+                    ArrayList<CodexDTO> list = new ArrayList<CodexDTO>(fractionFields.codexStore.getAll());
                     f.setCodexes(list);
                     commonService.changeFraction(f, new AsyncCallback<Void>() {
                         @Override
