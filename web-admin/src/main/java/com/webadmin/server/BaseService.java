@@ -526,18 +526,19 @@ public class BaseService extends RemoteServiceServlet implements CommonService {
 
     @Override
     public List<CodexDTO> getCodexByFraction(String id) throws ArmyException {
-        Session ses = HibernateUtil.getSessionFactory().openSession();
-        Transaction trans = ses.beginTransaction();
         List<CodexDTO> list = new ArrayList<CodexDTO>();
         try {
+            Session ses = HibernateUtil.getSessionFactory().openSession();
+            Transaction trans = ses.beginTransaction();
             Fraction f = (Fraction) ses.get(Fraction.class, id);
-            FractionDTO fractionDTO = new FractionDTO(f, false);
+            FractionDTO fractionDTO = new FractionDTO(f, true);
             list = fractionDTO.getCodexes();
+            trans.commit();
+            ses.close();
         } catch (Throwable e) {
             e.printStackTrace();
+            throw new ArmyException(e);
         }
-        trans.commit();
-        ses.close();
         return list;
     }
 
